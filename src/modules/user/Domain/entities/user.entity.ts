@@ -1,4 +1,4 @@
-import { Id } from '../../vo/Id';
+import { Id } from '../vo/Id';
 
 export class User {
   public static build(firstName: string, lastName: string, email: string, password: string): User {
