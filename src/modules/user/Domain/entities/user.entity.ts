@@ -1,19 +1,19 @@
-import { Id } from '../vo/Id';
+import { Email, Id, Name, Password } from '../vo';
 
 export class User {
-  public static build(firstName: string, lastName: string, email: string, password: string): User {
-    return new User(Id.generate(), firstName, lastName, email, password);
+  public static build(firstName: Name, lastName: Name, email: Email, password: Password): User {
+    return new User(Id.generate(), firstName.value, lastName.value, email.value, password.value);
   }
 
   constructor(
-    private _id: Id,
+    private _id: string,
     private _firstName: string,
     private _lastName: string,
     private _email: string,
     private _password: string
   ) {}
 
-  public get id(): Id {
+  public get id(): string {
     return this._id;
   }
 
