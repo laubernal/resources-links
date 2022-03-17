@@ -1,4 +1,4 @@
-import { EMAIL_REGEX } from '../../constants/emailRegex.constants';
+import { EMAIL_REGEX } from '../../../../constants/emailRegex.constants';
 import { normalizeableProviders } from '../utils/normalizableEmailProviders';
 import { VO } from './VO';
 

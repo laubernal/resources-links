@@ -1,13 +1,13 @@
 import { randomBytes, scryptSync } from 'crypto';
 
 import { VO } from './VO';
-import { ObjectDefinition } from '../../types/objectDefinition.types';
+import { ObjectDefinition } from '../../../../types/objectDefinition.types';
 import {
   LOWER_CASE_REGEX,
   NUMBER_REGEX,
   SYMBOL_REGEX,
   UPPER_CASE_REGEX,
-} from '../../constants/passwordRegex.constants';
+} from '../../../../constants/passwordRegex.constants';
 
 const defaultOptions: ObjectDefinition = {
   minLength: 8,
