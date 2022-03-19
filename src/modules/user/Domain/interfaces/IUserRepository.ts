@@ -1,7 +1,7 @@
 import { User } from '../entities/user.entity';
-import { IPostgreRepository } from './IPostgreRepository';
+import { IBaseRepository } from './IBaseRepository';
 
-export interface IUserRepository extends IPostgreRepository<User> {
+export interface IUserRepository extends IBaseRepository<User> {
   save(user: User): Promise<void>;
   getId(email: string): Promise<string>;
 }
