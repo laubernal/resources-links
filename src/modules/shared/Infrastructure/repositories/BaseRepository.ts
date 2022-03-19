@@ -9,6 +9,7 @@ export abstract class BaseRepository<T, K extends ObjectDefinition> {
 
   public async getOneBy(column: string, value: string): Promise<K | undefined> {
     try {
+      // USE PRISMA
       const queryResult = await Database.query(
         `SELECT * FROM ${this.tableName} WHERE ${column} = $1`,
         [value]
@@ -27,6 +28,7 @@ export abstract class BaseRepository<T, K extends ObjectDefinition> {
   }
   public async getAllBy(column: string, value: string): Promise<K | undefined> {
     try {
+      // USE PRISMA
       const queryResult = await Database.query(
         `SELECT * FROM ${this.tableName} WHERE ${column}=$1`,
         [value]
