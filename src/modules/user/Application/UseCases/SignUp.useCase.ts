@@ -4,7 +4,7 @@ import { Email, Name, Password } from '../../Domain/vo';
 import { IUseCase } from './IUseCase';
 
 export class SignUp implements IUseCase<string> {
-  constructor(public userRepository: IUserRepository) {}
+  constructor(private userRepository: IUserRepository) {}
 
   public async execute(
     firstName: string,
@@ -35,7 +35,7 @@ export class SignUp implements IUseCase<string> {
       await this.userRepository.save(newUser);
       return await this.userRepository.getId(emailValidated.value);
     } catch (error: any) {
-      throw new Error(error.message);
+      throw new Error(`Error sign up use case - ${error.message}`);
     }
   }
 }

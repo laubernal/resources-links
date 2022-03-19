@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+  postgres:
+    container_name: resources-links-postgres-dev-db
+    image: 'postgres:latest'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: resources-links
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
