@@ -4,7 +4,7 @@ import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email } from '../../Domain/vo';
 import { IUseCase } from './IUseCase';
 
-export class SignIn implements IUseCase<void> {
+export class SignInUseCase implements IUseCase<void> {
   constructor(private userRepository: IUserRepository) {}
 
   public async execute(email: string, password: string): Promise<void> {
@@ -34,4 +34,3 @@ export class SignIn implements IUseCase<void> {
     return hashed === suppliedHashedBuf.toString('hex');
   }
 }
-
