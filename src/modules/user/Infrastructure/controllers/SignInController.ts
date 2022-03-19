@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { SignInUseCase } from '../../Application/UseCases/SignIn.useCase';
 import { UserRepository } from '../../Infrastructure/repositories/UserRepository';
 
-export class SignInControler {
+export class SignInController {
   public async signIn(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;
