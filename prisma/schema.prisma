@@ -8,29 +8,28 @@ generator client {
 }
 
 model User {
-  id String @id
+  id         String     @id
   first_name String
-  last_name String
-  email String @unique
-  password String
-  resources Resource[]
+  last_name  String
+  email      String     @unique
+  password   String
+  resources  Resource[]
 }
 
 model Category {
-  id String @id
-  name String
+  id        String     @id
+  name      String
   resources Resource[]
 }
 
 model Resource {
-  id String @id
-  title String
-  link String
-  note String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user User @relation(fields: [user_id], references: [id])
-  user_id String @unique
+  id         String     @id
+  title      String
+  link       String
+  note       String
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  user       User       @relation(fields: [user_id], references: [id])
+  user_id    String     @unique
   categories Category[]
 }
-
