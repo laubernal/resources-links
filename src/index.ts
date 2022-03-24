@@ -4,6 +4,8 @@ import express, { Application } from 'express';
 
 import { AppRouter } from './modules/shared/Infrastructure/controllers/AppRouter';
 
+import './modules/user/Infrastructure/controllers/SignInController'
+
 const app: Application = express();
 const port = process.env.PORT || 5000;
 

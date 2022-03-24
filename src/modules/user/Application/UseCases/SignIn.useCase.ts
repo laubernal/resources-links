@@ -11,7 +11,7 @@ export class SignInUseCase implements IUseCase<void> {
     try {
       const emailValidated = new Email(email);
 
-      const userExists = await this.userRepository.getOneBy('us_email', emailValidated.value);
+      const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
       if (!userExists) {
         throw new Error('This user does not exist');

@@ -9,11 +9,11 @@ export class SignInController {
     try {
       const { email, password } = req.body;
 
-      const userPgRepository = new UserRepository();
+      const userRepository = new UserRepository();
 
-      await new SignInUseCase(userPgRepository).execute(email, password);
+      await new SignInUseCase(userRepository).execute(email, password);
 
-      const id = await userPgRepository.getId(email);
+      const id = await userRepository.getId(email);
 
       const userJwt = jwt.sign(
         {

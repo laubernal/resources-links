@@ -10,7 +10,7 @@ export class UserRepository implements IUserRepository {
 
   constructor() {}
 
-  public async getOneBy(email: string): Promise<User | undefined> {
+  public async getOneByEmail(email: string): Promise<User | undefined> {
     const result = await this.prisma.user.findUnique({ where: { email } });
 
     if (!result) {
@@ -24,20 +24,15 @@ export class UserRepository implements IUserRepository {
     return this.mapper.toDomain(userToModel[0]);
   }
 
-  public async getAllBy(column: string, value: string): Promise<User | undefined> {
+  public async getAllBy(value: string): Promise<User | undefined> {
     return undefined;
   }
 
   public async save(user: User): Promise<void> {
-    // USE PRISMA
+    const newUser = this.mapper.domainToPrisma(user);
+
     const result = await this.prisma.user.create({
-      data: {
-        id: user.id,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        email: user.email,
-        password: user.password,
-      },
+      data: newUser,
     });
 
     chalk.cyan(console.log(`result ${result}`));
@@ -46,8 +41,6 @@ export class UserRepository implements IUserRepository {
   }
 
   public async getId(email: string): Promise<string> {
-    // USE PRISMA
-
     return '';
   }
 }

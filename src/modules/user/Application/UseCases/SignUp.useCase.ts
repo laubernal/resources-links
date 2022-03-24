@@ -1,9 +1,10 @@
+import chalk from 'chalk';
 import { User } from '../../Domain/entities/user.entity';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email, Name, Password } from '../../Domain/vo';
 import { IUseCase } from './IUseCase';
 
-export class SignUp implements IUseCase<string> {
+export class SignUpUseCase implements IUseCase<string> {
   constructor(private userRepository: IUserRepository) {}
 
   public async execute(
@@ -14,8 +15,9 @@ export class SignUp implements IUseCase<string> {
     passwordConfirmation: string
   ): Promise<string> {
     try {
+      chalk.cyan(console.log('sign up use case'));
       const emailValidated = new Email(email);
-      const userExists = await this.userRepository.getOneBy('us_email', emailValidated.value);
+      const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
       if (userExists) {
         throw new Error('This user already exists');

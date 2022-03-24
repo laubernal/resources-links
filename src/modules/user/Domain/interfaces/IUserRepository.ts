@@ -1,7 +1,8 @@
 import { User } from '../entities/user.entity';
-import { IBaseRepository } from './IBaseRepository';
 
-export interface IUserRepository extends IBaseRepository<User> {
+export interface IUserRepository {
+  getOneByEmail(email: string): Promise<User | undefined>;
+  getAllBy(value: string): Promise<User | undefined>
   save(user: User): Promise<void>;
   getId(email: string): Promise<string>;
 }
