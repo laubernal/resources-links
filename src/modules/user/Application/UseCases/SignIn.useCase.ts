@@ -13,8 +13,6 @@ export class SignInUseCase implements IUseCase<void> {
 
       const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
-      console.log('user', userExists);
-
       if (!userExists) {
         throw new Error('This user does not exist');
       }

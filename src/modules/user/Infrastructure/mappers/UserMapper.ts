@@ -8,13 +8,7 @@ export class UserMapper implements IMapper<UserModel, User> {
     const userToModel = [];
 
     userToModel.push(
-      new UserModel(
-        user.us_id,
-        user.us_first_name,
-        user.us_last_name,
-        user.us_email,
-        user.us_password
-      )
+      new UserModel(user.id, user.first_name, user.last_name, user.email, user.password)
     );
 
     return userToModel;

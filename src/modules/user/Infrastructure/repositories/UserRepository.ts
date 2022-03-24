@@ -40,6 +40,12 @@ export class UserRepository implements IUserRepository {
   }
 
   public async getId(email: string): Promise<string> {
-    return '';
+    const result = await this.prisma.user.findUnique({ where: { email }, select: { id: true } });
+
+    if (!result) {
+      throw new Error(`User repository error - User not found`);
+    }
+
+    return JSON.stringify(result);
   }
 }
