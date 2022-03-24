@@ -1,10 +1,18 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
+import {
+  bodyValidator,
+  Controller,
+  post,
+} from '../../../shared/Infrastructure/controllers/decorators';
 import { SignUpUseCase } from '../../Application/UseCases';
 import { UserRepository } from '../repositories/UserRepository';
 
+@Controller()
 export class SignUpController {
+  @post('/signup')
+  @bodyValidator('firstName', 'lastName', 'email', 'password', 'passwordConfirmation')
   public async signUp(req: Request, res: Response): Promise<void> {
     try {
       const { firstName, lastName, email, password, passwordConfirmation } = req.body;

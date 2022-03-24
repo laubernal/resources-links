@@ -4,11 +4,12 @@ import express, { Application } from 'express';
 
 import { AppRouter } from './modules/shared/Infrastructure/controllers/AppRouter';
 
-import './modules/user/Infrastructure/controllers/SignInController'
+import './modules/user/Infrastructure/controllers/SignInController';
+import './modules/user/Infrastructure/controllers/SignUpController';
 
 const app: Application = express();
 const port = process.env.PORT || 5000;
-
+console.log('hiiiiiiii');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieSession({ name: 'session', signed: false }));
