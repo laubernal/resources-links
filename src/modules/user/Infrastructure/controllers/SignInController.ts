@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { SignInUseCase } from '../../Application/UseCases/SignIn.useCase';
+import { SignInUseCase } from '../../Application/UseCases';
 import { UserRepository } from '../../Infrastructure/repositories/UserRepository';
 
 export class SignInController {
