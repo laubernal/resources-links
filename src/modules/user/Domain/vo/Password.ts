@@ -7,7 +7,7 @@ import {
   NUMBER_REGEX,
   SYMBOL_REGEX,
   UPPER_CASE_REGEX,
-} from '../../../../constants/passwordRegex.constants';
+} from '../../../../constants/user/passwordRegex.constants';
 
 const defaultOptions: ObjectDefinition = {
   minLength: 8,
