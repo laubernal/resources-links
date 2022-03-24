@@ -1,6 +1,5 @@
 // import { Pool } from 'pg';
 import { PrismaClient } from '@prisma/client';
-import chalk from 'chalk';
 
 export class Database {
   // private static client: Pool;
@@ -8,15 +7,15 @@ export class Database {
   private readonly prismaClient: PrismaClient;
 
   constructor() {
-    console.log(chalk.magenta(`Connecting to database...`));
+    console.log(`Connecting to database...`);
 
     try {
       this.prismaClient = new PrismaClient();
     } catch (error: any) {
-      throw new Error(chalk.red(`❌ Error connecting to ${process.env.PGDATABASE} database`));
+      throw new Error(`❌ Error connecting to ${process.env.PGDATABASE} database`);
     }
 
-    console.log(chalk.green(`✔ Connected successfully to ${process.env.PGDATABASE} database`));
+    console.log(`✔ Connected successfully to ${process.env.PGDATABASE} database`);
   }
 
   public static instance(): Database {

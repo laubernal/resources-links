@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { Database } from '../../../shared/Infrastructure/repositories/Database';
 import { User } from '../../Domain/entities/user.entity';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
@@ -35,7 +34,7 @@ export class UserRepository implements IUserRepository {
       data: newUser,
     });
 
-    chalk.cyan(console.log(`result ${result}`));
+    console.log(`result ${result}`);
 
     this.prisma.$disconnect();
   }

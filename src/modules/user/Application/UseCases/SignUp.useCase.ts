@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { User } from '../../Domain/entities/user.entity';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email, Name, Password } from '../../Domain/vo';
@@ -15,7 +14,7 @@ export class SignUpUseCase implements IUseCase<string> {
     passwordConfirmation: string
   ): Promise<string> {
     try {
-      chalk.cyan(console.log('sign up use case'));
+      console.log('sign up use case');
       const emailValidated = new Email(email);
       const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
