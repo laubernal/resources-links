@@ -5,7 +5,7 @@ import {
   bodyValidator,
   Controller,
   post,
-} from '../../../shared/Infrastructure/controllers/decorators';
+} from '../../../shared/Infrastructure/decorators';
 import { SignInUseCase } from '../../Application/UseCases';
 import { UserRepository } from '../../Infrastructure/repositories/UserRepository';
 
