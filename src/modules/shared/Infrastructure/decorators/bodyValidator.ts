@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { MetadataKeys } from '../enums';
+import { MetadataKeys } from '../controllers/enums';
 
 export function bodyValidator(...keys: string[]) {
   return function (target: any, key: string, desc: PropertyDescriptor) {

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { RequestHandler } from 'express';
 
-import { MetadataKeys } from '../enums';
+import { MetadataKeys } from '../controllers/enums';
 
 export function use(middleware: RequestHandler) {
   return function (target: any, key: string, desc: PropertyDescriptor) {
