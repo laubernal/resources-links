@@ -1,11 +1,7 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import {
-  bodyValidator,
-  Controller,
-  post,
-} from '../../../shared/Infrastructure/decorators';
+import { bodyValidator, Controller, post } from '../../../shared/Infrastructure/decorators';
 import { SignInUseCase } from '../../Application/UseCases';
 import { UserRepository } from '../../Infrastructure/repositories/UserRepository';
 
@@ -19,13 +15,11 @@ export class SignInController {
 
       const userRepository = new UserRepository();
 
-      await new SignInUseCase(userRepository).execute(email, password);
-
-      const id = await userRepository.getId(email);
+      const user = await new SignInUseCase(userRepository).execute(email, password);
 
       const userJwt = jwt.sign(
         {
-          id: id,
+          id: user.id,
           email: email,
         },
         process.env.TOKEN_KEY!
