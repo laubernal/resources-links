@@ -11,7 +11,9 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieSession({ name: 'session', signed: false }));
+app.use(
+  cookieSession({ name: 'resources-links-session', maxAge: 24 * 60 * 60 * 1000, signed: false })
+);
 app.use(AppRouter.getInstance());
 
 try {
