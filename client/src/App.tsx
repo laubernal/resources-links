@@ -1,8 +1,18 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+
 import './App.css';
+import SignIn from './Auth/Components/SignIn/SignIn';
+import { AuthProvider } from './Auth/Context/AuthProvider';
 
 function App() {
-  return <h1>Hi there!</h1>;
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route path="/signin/*" element={<SignIn />} />
+      </Routes>
+    </AuthProvider>
+  );
 }
 
 export default App;
