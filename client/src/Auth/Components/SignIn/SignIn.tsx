@@ -3,17 +3,15 @@ import { useForm } from '@mantine/form';
 import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../Hooks/useAuth';
-import { Button, Group, PasswordInput, TextInput } from '@mantine/core';
+import { Box, Button, Group, PasswordInput, Text, TextInput } from '@mantine/core';
 import SignUp from '../SignUp/SignUp';
 
 function SignIn(): JSX.Element {
-  //   const { state, saveEmail, savePassword } = useAuth();
-
   const navigate = useNavigate();
   const location = useLocation();
   const auth = useAuth();
 
-  //   const from = location?.state?.from?.pathname || '/';
+  // const from = location?.state?.from.pathname || '/';
 
   const handleSubmit = async (
     values: { email: string; password: string },
@@ -39,33 +37,35 @@ function SignIn(): JSX.Element {
   });
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
-      <TextInput
-        required
-        label="Email"
-        placeholder="Enter your email"
-        {...form.getInputProps('email')}
-      />
-      <PasswordInput
-        required
-        label="Password"
-        placeholder="Enter your password"
-        {...form.getInputProps('password')}
-      />
+    <Box sx={{ maxWidth: 400 }} mx="auto">
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <TextInput
+          required
+          label="Email"
+          placeholder="Enter your email"
+          {...form.getInputProps('email')}
+        />
+        <PasswordInput
+          required
+          label="Password"
+          placeholder="Enter your password"
+          {...form.getInputProps('password')}
+        />
 
-      <Group position="right" mt="md">
-        <Button type="submit">Submit</Button>
-      </Group>
-      <div>
-        <p>
-          Need an account? <Link to="/signup">Sign up!</Link>
-        </p>{' '}
-        <br />
-        <Routes>
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
-    </form>
+        <Group position="right" mt="md">
+          <Button type="submit">Submit</Button>
+        </Group>
+        <div>
+          <Text size="sm">
+            Need an account? <Link to="/signup">Sign up!</Link>
+          </Text>{' '}
+          <br />
+          <Routes>
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
+      </form>
+    </Box>
   );
 }
 
