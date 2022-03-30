@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../Hooks/useAuth';
-import { Box, Button, Group, PasswordInput, Text, TextInput } from '@mantine/core';
+import { Anchor, Box, Button, Group, PasswordInput, Text, TextInput } from '@mantine/core';
 import SignUp from '../SignUp/SignUp';
 
 function SignIn(): JSX.Element {
@@ -53,12 +53,17 @@ function SignIn(): JSX.Element {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" radius="xl" color="cyan">
+            Submit
+          </Button>
         </Group>
         <div>
           <Text size="sm">
-            Need an account? <Link to="/signup">Sign up!</Link>
-          </Text>{' '}
+            Need an account?{' '}
+            <Anchor component={Link} to="/signup" color="cyan">
+              Sign up!
+            </Anchor>
+          </Text>
           <br />
           <Routes>
             <Route path="/signup" element={<SignUp />} />
