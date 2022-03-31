@@ -1,12 +1,21 @@
 import React from 'react';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import { Anchor, Button, Group, PasswordInput, Space, Text, TextInput } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  Group,
+  PasswordInput,
+  Space,
+  Text,
+  TextInput,
+  UnstyledButton,
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import SignIn from '../SignIn';
 import { useAuth } from '../../Hooks/useAuth';
 
-function SignUp(): JSX.Element {
+type propsType = { setActiveTab: Function };
+
+function SignUp({ setActiveTab: setTabActive }: propsType): JSX.Element {
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -82,16 +91,14 @@ function SignUp(): JSX.Element {
         </Button>
       </Group>
       <Space h="md" />
-      <Text size="md">
-        Already have an account?{' '}
-        <Anchor component={Link} to="/signin" color="cyan">
-          Sign in!
-        </Anchor>
-      </Text>
-      <br />
-      <Routes>
-        <Route path="/signin" element={<SignIn />} />
-      </Routes>
+      <UnstyledButton onClick={() => setTabActive(0)}>
+        <Text size="md">
+          Already have an account?{' '}
+          <Text variant="link" color="cyan">
+            Sign in!
+          </Text>
+        </Text>
+      </UnstyledButton>
     </form>
   );
 }
