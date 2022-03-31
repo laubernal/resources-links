@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
-import { Anchor, Button, Group, PasswordInput, Text, TextInput } from '@mantine/core';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { Anchor, Button, Group, PasswordInput, Space, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import SignIn from '../SignIn/SignIn';
+import SignIn from '../SignIn';
+import { useAuth } from '../../Hooks/useAuth';
 
 function SignUp(): JSX.Element {
+  const auth = useAuth();
+  const navigate = useNavigate();
+
   const form = useForm({
     initialValues: {
       firstName: '',
@@ -20,21 +24,39 @@ function SignUp(): JSX.Element {
     },
   });
 
+  const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
+    try {
+      event.preventDefault();
+      await auth.signup(
+        values.firstName,
+        values.lastName,
+        values.email,
+        values.password,
+        values.passwordConfirmation,
+        () => navigate('/', { replace: true })
+      );
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
-    <form>
-      {/* <form onSubmit={form.onSubmit(handleSubmit)}> */}
-      <TextInput
-        required
-        label="First name"
-        placeholder="Enter your first name"
-        {...form.getInputProps('firstName')}
-      />
-      <TextInput
-        required
-        label="Last name"
-        placeholder="Enter your last name"
-        {...form.getInputProps('lastName')}
-      />
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Group direction="row" grow>
+        <TextInput
+          required
+          label="First name"
+          placeholder="Enter your first name"
+          {...form.getInputProps('firstName')}
+        />
+
+        <TextInput
+          required
+          label="Last name"
+          placeholder="Enter your last name"
+          {...form.getInputProps('lastName')}
+        />
+      </Group>
       <TextInput
         required
         label="Email"
@@ -54,23 +76,22 @@ function SignUp(): JSX.Element {
         {...form.getInputProps('passwordConfirmation')}
       />
 
-      <Group position="right" mt="md">
-        <Button type="submit" radius="xl" color="cyan">
+      <Group mt="md" grow>
+        <Button type="submit" radius="md" color="cyan">
           Submit
         </Button>
       </Group>
-      <div>
-        <Text size="sm">
-          Already have an account?{' '}
-          <Anchor component={Link} to="/signin" color="cyan">
-            Sign in!
-          </Anchor>
-        </Text>
-        <br />
-        <Routes>
-          <Route path="/signin" element={<SignIn />} />
-        </Routes>
-      </div>
+      <Space h="md" />
+      <Text size="md">
+        Already have an account?{' '}
+        <Anchor component={Link} to="/signin" color="cyan">
+          Sign in!
+        </Anchor>
+      </Text>
+      <br />
+      <Routes>
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
     </form>
   );
 }
