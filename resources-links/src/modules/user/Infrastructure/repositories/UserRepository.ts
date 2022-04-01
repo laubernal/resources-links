@@ -10,7 +10,11 @@ export class UserRepository implements IUserRepository {
   constructor() {}
 
   public async getOneByEmail(email: string): Promise<User | undefined> {
-    const result = await this.prisma.user.findUnique({ where: { email } });
+    const result = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
 
     if (!result) {
       return undefined;
