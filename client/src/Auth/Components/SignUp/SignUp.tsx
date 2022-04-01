@@ -28,6 +28,7 @@ function SignUp({ setActiveTab: setTabActive }: propsType): JSX.Element {
       passwordConfirmation: '',
     },
     validate: {
+      password: value => (value.length < 8 ? 'Password must have at least 8 characters' : null),
       passwordConfirmation: (value, values) =>
         value !== values.password ? `Passwords don't match` : null,
     },
