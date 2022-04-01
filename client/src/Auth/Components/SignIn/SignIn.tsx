@@ -24,17 +24,15 @@ function SignIn({ setActiveTab }: propsType): JSX.Element {
       email: '',
       password: '',
     },
-    validate: {
-      password: value => (value.length < 8 ? 'Password must have at least 8 characters' : null),
-    },
   });
 
   const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
     try {
       event.preventDefault();
 
-      // await auth.signin(values.email, values.password, () => navigate('/', { replace: true }));
-      await auth.signin(values.email, values.password, () => console.log('SIGNED IN!'));
+      await auth.signin(values.email, values.password, () =>
+        navigate('/resources', { replace: true })
+      );
     } catch (error: any) {
       console.log(error.message);
     }
@@ -61,7 +59,7 @@ function SignIn({ setActiveTab }: propsType): JSX.Element {
         </Button>
       </Group>
       <Space h="md" />
-      <UnstyledButton onClick={() => setActiveTab(1) }>
+      <UnstyledButton onClick={() => setActiveTab(1)}>
         <Text size="md">
           Need an account?
           <Text variant="link" color="cyan">
