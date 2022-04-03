@@ -7,6 +7,7 @@ export const useAuthProvider = () => {
 
   const signin = async (email: string, password: string, callback: VoidFunction): Promise<void> => {
     const response = await axios.post('/signin', { email, password });
+
     console.log('RESPONSE --', response);
 
     setToken(response.data.userJwt);
@@ -38,9 +39,9 @@ export const useAuthProvider = () => {
     }
   };
 
-  const signout = async (callback: VoidFunction) => {
+  const signout = (callback: VoidFunction) => {
     try {
-      await axios.get('/signout');
+      axios.get('/signout');
       setToken(null);
       callback();
     } catch (error: any) {
