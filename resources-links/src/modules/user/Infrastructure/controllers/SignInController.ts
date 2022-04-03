@@ -32,7 +32,7 @@ export class SignInController {
       res.status(201).send({ email, userJwt });
     } catch (error: any) {
       console.log(error);
-      res.send({
+      res.status(400).send({
         msg: 'Error occurred',
         error: error.message,
       });
