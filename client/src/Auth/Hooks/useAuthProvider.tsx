@@ -21,20 +21,18 @@ export const useAuthProvider = () => {
     passwordConfirmation: string,
     callback: VoidFunction
   ): Promise<void> => {
-    try {
-      const response = await axios.post('signup', {
-        firstName,
-        lastName,
-        email,
-        password,
-        passwordConfirmation,
-      });
-      setToken(response.data.userJwt);
+    const response = await axios.post('/signup', {
+      firstName,
+      lastName,
+      email,
+      password,
+      passwordConfirmation,
+    });
+    console.log('RESPONSE -- ', response);
 
-      callback();
-    } catch (error: any) {
-      console.log(error.message);
-    }
+    setToken(response.data.userJwt);
+
+    callback();
   };
 
   const signout = (callback: VoidFunction) => {
