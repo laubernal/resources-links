@@ -14,7 +14,6 @@ export class SignUpUseCase implements IUseCase<string> {
     password: string,
     passwordConfirmation: string
   ): Promise<string> {
-    console.log('sign up use case');
     const emailValidated = new Email(email);
     const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
@@ -34,7 +33,7 @@ export class SignUpUseCase implements IUseCase<string> {
     );
 
     await this.userRepository.save(newUser);
-    
+
     return await this.userRepository.getId(emailValidated.value);
   }
 }

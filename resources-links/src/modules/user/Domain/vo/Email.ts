@@ -1,4 +1,5 @@
 import { EMAIL_REGEX } from '../../../../constants/user/emailRegex.constants';
+import { EmailError } from '../error/EmailError';
 import { normalizeableProviders } from '../utils/normalizableEmailProviders';
 import { VO } from './VO';
 
@@ -19,7 +20,7 @@ export class Email extends VO {
     const regexp = new RegExp(EMAIL_REGEX);
 
     if (!regexp.test(this.email)) {
-      throw new Error('Please enter a valid email');
+      throw new EmailError('Please enter a valid email');
     }
   }
 
@@ -28,7 +29,7 @@ export class Email extends VO {
     const emailParts = this.email.split('@');
 
     if (emailParts.length !== 2) {
-      throw new Error('Please enter a valid email');
+      throw new EmailError('Please enter a valid email');
     }
 
     let [username, domain] = emailParts;

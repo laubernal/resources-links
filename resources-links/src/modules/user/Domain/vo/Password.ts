@@ -8,6 +8,7 @@ import {
   SYMBOL_REGEX,
   UPPER_CASE_REGEX,
 } from '../../../../constants/user/passwordRegex.constants';
+import { PasswordError } from '../error';
 
 const defaultOptions: ObjectDefinition = {
   minLength: 8,
@@ -40,7 +41,7 @@ export class Password extends VO {
     const strength = this.isStrong(this.password);
 
     if (strength === false) {
-      throw new Error('Password must be stronger');
+      throw new PasswordError('Password must be stronger');
     }
   }
 
