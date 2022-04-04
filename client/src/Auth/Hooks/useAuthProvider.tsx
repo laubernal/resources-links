@@ -8,8 +8,6 @@ export const useAuthProvider = () => {
   const signin = async (email: string, password: string, callback: VoidFunction): Promise<void> => {
     const response = await axios.post('/signin', { email, password });
 
-    console.log('RESPONSE --', response);
-
     setToken(response.data.userJwt);
 
     callback();
