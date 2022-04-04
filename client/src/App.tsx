@@ -5,7 +5,8 @@ import './App.css';
 import { AuthProvider } from './Auth/Context/AuthProvider';
 import { RequireAuth } from './Auth/Context/RequireAuth';
 import Home from './Home/Components/Home';
-import ResourcesLinks from './ResourcesLinks/Components/ResourcesLinks';
+import Resources from './Pages/Resources/Resources';
+// import ResourcesLinks from './ResourcesLinks/Components/ResourcesLinks';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           path="/resources"
           element={
             <RequireAuth>
-              <ResourcesLinks />
+              <Resources />
             </RequireAuth>
           }
         />
