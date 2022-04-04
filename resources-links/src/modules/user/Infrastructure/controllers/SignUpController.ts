@@ -1,11 +1,7 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import {
-  bodyValidator,
-  Controller,
-  post,
-} from '../../../shared/Infrastructure/decorators';
+import { bodyValidator, Controller, post } from '../../../shared/Infrastructure/decorators';
 import { SignUpUseCase } from '../../Application/UseCases';
 import { UserRepository } from '../repositories/UserRepository';
 
@@ -42,8 +38,8 @@ export class SignUpController {
       res.status(201).send({ email, userJwt });
     } catch (error: any) {
       console.log(error);
-      res.send({
-        msg: 'Error occured',
+      res.status(400).send({
+        msg: 'Error occurred',
         error: error.message,
       });
     }
