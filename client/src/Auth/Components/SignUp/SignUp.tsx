@@ -18,7 +18,7 @@ import { AlertCircle } from 'tabler-icons-react';
 
 type propsType = { setActiveTab: Function };
 
-function SignUp({ setActiveTab: setTabActive }: propsType): JSX.Element {
+function SignUp({ setActiveTab }: propsType): JSX.Element {
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -107,15 +107,17 @@ function SignUp({ setActiveTab: setTabActive }: propsType): JSX.Element {
           Submit
         </Button>
       </Group>
+
       <Space h="md" />
-      <UnstyledButton onClick={() => setTabActive(0)}>
-        <Text size="md">
-          Already have an account?{' '}
+
+      <Group spacing={5}>
+        <Text>Already have an account?</Text>
+        <UnstyledButton onClick={() => setActiveTab(0)}>
           <Text variant="link" color="cyan">
             Sign in!
           </Text>
-        </Text>
-      </UnstyledButton>
+        </UnstyledButton>
+      </Group>
     </form>
   );
 }
