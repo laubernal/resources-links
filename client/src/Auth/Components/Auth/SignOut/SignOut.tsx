@@ -19,7 +19,7 @@ function SignOut(): JSX.Element {
   };
 
   return (
-    <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} onClick={onClick}>
+    <Button radius="md" color="cyan" onClick={onClick}>
       Sign out
     </Button>
   );

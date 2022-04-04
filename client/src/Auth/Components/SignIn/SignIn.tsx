@@ -73,15 +73,17 @@ function SignIn({ setActiveTab }: propsType): JSX.Element {
           Submit
         </Button>
       </Group>
+
       <Space h="md" />
-      <UnstyledButton onClick={() => setActiveTab(1)}>
-        <Text size="md">
-          Need an account?
+
+      <Group spacing={5}>
+        <Text>Need an account?</Text>
+        <UnstyledButton onClick={() => setActiveTab(1)}>
           <Text variant="link" color="cyan">
             Sign up!
           </Text>
-        </Text>
-      </UnstyledButton>
+        </UnstyledButton>
+      </Group>
     </form>
   );
 }
