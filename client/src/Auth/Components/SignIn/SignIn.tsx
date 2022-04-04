@@ -1,9 +1,9 @@
-import React from 'react';
-import { useForm } from '@mantine/form';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { useAuth } from '../../Hooks/useAuth';
+import { useForm } from '@mantine/form';
 import {
+  Alert,
+  Box,
   Button,
   Group,
   PasswordInput,
@@ -12,12 +12,17 @@ import {
   TextInput,
   UnstyledButton,
 } from '@mantine/core';
+import { AlertCircle } from 'tabler-icons-react';
+
+import { useAuth } from '../../Hooks/useAuth';
 
 type propsType = { setActiveTab: Function };
 
 function SignIn({ setActiveTab }: propsType): JSX.Element {
   const navigate = useNavigate();
   const auth = useAuth();
+
+  const [showAlert, setShowAlert] = useState(false);
 
   const form = useForm({
     initialValues: {
@@ -34,6 +39,7 @@ function SignIn({ setActiveTab }: propsType): JSX.Element {
         navigate('/resources', { replace: true })
       );
     } catch (error: any) {
+      setShowAlert(true);
       console.log(error.message);
     }
   };
@@ -52,6 +58,15 @@ function SignIn({ setActiveTab }: propsType): JSX.Element {
         placeholder="Enter your password"
         {...form.getInputProps('password')}
       />
+
+      {showAlert ? (
+        <Box>
+          <Space h="md" />
+          <Alert icon={<AlertCircle size={16} />} title="Error signing in!" color="red">
+            Email or password is wrong.
+          </Alert>
+        </Box>
+      ) : null}
 
       <Group mt="md" grow>
         <Button type="submit" radius="md" color="cyan">

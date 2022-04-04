@@ -8,11 +8,11 @@ import Header from '../../Auth/Components/Header/Header';
 function Resources(): JSX.Element {
   return (
     <>
-      <Grid grow={true}>
+      <Grid grow>
         <Grid.Col span={3}>
           <Header />
         </Grid.Col>
-        <Grid.Col span={3} offset={6}>
+        <Grid.Col span={1} offset={8}>
           <SignOut />
         </Grid.Col>
       </Grid>

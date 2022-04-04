@@ -5,7 +5,7 @@ import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 
 function Auth(): JSX.Element {
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <Box sx={{ maxWidth: 350 }} mx="auto">
