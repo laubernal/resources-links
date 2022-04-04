@@ -28,7 +28,6 @@ export const useAuthProvider = () => {
       password,
       passwordConfirmation,
     });
-    console.log('RESPONSE -- ', response);
 
     setToken(response.data.userJwt);
 
