@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  Alert,
+  Box,
   Button,
   Group,
   PasswordInput,
@@ -12,12 +14,15 @@ import {
 import { useForm } from '@mantine/form';
 
 import { useAuth } from '../../Hooks/useAuth';
+import { AlertCircle } from 'tabler-icons-react';
 
 type propsType = { setActiveTab: Function };
 
 function SignUp({ setActiveTab: setTabActive }: propsType): JSX.Element {
   const auth = useAuth();
   const navigate = useNavigate();
+
+  const [showAlert, setShowAlert] = useState(false);
 
   const form = useForm({
     initialValues: {
@@ -37,15 +42,17 @@ function SignUp({ setActiveTab: setTabActive }: propsType): JSX.Element {
   const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
     try {
       event.preventDefault();
+
       await auth.signup(
         values.firstName,
         values.lastName,
         values.email,
         values.password,
         values.passwordConfirmation,
-        () => navigate('/', { replace: true })
+        () => navigate('/resources', { replace: true })
       );
     } catch (error: any) {
+      setShowAlert(true);
       console.log(error);
     }
   };
@@ -85,6 +92,15 @@ function SignUp({ setActiveTab: setTabActive }: propsType): JSX.Element {
         placeholder="Repeat your password"
         {...form.getInputProps('passwordConfirmation')}
       />
+
+      {showAlert ? (
+        <Box>
+          <Space h="md" />
+          <Alert icon={<AlertCircle size={16} />} title="Error signing up!" color="red">
+            Some data is wrong, please check it.
+          </Alert>
+        </Box>
+      ) : null}
 
       <Group mt="md" grow>
         <Button type="submit" radius="md" color="cyan">
