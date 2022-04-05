@@ -4,7 +4,7 @@ import { User } from '../../Domain/entities/user.entity';
 import { PasswordError, UserNotExistsError } from '../../Domain/error';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email } from '../../Domain/vo';
-import { IUseCase } from './IUseCase';
+import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 
 export class SignInUseCase implements IUseCase<User> {
   constructor(private userRepository: IUserRepository) {}
