@@ -8,8 +8,6 @@ export class UserRepository implements IUserRepository {
   protected mapper = new UserMapper();
   private prisma = Database.instance().connection();
 
-  constructor() {}
-
   public async getOneByEmail(email: string): Promise<User | undefined> {
     const result = await this.prisma.user.findUnique({
       where: {
