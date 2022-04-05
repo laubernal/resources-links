@@ -1,5 +1,6 @@
 import { Database } from '../../../shared/Infrastructure/repositories/Database';
 import { User } from '../../Domain/entities/user.entity';
+import { UserNotExistsError } from '../../Domain/error';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { UserMapper } from '../mappers/UserMapper';
 
@@ -22,9 +23,7 @@ export class UserRepository implements IUserRepository {
 
     this.prisma.$disconnect();
 
-    const userToModel = this.mapper.rawDataToModel(result);
-
-    return this.mapper.toDomain(userToModel[0]);
+    return this.mapper.toDomain(result);
   }
 
   public async getAllBy(value: string): Promise<User | undefined> {
@@ -32,13 +31,11 @@ export class UserRepository implements IUserRepository {
   }
 
   public async save(user: User): Promise<void> {
-    const newUser = this.mapper.domainToPrisma(user);
+    const newUser = this.mapper.toData(user);
 
-    const result = await this.prisma.user.create({
+    await this.prisma.user.create({
       data: newUser,
     });
-
-    console.log(`result ${result}`);
 
     this.prisma.$disconnect();
   }
@@ -47,7 +44,7 @@ export class UserRepository implements IUserRepository {
     const result = await this.prisma.user.findUnique({ where: { email }, select: { id: true } });
 
     if (!result) {
-      throw new Error(`User repository error - User not found`);
+      throw new UserNotExistsError();
     }
 
     return JSON.stringify(result);

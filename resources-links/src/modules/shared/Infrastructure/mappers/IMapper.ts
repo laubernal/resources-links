@@ -1,5 +1,5 @@
 export interface IMapper<T, K> {
-  rawDataToModel(item: any): T[];
-  toDomain(item: T): K;
-  toData(item: K): T;
+  // rawDataToModel(rawData: any): T[];
+  toDomain(data: T): K;
+  toData(domain: K): T;
 }
