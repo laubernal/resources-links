@@ -2,7 +2,7 @@ import { User } from '../../Domain/entities/user.entity';
 import { PasswordError, UserAlreadyExistsError } from '../../Domain/error';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email, Name, Password } from '../../Domain/vo';
-import { IUseCase } from './IUseCase';
+import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 
 export class SignUpUseCase implements IUseCase<string> {
   constructor(private userRepository: IUserRepository) {}
