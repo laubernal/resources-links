@@ -5,6 +5,7 @@ import express, { Application } from 'express';
 import { AppRouter } from './modules/shared/Infrastructure/controllers/AppRouter';
 import { errorHandler } from './modules/shared/Infrastructure/middlewares/error-handler';
 import './modules/user/Infrastructure/controllers';
+import './modules/resources/Infrastructure/controllers';
 
 const app: Application = express();
 const port = process.env.PORT || 5000;

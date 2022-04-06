@@ -11,10 +11,18 @@ export class NewResourceController {
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
       const { title, note, link, userId } = req.body;
+      console.log(`TITLE - ${title} NOTE - ${note} LINK - ${link} USERID - ${userId}`);
 
       const resourceRepository = new ResourcesRepository();
 
-      await new NewResourceUseCase(resourceRepository).execute(title, note, link, userId);
+      const resourceId = await new NewResourceUseCase(resourceRepository).execute(
+        title,
+        note,
+        link,
+        userId
+      );
+
+      res.status(200).send({ resourceId });
     } catch (error: any) {
       console.log(error);
       res.status(400).send({

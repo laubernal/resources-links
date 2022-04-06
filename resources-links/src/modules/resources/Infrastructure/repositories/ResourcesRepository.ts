@@ -10,7 +10,10 @@ export class ResourcesRepository implements IResourcesRepository {
   public async save(resource: Resource): Promise<void> {
     const newResource = this.mapper.toData(resource);
 
+    console.log(`NEW RESOURCE -- ${JSON.stringify(newResource)}`);
+
     await this.prisma.resource.create({ data: newResource });
+    console.log('CREATE RESOURCE');
 
     this.prisma.$disconnect();
   }
@@ -29,5 +32,19 @@ export class ResourcesRepository implements IResourcesRepository {
     // }
 
     // return resources;
+  }
+
+  public async delete(resourceId: string, userId: string): Promise<number | undefined> {
+    const result = await this.prisma.resource.deleteMany({
+      where: { id: resourceId, user_id: userId },
+    });
+
+    if (result.count === 0) {
+      return undefined;
+    }
+
+    this.prisma.$disconnect();
+
+    return result.count;
   }
 }
