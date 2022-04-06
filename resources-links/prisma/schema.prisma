@@ -30,6 +30,6 @@ model Resource {
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
   user       User       @relation(fields: [user_id], references: [id])
-  user_id    String     @unique
+  user_id    String     
   categories Category[]
 }
