@@ -8,43 +8,59 @@ export class ResourcesRepository implements IResourcesRepository {
   private prisma = Database.instance().connection();
 
   public async save(resource: Resource): Promise<void> {
-    const newResource = this.mapper.toData(resource);
+    try {
+      const newResource = this.mapper.toData(resource);
 
-    console.log(`NEW RESOURCE -- ${JSON.stringify(newResource)}`);
+      console.log(`NEW RESOURCE -- ${JSON.stringify(newResource)}`);
 
-    await this.prisma.resource.create({ data: newResource });
-    console.log('CREATE RESOURCE');
+      await this.prisma.resource.create({ data: newResource });
+      console.log('CREATE RESOURCE');
 
-    this.prisma.$disconnect();
+      this.prisma.$disconnect();
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error();
+    }
   }
 
   public async getAllBy(userId: string): Promise<Resource[] | undefined> {
-    const result = await this.prisma.resource.findMany({ where: { user_id: userId } });
+    try {
+      const result = await this.prisma.resource.findMany({ where: { user_id: userId } });
 
-    if (!result) {
-      return undefined;
+      if (!result) {
+        return undefined;
+      }
+
+      // const resources: Resource[] = [];
+
+      // for (const resource of result) {
+      //   resources.push(this.mapper.toDomain(resource));
+      // }
+
+      this.prisma.$disconnect();
+      // return resources;
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error();
     }
-
-    // const resources: Resource[] = [];
-
-    // for (const resource of result) {
-    //   resources.push(this.mapper.toDomain(resource));
-    // }
-
-    // return resources;
   }
 
   public async delete(resourceId: string, userId: string): Promise<number | undefined> {
-    const result = await this.prisma.resource.deleteMany({
-      where: { id: resourceId, user_id: userId },
-    });
+    try {
+      const result = await this.prisma.resource.deleteMany({
+        where: { id: resourceId, user_id: userId },
+      });
 
-    if (result.count === 0) {
-      return undefined;
+      if (result.count === 0) {
+        return undefined;
+      }
+
+      this.prisma.$disconnect();
+
+      return result.count;
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error();
     }
-
-    this.prisma.$disconnect();
-
-    return result.count;
   }
 }

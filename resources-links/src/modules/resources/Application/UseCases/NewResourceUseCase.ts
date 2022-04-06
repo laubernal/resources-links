@@ -6,10 +6,14 @@ export class NewResourceUseCase implements IUseCase<string> {
   constructor(private resourcesRepository: IResourcesRepository) {}
 
   public async execute(title: string, note: string, link: string, userId: string): Promise<string> {
-    const newResource = Resource.build(title, note, link, userId);
+    try {
+      const newResource = Resource.build(title, note, link, userId);
 
-    await this.resourcesRepository.save(newResource);
+      await this.resourcesRepository.save(newResource);
 
-    return newResource.id;
+      return newResource.id;
+    } catch (error: any) {
+      throw new Error();
+    }
   }
 }
