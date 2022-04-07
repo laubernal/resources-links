@@ -1,7 +1,7 @@
 import { EMAIL_REGEX } from '../../../../constants/user/emailRegex.constants';
 import { EmailError } from '../error/EmailError';
 import { normalizeableProviders } from '../utils/normalizableEmailProviders';
-import { VO } from './VO';
+import { VO } from '../../../shared/Domain/vo/VO';
 
 export class Email extends VO {
   constructor(private email: string) {

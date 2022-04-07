@@ -1,4 +1,4 @@
-import { Id } from '../../../user/Domain/vo';
+import { Id } from '../../../shared/Domain/vo';
 
 export class Resource {
   public static build(title: string, link: string, note: string, userId: string): Resource {

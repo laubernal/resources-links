@@ -1,4 +1,5 @@
-import { Email, Id, Name, Password } from '../vo';
+import { Id } from '../../../shared/Domain/vo';
+import { Email, Name, Password } from '../vo';
 
 export class User {
   public static build(firstName: Name, lastName: Name, email: Email, password: Password): User {
