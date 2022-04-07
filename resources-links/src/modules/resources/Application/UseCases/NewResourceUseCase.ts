@@ -1,7 +1,7 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
-import { NewResourceDto } from '../Dto/NewResourceDto';
+import { NewResourceDto } from '../Dto';
 
 export class NewResourceUseCase implements IUseCase<string> {
   constructor(private resourcesRepository: IResourcesRepository) {}

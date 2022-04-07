@@ -1,6 +1,6 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
-import { DeleteResourceDto } from '../Dto/DeleteResourceDto';
+import { DeleteResourceDto } from '../Dto';
 
 export class DeleteResourceUseCase implements IUseCase<void> {
   constructor(private resourcesRepository: IResourcesRepository) {}

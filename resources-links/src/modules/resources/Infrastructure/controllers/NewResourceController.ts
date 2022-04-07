@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
-import { NewResourceDto } from '../../Application/Dto/NewResourceDto';
+import { NewResourceDto } from '../../Application/Dto';
 import { NewResourceUseCase } from '../../Application/UseCases/NewResourceUseCase';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 
