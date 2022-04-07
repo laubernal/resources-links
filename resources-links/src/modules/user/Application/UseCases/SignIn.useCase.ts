@@ -5,12 +5,13 @@ import { PasswordError, UserNotExistsError } from '../../Domain/error';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email } from '../../Domain/vo';
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
+import { SignInDto } from '../Dto/SignInDto';
 
 export class SignInUseCase implements IUseCase<User> {
   constructor(private userRepository: IUserRepository) {}
 
-  public async execute(email: string, password: string): Promise<User> {
-    const emailValidated = new Email(email);
+  public async execute(user: SignInDto): Promise<User> {
+    const emailValidated = new Email(user.email);
 
     const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
@@ -18,7 +19,7 @@ export class SignInUseCase implements IUseCase<User> {
       throw new UserNotExistsError();
     }
 
-    if (!this.comparePasswords(userExists.password, password)) {
+    if (!this.comparePasswords(userExists.password, user.password)) {
       throw new PasswordError('Incorrect password');
     }
 
