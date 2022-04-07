@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { bodyValidator, Controller, post } from '../../../shared/Infrastructure/decorators';
-import { SignInDto } from '../../Application/Dto/SignInDto';
+import { SignInDto } from '../../Application/Dto';
 import { SignInUseCase } from '../../Application/UseCases';
 import { UserRepository } from '../../Infrastructure/repositories/UserRepository';
 
