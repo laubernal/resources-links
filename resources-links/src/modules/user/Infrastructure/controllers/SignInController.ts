@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 import { bodyValidator, Controller, post } from '../../../shared/Infrastructure/decorators';
+import { SignInDto } from '../../Application/Dto/SignInDto';
 import { SignInUseCase } from '../../Application/UseCases';
 import { UserRepository } from '../../Infrastructure/repositories/UserRepository';
 
@@ -15,7 +16,9 @@ export class SignInController {
 
       const userRepository = new UserRepository();
 
-      const user = await new SignInUseCase(userRepository).execute(email, password);
+      const signInDto = new SignInDto(email, password);
+
+      const user = await new SignInUseCase(userRepository).execute(signInDto);
 
       const userJwt = jwt.sign(
         {
