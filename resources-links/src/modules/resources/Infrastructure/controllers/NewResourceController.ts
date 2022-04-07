@@ -1,12 +1,16 @@
 import { Request, Response } from 'express';
 
-import { bodyValidator, Controller, post } from '../../../shared/Infrastructure/decorators';
+import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
+import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
+import { NewResourceDto } from '../../Application/Dto/NewResourceDto';
 import { NewResourceUseCase } from '../../Application/UseCases/NewResourceUseCase';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 
 @Controller()
 export class NewResourceController {
   @post('/resources/new')
+  @use(requireAuth)
+  @use(currentUser)
   @bodyValidator('title', 'note', 'link')
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
@@ -15,12 +19,9 @@ export class NewResourceController {
 
       const resourceRepository = new ResourcesRepository();
 
-      const resourceId = await new NewResourceUseCase(resourceRepository).execute(
-        title,
-        note,
-        link,
-        userId
-      );
+      const newResourceDto = new NewResourceDto(title, note, link, req.currentUser!.id);
+
+      const resourceId = await new NewResourceUseCase(resourceRepository).execute(newResourceDto);
 
       res.status(200).send({ resourceId });
     } catch (error: any) {

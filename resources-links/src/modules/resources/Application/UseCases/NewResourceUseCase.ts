@@ -1,13 +1,19 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
+import { NewResourceDto } from '../Dto/NewResourceDto';
 
 export class NewResourceUseCase implements IUseCase<string> {
   constructor(private resourcesRepository: IResourcesRepository) {}
 
-  public async execute(title: string, note: string, link: string, userId: string): Promise<string> {
+  public async execute(resource: NewResourceDto): Promise<string> {
     try {
-      const newResource = Resource.build(title, note, link, userId);
+      const newResource = Resource.build(
+        resource.title,
+        resource.note,
+        resource.link,
+        resource.userId
+      );
 
       await this.resourcesRepository.save(newResource);
 

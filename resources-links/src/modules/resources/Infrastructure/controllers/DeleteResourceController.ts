@@ -1,12 +1,16 @@
 import { Request, Response } from 'express';
 
-import { bodyValidator, Controller, post } from '../../../shared/Infrastructure/decorators';
+import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
+import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
+import { DeleteResourceDto } from '../../Application/Dto/DeleteResourceDto';
 import { DeleteResourceUseCase } from '../../Application/UseCases/DeleteResourceUseCase';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 
 @Controller()
 export class DeleteResourceController {
   @post('/resources/delete')
+  @use(requireAuth)
+  @use(currentUser)
   @bodyValidator('resourceId', 'userId')
   public async deleteResource(req: Request, res: Response): Promise<void> {
     try {
@@ -15,7 +19,9 @@ export class DeleteResourceController {
 
       const resourceRepository = new ResourcesRepository();
 
-      new DeleteResourceUseCase(resourceRepository).execute(resourceId, userId);
+      const deleteResourceDto = new DeleteResourceDto(resourceId, req.currentUser!.id);
+
+      new DeleteResourceUseCase(resourceRepository).execute(deleteResourceDto);
 
       res.status(200);
     } catch (error: any) {
