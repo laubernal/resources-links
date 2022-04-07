@@ -1,4 +1,4 @@
-import { VO } from "./VO";
+import { VO } from "../../../shared/Domain/vo/VO";
 
 export class Name extends VO {
     constructor(private name: string) {

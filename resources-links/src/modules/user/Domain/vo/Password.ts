@@ -1,6 +1,6 @@
 import { randomBytes, scryptSync } from 'crypto';
 
-import { VO } from './VO';
+import { VO } from '../../../shared/Domain/vo/VO';
 import { ObjectDefinition } from '../../../../types/objectDefinition.types';
 import {
   LOWER_CASE_REGEX,
