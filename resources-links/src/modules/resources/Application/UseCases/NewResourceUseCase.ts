@@ -11,13 +11,13 @@ export class NewResourceUseCase implements IUseCase<string> {
   public async execute(resource: NewResourceDto): Promise<string> {
     try {
       const validatedLink = new Link(resource.link);
-      const validatedId = Id.validUuid(resource.userId);
+      const validatedUserId = Id.validUuid(resource.userId);
 
       const newResource = Resource.build(
         new Text(resource.title),
         validatedLink,
         new Text(resource.note),
-        validatedId
+        validatedUserId
       );
 
       await this.resourcesRepository.save(newResource);

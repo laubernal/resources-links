@@ -1,4 +1,6 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
+import { DeleteError } from '../../../shared/Domain/Error/DeleteError';
+import { Id } from '../../../shared/Domain/vo';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { DeleteResourceDto } from '../Dto';
 
@@ -11,16 +13,19 @@ export class DeleteResourceUseCase implements IUseCase<void> {
         `DELETE USE CASE RESOURCE ${resource.resourceId} FROM USERID - ${resource.userId}`
       );
 
+      const validatedResourceId = Id.validUuid(resource.resourceId);
+      const validatedUserId = Id.validUuid(resource.userId);
+
       const deletedResource = await this.resourcesRepository.delete(
-        resource.resourceId,
-        resource.userId
+        validatedResourceId,
+        validatedUserId
       );
 
       if (!deletedResource) {
-        throw new Error('Could not delete resource');
+        throw new DeleteError('Could not delete resource');
       }
     } catch (error: any) {
-      throw new Error();
+      throw new Error(error.message);
     }
   }
 }
