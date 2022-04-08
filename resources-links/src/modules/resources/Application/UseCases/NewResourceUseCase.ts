@@ -1,8 +1,8 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { Id } from '../../../shared/Domain/vo';
+import { Link, Text } from '../../Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
-import { Link } from '../../Domain/vo';
 import { NewResourceDto } from '../Dto';
 
 export class NewResourceUseCase implements IUseCase<string> {
@@ -13,13 +13,18 @@ export class NewResourceUseCase implements IUseCase<string> {
       const validatedLink = new Link(resource.link);
       const validatedId = Id.validUuid(resource.userId);
 
-      const newResource = Resource.build(resource.title, validatedLink, resource.note, validatedId);
+      const newResource = Resource.build(
+        new Text(resource.title),
+        validatedLink,
+        new Text(resource.note),
+        validatedId
+      );
 
       await this.resourcesRepository.save(newResource);
 
       return newResource.id;
     } catch (error: any) {
-      throw new Error();
+      throw new Error(error.message);
     }
   }
 }
