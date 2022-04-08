@@ -1,10 +1,14 @@
+const URL = require('url').URL;
+
 import { VO } from '../../../shared/Domain/vo';
 
 export class Link extends VO {
   constructor(private link: string) {
     super();
     this.validate();
-    // this.checkURL();
+    if (!this.checkURL()) {
+      throw new Error('URL is not valid');
+    }
   }
 
   public get value(): string {
@@ -16,7 +20,12 @@ export class Link extends VO {
     this.isEmpty(this.link);
   }
 
-  //   private checkURL() {
-
-  //   }
+  private checkURL(): boolean {
+    try {
+      new URL(this.link);
+      return true;
+    } catch (error: any) {
+      return false;
+    }
+  }
 }
