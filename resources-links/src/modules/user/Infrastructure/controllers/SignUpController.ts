@@ -12,7 +12,13 @@ export class SignUpController {
   @bodyValidator('firstName', 'lastName', 'email', 'password', 'passwordConfirmation')
   public async signUp(req: Request, res: Response): Promise<void> {
     try {
-      const { firstName, lastName, email, password, passwordConfirmation } = req.body;
+      const { firstName, lastName, email, password, passwordConfirmation } = req.body as {
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+        passwordConfirmation: string;
+      };
 
       const userRepository = new UserRepository();
 

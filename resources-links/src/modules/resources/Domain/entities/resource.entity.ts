@@ -1,8 +1,9 @@
 import { Id } from '../../../shared/Domain/vo';
+import { Link } from '../vo';
 
 export class Resource {
-  public static build(title: string, link: string, note: string, userId: string): Resource {
-    return new Resource(Id.generate(), title, link, note, userId);
+  public static build(title: string, link: Link, note: string, userId: string): Resource {
+    return new Resource(Id.generate(), title, link.value, note, userId);
   }
 
   constructor(
