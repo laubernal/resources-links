@@ -12,7 +12,7 @@ export class SignInController {
   @bodyValidator('email', 'password')
   public async signIn(req: Request, res: Response): Promise<void> {
     try {
-      const { email, password } = req.body;
+      const { email, password } = req.body as { email: string; password: string };
 
       const userRepository = new UserRepository();
 

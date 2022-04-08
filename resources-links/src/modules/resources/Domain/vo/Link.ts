@@ -6,7 +6,7 @@ export class Link extends VO {
   constructor(private link: string) {
     super();
     this.validate();
-    if (!this.checkURL()) {
+    if (!this.validUrl()) {
       throw new Error('URL is not valid');
     }
   }
@@ -20,7 +20,7 @@ export class Link extends VO {
     this.isEmpty(this.link);
   }
 
-  private checkURL(): boolean {
+  private validUrl(): boolean {
     try {
       new URL(this.link);
       return true;
