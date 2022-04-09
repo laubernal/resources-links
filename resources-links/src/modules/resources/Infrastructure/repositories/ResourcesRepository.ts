@@ -11,15 +11,12 @@ export class ResourcesRepository implements IResourcesRepository {
     try {
       const newResource = this.mapper.toData(resource);
 
-      console.log(`NEW RESOURCE -- ${JSON.stringify(newResource)}`);
-
       await this.prisma.resource.create({ data: newResource });
-      console.log('CREATE RESOURCE');
 
       this.prisma.$disconnect();
     } catch (error: any) {
       this.prisma.$disconnect();
-      throw new Error();
+      throw new Error(error.message);
     }
   }
 
@@ -30,19 +27,18 @@ export class ResourcesRepository implements IResourcesRepository {
       if (!result) {
         return undefined;
       }
-      console.log(`RESULT GET ALL - ${result}`);
 
       const resources: Resource[] = [];
 
-      // for (const resource of result) {
-      //   resources.push(this.mapper.toDomain(resource));
-      // }
+      for (const resource of result) {
+        resources.push(this.mapper.toDomain(resource));
+      }
 
       this.prisma.$disconnect();
       return resources;
     } catch (error: any) {
       this.prisma.$disconnect();
-      throw new Error();
+      throw new Error(error.message);
     }
   }
 
@@ -61,7 +57,7 @@ export class ResourcesRepository implements IResourcesRepository {
       return result.count;
     } catch (error: any) {
       this.prisma.$disconnect();
-      throw new Error();
+      throw new Error(error.message);
     }
   }
 }
