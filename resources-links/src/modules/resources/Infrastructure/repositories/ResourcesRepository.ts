@@ -30,15 +30,16 @@ export class ResourcesRepository implements IResourcesRepository {
       if (!result) {
         return undefined;
       }
+      console.log(`RESULT GET ALL - ${result}`);
 
-      // const resources: Resource[] = [];
+      const resources: Resource[] = [];
 
       // for (const resource of result) {
       //   resources.push(this.mapper.toDomain(resource));
       // }
 
       this.prisma.$disconnect();
-      // return resources;
+      return resources;
     } catch (error: any) {
       this.prisma.$disconnect();
       throw new Error();
