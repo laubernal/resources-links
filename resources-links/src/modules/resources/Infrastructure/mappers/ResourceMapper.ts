@@ -14,13 +14,13 @@ export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resou
     };
   }
 
-  public toDomain(resource: Prisma.ResourceCreateInput): Resource {
+  public toDomain(resource: any): Resource {
     return new Resource(
       resource.id,
       resource.title,
       resource.link,
       resource.note,
-      resource.user.connect?.id as string,
+      resource.user_id,
       resource.created_at as Date,
       resource.updated_at as Date
     );
