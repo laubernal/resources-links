@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { Controller, get, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
-import { GetAllResourcesUseCase } from '../../Application/UseCases/GetAllResourcesUseCase';
+import { GetAllResourcesUseCase } from '../../Application/UseCases';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 
 @Controller()
