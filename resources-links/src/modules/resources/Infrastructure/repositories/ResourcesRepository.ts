@@ -59,6 +59,8 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
+  public async update(resource: Resource): Promise<void> {}
+
   public async delete(resourceId: string, userId: string): Promise<number | undefined> {
     try {
       const result = await this.prisma.resource.deleteMany({
