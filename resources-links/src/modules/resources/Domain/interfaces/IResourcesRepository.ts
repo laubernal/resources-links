@@ -2,6 +2,6 @@ import { Resource } from '../entities/resource.entity';
 
 export interface IResourcesRepository {
   save(resource: Resource): Promise<void>;
-  getAllBy(userId: string): Promise<Resource[] | undefined>;
+  getAllByUserId(userId: string): Promise<Resource[] | undefined>;
   delete(resourceId: string, userId: string): Promise<number | undefined>;
 }

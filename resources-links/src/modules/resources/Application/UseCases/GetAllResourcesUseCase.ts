@@ -7,7 +7,7 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
 
   public async execute(userId: string): Promise<Resource[] | undefined> {
     try {
-      const resources= await this.resourcesRepository.getAllBy(userId);
+      const resources = await this.resourcesRepository.getAllByUserId(userId);
 
       return resources;
     } catch (error: any) {
