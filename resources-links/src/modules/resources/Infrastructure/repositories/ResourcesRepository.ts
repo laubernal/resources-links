@@ -42,6 +42,8 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
+  public async getOneByLink(link: string): Promise<void> {}
+
   public async delete(resourceId: string, userId: string): Promise<number | undefined> {
     try {
       const result = await this.prisma.resource.deleteMany({
