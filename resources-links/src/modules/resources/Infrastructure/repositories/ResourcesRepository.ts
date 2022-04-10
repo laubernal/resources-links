@@ -42,7 +42,22 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getOneByLink(link: string): Promise<void> {}
+  public async getOneByLink(link: string): Promise<Resource | undefined> {
+    try {
+      const result = await this.prisma.resource.findMany({
+        where: { link },
+      });
+
+      if (result.length === 0) {
+        return undefined;
+      }
+
+      return this.mapper.toDomain(result[0]);
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error(error.message);
+    }
+  }
 
   public async delete(resourceId: string, userId: string): Promise<number | undefined> {
     try {

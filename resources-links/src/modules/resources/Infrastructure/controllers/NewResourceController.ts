@@ -15,7 +15,6 @@ export class NewResourceController {
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
       const { title, note, link, userId } = req.body;
-      console.log(`TITLE - ${title} NOTE - ${note} LINK - ${link} USERID - ${userId}`);
 
       const resourceRepository = new ResourcesRepository();
 
