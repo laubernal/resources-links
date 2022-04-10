@@ -18,14 +18,14 @@ model User {
 
 model Category {
   id        String     @id
-  name      String     @unique
+  name      String     
   resources Resource[]
 }
 
 model Resource {
   id         String     @id
   title      String
-  link       String     @unique
+  link       String     
   note       String
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
