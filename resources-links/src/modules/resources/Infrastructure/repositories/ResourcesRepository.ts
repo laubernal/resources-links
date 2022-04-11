@@ -59,7 +59,25 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async update(resource: Resource): Promise<void> {}
+  public async update(resource: Resource): Promise<void> {
+    try {
+      console.log('RESOURCE TO UPDATE', resource);
+      
+      const result = await this.prisma.resource.update({
+        where: { id: resource.id },
+        data: {
+          title: resource.title,
+          link: resource.link,
+          note: resource.note,
+        },
+      });
+
+      
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error(error.message);
+    }
+  }
 
   public async delete(resourceId: string, userId: string): Promise<number | undefined> {
     try {
