@@ -3,7 +3,9 @@ import { Prisma } from '@prisma/client';
 import { IMapper } from '../../../shared/Infrastructure/mappers/IMapper';
 import { Resource } from '../../Domain/entities/resource.entity';
 
-export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resource> {
+export class ResourceMapper
+  implements IMapper<Prisma.ResourceCreateInput, Resource>
+{
   public toData(resource: Resource): Prisma.ResourceCreateInput {
     return {
       id: resource.id,
