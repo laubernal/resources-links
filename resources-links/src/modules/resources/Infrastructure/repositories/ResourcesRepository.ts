@@ -42,6 +42,19 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
+  public async getOneByResourceId(resourceId: string): Promise<Resource> {
+    try {
+      const result = await this.prisma.resource.findMany({
+        where: { id: resourceId },
+      });
+
+      return this.mapper.toDomain(result[0]);
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error(error.message);
+    }
+  }
+
   public async getOneByLink(link: string): Promise<Resource | undefined> {
     try {
       const result = await this.prisma.resource.findMany({
@@ -61,9 +74,7 @@ export class ResourcesRepository implements IResourcesRepository {
 
   public async update(resource: Resource): Promise<void> {
     try {
-      console.log('RESOURCE TO UPDATE', resource);
-      
-      const result = await this.prisma.resource.update({
+      await this.prisma.resource.update({
         where: { id: resource.id },
         data: {
           title: resource.title,
@@ -71,8 +82,6 @@ export class ResourcesRepository implements IResourcesRepository {
           note: resource.note,
         },
       });
-
-      
     } catch (error: any) {
       this.prisma.$disconnect();
       throw new Error(error.message);

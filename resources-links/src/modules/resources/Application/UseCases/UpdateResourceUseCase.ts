@@ -3,7 +3,7 @@ import { Id } from '../../../shared/Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { LinkAlreadyExistsError } from '../../Domain/error';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
-import { Link, Text } from '../../Domain/vo';
+import { Link } from '../../Domain/vo';
 import { UpdateResourceDto } from '../Dto';
 
 export class UpdateResourceUseCase implements IUseCase<string> {
@@ -13,6 +13,8 @@ export class UpdateResourceUseCase implements IUseCase<string> {
     try {
       const validatedLink = new Link(resource.link);
       const validatedUserId = Id.validUuid(resource.userId);
+
+      await this.checkIfLinkIsDifferent(resource.id, validatedLink.value);
 
       const updatedResource = new Resource(
         resource.id,
@@ -27,6 +29,14 @@ export class UpdateResourceUseCase implements IUseCase<string> {
       return updatedResource.id;
     } catch (error: any) {
       throw new Error(error.message);
+    }
+  }
+
+  private async checkIfLinkIsDifferent(resourceId: string, newLink: string): Promise<void> {
+    const savedLink = await this.resourcesRepository.getOneByResourceId(resourceId);
+
+    if (savedLink.link === newLink) {
+      throw new LinkAlreadyExistsError();
     }
   }
 }
