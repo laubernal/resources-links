@@ -1,5 +1,6 @@
 import { Id } from '../../../shared/Domain/vo';
-import { Link, Text } from '../vo';
+import { Text } from '../../../shared/Domain/vo';
+import { Link } from '../vo';
 
 export class Resource {
   public static build(title: Text, link: Link, note: Text, userId: string): Resource {
