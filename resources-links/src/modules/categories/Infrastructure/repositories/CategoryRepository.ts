@@ -11,9 +11,22 @@ export class CategoryRepository implements ICategoryRepository {
     try {
       const newCategory = this.mapper.toData(category);
 
-      await this.prisma.category.create({ data: newCategory });
+      const result = await this.prisma.category.create({ data: newCategory });
 
       this.prisma.$disconnect();
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error(error.message);
+    }
+  }
+
+  public async getOneByName(name: string): Promise<Category> {
+    try {
+      const result = await this.prisma.category.findMany({ where: { name } });
+
+      this.prisma.$disconnect();
+
+      return this.mapper.toDomain(result[0]);
     } catch (error: any) {
       this.prisma.$disconnect();
       throw new Error(error.message);
@@ -62,7 +75,7 @@ export class CategoryRepository implements ICategoryRepository {
   public async delete(id: string): Promise<number | undefined> {
     try {
       const result = await this.prisma.category.deleteMany({ where: { id } });
-      
+
       if (result.count === 0) {
         return undefined;
       }

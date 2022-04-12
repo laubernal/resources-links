@@ -12,6 +12,7 @@ export class NewResourceController {
   @use(requireAuth)
   @use(currentUser)
   @bodyValidator('title', 'note', 'link')
+  
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
       const { title, note, link } = req.body;

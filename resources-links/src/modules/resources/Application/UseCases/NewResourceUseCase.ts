@@ -1,6 +1,6 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
-import { Id } from '../../../shared/Domain/vo';
-import { Link, Text } from '../../Domain/vo';
+import { Id, Text } from '../../../shared/Domain/vo';
+import { Link } from '../../Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { NewResourceDto } from '../Dto';
