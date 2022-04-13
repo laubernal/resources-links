@@ -1,6 +1,7 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { Text } from '../../../shared/Domain/vo';
 import { Category } from '../../Domain/entities/category.entity';
+import { CategoryAlreadyExistsError } from '../../Domain/error';
 import { ICategoryRepository } from '../../Domain/interfaces/ICategoriesRepository';
 import { NewCategoryDto } from '../Dto/NewCategoryDto';
 
@@ -25,8 +26,7 @@ export class NewCategoryUseCase implements IUseCase<string> {
     const categoryExists = await this.categoryRepository.getOneByName(name);
 
     if (categoryExists) {
-      throw new Error('Category already exists');
-      //   throw new CategoryAlreadyExistsError();
+      throw new CategoryAlreadyExistsError();
     }
   }
 }

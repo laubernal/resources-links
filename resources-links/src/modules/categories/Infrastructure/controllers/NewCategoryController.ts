@@ -8,7 +8,7 @@ import { CategoryRepository } from '../repositories/CategoryRepository';
 
 @Controller()
 export class NewCategoryController {
-  @post('/category/new')
+  @post('/categories/new')
   @use(requireAuth)
   @use(currentUser)
   @bodyValidator('name')
