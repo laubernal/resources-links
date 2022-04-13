@@ -9,10 +9,6 @@ export class DeleteResourceUseCase implements IUseCase<void> {
 
   public async execute(resource: DeleteResourceDto): Promise<void> {
     try {
-      console.log(
-        `DELETE USE CASE RESOURCE ${resource.resourceId} FROM USERID - ${resource.userId}`
-      );
-
       const validatedResourceId = Id.validUuid(resource.resourceId);
       const validatedUserId = Id.validUuid(resource.userId);
 

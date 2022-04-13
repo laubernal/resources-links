@@ -1,29 +1,25 @@
 import { Request, Response } from 'express';
-
 import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
-import { NewCategoryDto } from '../../Application/Dto/NewCategoryDto';
-import { NewCategoryUseCase } from '../../Application/UseCases';
+import { DeleteCategoryDto } from '../../Application/Dto';
+import { DeleteCategoryUseCase } from '../../Application/UseCases';
 import { CategoryRepository } from '../repositories/CategoryRepository';
 
 @Controller()
-export class NewCategoryController {
-  @post('/categories/new')
+export class DeleteCategoryController {
+  @post('/categories/delete')
   @use(requireAuth)
   @use(currentUser)
-  @bodyValidator('name')
-  
-  public async execute(req: Request, res: Response): Promise<void> {
+  @bodyValidator('id')
+  public async deleteCategory(req: Request, res: Response): Promise<void> {
     try {
-      const { name } = req.body;
+      const { id, name } = req.body as { id: string; name: string };
 
       const categoryRepository = new CategoryRepository();
 
-      const newCategoryDto = new NewCategoryDto(name);
+      const categoryDto = new DeleteCategoryDto(id, name);
 
-      const categoryId = await new NewCategoryUseCase(categoryRepository).execute(newCategoryDto);
-
-      res.status(200).send({ categoryId });
+      new DeleteCategoryUseCase(categoryRepository).execute(categoryDto);
     } catch (error: any) {
       console.log(error);
       res.status(400).send({
