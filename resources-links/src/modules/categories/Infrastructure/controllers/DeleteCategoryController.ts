@@ -19,7 +19,7 @@ export class DeleteCategoryController {
 
       const categoryDto = new DeleteCategoryDto(id, name);
 
-      new DeleteCategoryUseCase(categoryRepository).execute(categoryDto);
+      await new DeleteCategoryUseCase(categoryRepository).execute(categoryDto);
     } catch (error: any) {
       console.log(error);
       res.status(400).send({
