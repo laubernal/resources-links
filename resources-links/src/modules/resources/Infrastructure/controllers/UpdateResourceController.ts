@@ -14,7 +14,12 @@ export class UpdateResourceController {
   @bodyValidator('id', 'title', 'note', 'link')
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
-      const { id, title, note, link } = req.body;
+      const { id, title, note, link } = req.body as {
+        id: string;
+        title: string;
+        note: string;
+        link: string;
+      };
 
       const resourceRepository = new ResourcesRepository();
 

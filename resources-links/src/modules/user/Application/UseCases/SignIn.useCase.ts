@@ -11,19 +11,23 @@ export class SignInUseCase implements IUseCase<User> {
   constructor(private userRepository: IUserRepository) {}
 
   public async execute(user: SignInDto): Promise<User> {
-    const emailValidated = new Email(user.email);
+    try {
+      const emailValidated = new Email(user.email);
 
-    const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
+      const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
-    if (!userExists) {
-      throw new UserNotExistsError();
+      if (!userExists) {
+        throw new UserNotExistsError();
+      }
+
+      if (!this.comparePasswords(userExists.password, user.password)) {
+        throw new PasswordError('Incorrect password');
+      }
+
+      return userExists;
+    } catch (error: any) {
+      throw new Error(error.message);
     }
-
-    if (!this.comparePasswords(userExists.password, user.password)) {
-      throw new PasswordError('Incorrect password');
-    }
-
-    return userExists;
   }
 
   private comparePasswords(saved: string, supplied: string): boolean {
