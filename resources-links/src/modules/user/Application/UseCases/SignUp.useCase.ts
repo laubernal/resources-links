@@ -1,5 +1,6 @@
 import { User } from '../../Domain/entities/user.entity';
-import { PasswordError, UserAlreadyExistsError } from '../../Domain/error';
+import { PasswordError } from '../../Domain/error';
+import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsError';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email, Name, Password } from '../../Domain/vo';
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
@@ -14,7 +15,7 @@ export class SignUpUseCase implements IUseCase<string> {
     const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
 
     if (userExists) {
-      throw new UserAlreadyExistsError();
+      throw new AlreadyExistsError('User already exists');
     }
 
     if (user.password !== user.passwordConfirmation) {
