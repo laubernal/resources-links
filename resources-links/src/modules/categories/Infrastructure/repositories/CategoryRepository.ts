@@ -11,7 +11,7 @@ export class CategoryRepository implements ICategoryRepository {
     try {
       const newCategory = this.mapper.toData(category);
 
-      const result = await this.prisma.category.create({ data: newCategory });
+      await this.prisma.category.create({ data: newCategory });
 
       this.prisma.$disconnect();
     } catch (error: any) {
@@ -20,9 +20,13 @@ export class CategoryRepository implements ICategoryRepository {
     }
   }
 
-  public async getOneByName(name: string): Promise<Category> {
+  public async getOneByName(name: string): Promise<Category | undefined> {
     try {
       const result = await this.prisma.category.findMany({ where: { name } });
+
+      if (result.length === 0) {
+        return undefined;
+      }
 
       this.prisma.$disconnect();
 
