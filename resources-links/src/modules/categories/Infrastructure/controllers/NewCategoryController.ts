@@ -12,7 +12,6 @@ export class NewCategoryController {
   @use(requireAuth)
   @use(currentUser)
   @bodyValidator('name')
-  
   public async execute(req: Request, res: Response): Promise<void> {
     try {
       const { name } = req.body;
