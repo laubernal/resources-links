@@ -14,8 +14,6 @@ export class NewCategoryUseCase implements IUseCase<string> {
 
       const newCategory = Category.build(new Text(category.name));
 
-      console.log(newCategory);
-
       await this.categoryRepository.save(newCategory);
 
       return newCategory.id;

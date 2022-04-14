@@ -13,13 +13,15 @@ export class DeleteCategoryController {
   @bodyValidator('id')
   public async deleteCategory(req: Request, res: Response): Promise<void> {
     try {
-      const { id, name } = req.body as { id: string; name: string };
+      const { id } = req.body as { id: string };
 
       const categoryRepository = new CategoryRepository();
 
-      const categoryDto = new DeleteCategoryDto(id, name);
+      const categoryDto = new DeleteCategoryDto(id);
 
-      await new DeleteCategoryUseCase(categoryRepository).execute(categoryDto);
+      new DeleteCategoryUseCase(categoryRepository).execute(categoryDto);
+
+      res.status(200).send('Successful delete');
     } catch (error: any) {
       console.log(error);
       res.status(400).send({
