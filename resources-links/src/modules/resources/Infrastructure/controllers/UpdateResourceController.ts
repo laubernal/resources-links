@@ -24,7 +24,7 @@ export class UpdateResourceController {
         updateResourceDto
       );
 
-      res.status(200).send({ resourceId });
+      res.status(200).send(resourceId);
     } catch (error: any) {
       console.log(error);
       res.status(400).send({

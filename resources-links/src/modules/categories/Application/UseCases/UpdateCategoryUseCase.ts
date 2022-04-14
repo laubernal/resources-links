@@ -12,7 +12,7 @@ export class UpdateCategoryUseCase implements IUseCase<string> {
     try {
       await this.checkIfCategoryAlreadyExists(category.name);
 
-      const updatedCategory = Category.build(new Text(category.name));
+      const updatedCategory = new Category(category.id, category.name);
 
       await this.categoryRepository.update(updatedCategory);
 
