@@ -4,7 +4,7 @@ import { Link } from '../../Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { NewResourceDto } from '../Dto';
-import { LinkAlreadyExistsError } from '../../Domain/error';
+import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsError';
 
 export class NewResourceUseCase implements IUseCase<string> {
   constructor(private resourcesRepository: IResourcesRepository) {}
@@ -35,7 +35,7 @@ export class NewResourceUseCase implements IUseCase<string> {
     const linkExists = await this.resourcesRepository.getOneByLink(link);
 
     if (linkExists) {
-      throw new LinkAlreadyExistsError();
+      throw new AlreadyExistsError('Link already exists');
     }
   }
 }

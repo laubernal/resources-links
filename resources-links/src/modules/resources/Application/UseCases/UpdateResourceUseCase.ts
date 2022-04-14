@@ -1,7 +1,7 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
+import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsError';
 import { Id } from '../../../shared/Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
-import { LinkAlreadyExistsError } from '../../Domain/error';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { Link } from '../../Domain/vo';
 import { UpdateResourceDto } from '../Dto';
@@ -36,7 +36,7 @@ export class UpdateResourceUseCase implements IUseCase<string> {
     const savedLink = await this.resourcesRepository.getOneByResourceId(resourceId);
 
     if (savedLink.link === newLink) {
-      throw new LinkAlreadyExistsError();
+      throw new AlreadyExistsError('Link already exists');
     }
   }
 }
