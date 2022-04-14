@@ -12,10 +12,9 @@ export class DeleteResourceController {
   @use(requireAuth)
   @use(currentUser)
   @bodyValidator('resourceId')
-  
   public async deleteResource(req: Request, res: Response): Promise<void> {
     try {
-      const { resourceId } = req.body;
+      const { resourceId } = req.body as { resourceId: string };
 
       const resourceRepository = new ResourcesRepository();
 

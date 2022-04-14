@@ -14,7 +14,7 @@ export class NewCategoryController {
   @bodyValidator('name')
   public async execute(req: Request, res: Response): Promise<void> {
     try {
-      const { name } = req.body;
+      const { name } = req.body as { name: string };
 
       const categoryRepository = new CategoryRepository();
 
