@@ -12,5 +12,6 @@ export class CategoryVo extends VO {
 
   private validate(): void {
     this.category = this.category.trim();
+    this.isEmpty(this.category);
   }
 }

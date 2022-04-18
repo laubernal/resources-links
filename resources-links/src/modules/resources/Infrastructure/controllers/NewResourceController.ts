@@ -11,14 +11,19 @@ export class NewResourceController {
   @post('/resources/new')
   @use(requireAuth)
   @use(currentUser)
-  @bodyValidator('title', 'note', 'link')
+  @bodyValidator('title', 'note', 'link', 'categories')
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
-      const { title, note, link } = req.body as { title: string; note: string; link: string };
+      const { title, note, link, categories } = req.body as {
+        title: string;
+        note: string;
+        link: string;
+        categories: string[];
+      };
 
       const resourceRepository = new ResourcesRepository();
 
-      const newResourceDto = new NewResourceDto(title, note, link, req.currentUser!.id);
+      const newResourceDto = new NewResourceDto(title, note, link, req.currentUser!.id, categories);
 
       const resourceId = await new NewResourceUseCase(resourceRepository).execute(newResourceDto);
 
