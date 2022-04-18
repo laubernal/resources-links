@@ -1,6 +1,6 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { Id, Text } from '../../../shared/Domain/vo';
-import { Link } from '../../Domain/vo';
+import { CategoryVo, Link } from '../../Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { NewResourceDto } from '../Dto';
@@ -13,6 +13,9 @@ export class NewResourceUseCase implements IUseCase<string> {
     try {
       const validatedLink = new Link(resource.link);
       const validatedUserId = Id.validUuid(resource.userId);
+      const validatedCategories: CategoryVo[] = resource.categories.map(category => {
+        return new CategoryVo(category);
+      });
 
       await this.checkIfLinkAlreadyExists(validatedLink.value);
 
@@ -20,7 +23,8 @@ export class NewResourceUseCase implements IUseCase<string> {
         new Text(resource.title),
         validatedLink,
         new Text(resource.note),
-        validatedUserId
+        validatedUserId,
+        validatedCategories
       );
 
       await this.resourcesRepository.save(newResource);
