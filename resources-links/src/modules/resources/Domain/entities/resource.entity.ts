@@ -1,10 +1,15 @@
-import { Id } from '../../../shared/Domain/vo';
-import { Text } from '../../../shared/Domain/vo';
-import { Link } from '../vo';
+import { Id, Text } from '../../../shared/Domain/vo';
+import { CategoryVo, Link } from '../vo';
 
 export class Resource {
-  public static build(title: Text, link: Link, note: Text, userId: string): Resource {
-    return new Resource(Id.generate(), title.value, link.value, note.value, userId);
+  public static build(
+    title: Text,
+    link: Link,
+    note: Text,
+    userId: string,
+    categories: CategoryVo[]
+  ): Resource {
+    return new Resource(Id.generate(), title.value, link.value, note.value, userId, categories);
   }
 
   constructor(
@@ -13,8 +18,9 @@ export class Resource {
     private _link: string,
     private _note: string,
     private _userId: string,
-    _createdAt?: Date,
-    _updatedAt?: Date
+    private _categories: CategoryVo[],
+    private _createdAt?: Date,
+    private _updatedAt?: Date
   ) {}
 
   public get id(): string {
@@ -35,5 +41,17 @@ export class Resource {
 
   public get userId(): string {
     return this._userId;
+  }
+
+  public get categories(): CategoryVo[] {
+    return this._categories;
+  }
+
+  public createdAt(): Date | undefined {
+    return this._createdAt;
+  }
+
+  public updatedAt(): Date | undefined {
+    return this._updatedAt;
   }
 }
