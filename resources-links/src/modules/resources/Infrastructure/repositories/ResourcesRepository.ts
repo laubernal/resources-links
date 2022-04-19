@@ -11,7 +11,7 @@ export class ResourcesRepository implements IResourcesRepository {
     try {
       const newResource = this.mapper.toData(resource);
 
-      await this.prisma.resource.create({ data: newResource });
+      // await this.prisma.resource.create({ data: newResource, categories: { create: {} } });
 
       this.prisma.$disconnect();
     } catch (error: any) {

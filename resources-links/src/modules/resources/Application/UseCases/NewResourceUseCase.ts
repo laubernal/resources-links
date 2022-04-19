@@ -11,20 +11,20 @@ export class NewResourceUseCase implements IUseCase<string> {
 
   public async execute(resource: NewResourceDto): Promise<string> {
     try {
-      const validatedLink = new Link(resource.link);
-      const validatedUserId = Id.validUuid(resource.userId);
-      const validatedCategories: CategoryVo[] = resource.categories.map(category => {
-        return new CategoryVo(category);
+      const link = new Link(resource.link);
+      const userId = Id.validUuid(resource.userId);
+      const categories: CategoryVo[] = resource.categories.map(category => {
+        return new CategoryVo(category.id, category.name);
       });
 
-      await this.checkIfLinkAlreadyExists(validatedLink.value);
+      await this.checkIfLinkAlreadyExists(link.value);
 
       const newResource = Resource.build(
         new Text(resource.title),
-        validatedLink,
+        link,
         new Text(resource.note),
-        validatedUserId,
-        validatedCategories
+        userId,
+        categories
       );
 
       await this.resourcesRepository.save(newResource);

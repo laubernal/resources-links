@@ -3,7 +3,7 @@ import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsEr
 import { Id } from '../../../shared/Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
-import { Link } from '../../Domain/vo';
+import { CategoryVo, Link } from '../../Domain/vo';
 import { UpdateResourceDto } from '../Dto';
 
 export class UpdateResourceUseCase implements IUseCase<string> {
@@ -13,6 +13,9 @@ export class UpdateResourceUseCase implements IUseCase<string> {
     try {
       const validatedLink = new Link(resource.link);
       const validatedUserId = Id.validUuid(resource.userId);
+      const categories: CategoryVo[] = resource.categories.map(category => {
+        return new CategoryVo(category.id, category.name);
+      });
 
       await this.checkIfLinkIsDifferent(resource.id, validatedLink.value);
 
@@ -21,7 +24,7 @@ export class UpdateResourceUseCase implements IUseCase<string> {
         resource.title,
         validatedLink.value,
         resource.note,
-        validatedUserId
+        validatedUserId, categories
       );
 
       await this.resourcesRepository.update(updatedResource);

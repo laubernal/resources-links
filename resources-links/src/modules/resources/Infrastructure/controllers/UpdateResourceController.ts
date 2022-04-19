@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { CategoryType } from '../../../../types/types';
 
 import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
@@ -11,19 +12,27 @@ export class UpdateResourceController {
   @post('/resources/update')
   @use(requireAuth)
   @use(currentUser)
-  @bodyValidator('id', 'title', 'note', 'link')
+  @bodyValidator('id', 'title', 'note', 'link', 'categories')
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
-      const { id, title, note, link } = req.body as {
+      const { id, title, note, link, categories } = req.body as {
         id: string;
         title: string;
         note: string;
         link: string;
+        categories: CategoryType[];
       };
 
       const resourceRepository = new ResourcesRepository();
 
-      const updateResourceDto = new UpdateResourceDto(id, title, note, link, req.currentUser!.id);
+      const updateResourceDto = new UpdateResourceDto(
+        id,
+        title,
+        note,
+        link,
+        req.currentUser!.id,
+        categories
+      );
 
       const resourceId = await new UpdateResourceUseCase(resourceRepository).execute(
         updateResourceDto
