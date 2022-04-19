@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { CategoryType } from '../../../../types/types';
 
 import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
@@ -18,7 +19,7 @@ export class NewResourceController {
         title: string;
         note: string;
         link: string;
-        categories: string[];
+        categories: CategoryType[];
       };
 
       const resourceRepository = new ResourcesRepository();
