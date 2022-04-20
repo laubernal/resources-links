@@ -1,22 +1,26 @@
 import { Id, VO } from '../../../shared/Domain/vo';
 
 export class CategoryVo extends VO {
-  constructor(private id: string, private name: string) {
+  constructor(private _id: string, private _name: string) {
     super();
     this.validateId();
     this.validate();
   }
 
-  public get value(): string {
-    return this.name;
+  public get id(): string {
+    return this._id;
+  }
+
+  public get name(): string {
+    return this._name;
   }
 
   private validate(): void {
-    this.name = this.name.trim();
-    this.isEmpty(this.name);
+    this._name = this._name.trim();
+    this.isEmpty(this._name);
   }
 
   private validateId(): void {
-    this.id = Id.validUuid(this.id);
+    this._id = Id.validUuid(this._id);
   }
 }

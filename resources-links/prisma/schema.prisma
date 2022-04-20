@@ -18,18 +18,18 @@ model User {
 
 model Category {
   id        String     @id
-  name      String     
-  resources Resource[]
+  name      String
+  resources Resource[] @relation(references: [id])
 }
 
 model Resource {
   id         String     @id
   title      String
-  link       String     
+  link       String
   note       String
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
   user       User       @relation(fields: [user_id], references: [id])
   user_id    String
-  categories Category[]
+  categories Category[] @relation(references: [id])
 }
