@@ -24,7 +24,8 @@ export class UpdateResourceUseCase implements IUseCase<string> {
         resource.title,
         validatedLink.value,
         resource.note,
-        validatedUserId, categories
+        validatedUserId,
+        categories
       );
 
       await this.resourcesRepository.update(updatedResource);
@@ -38,7 +39,7 @@ export class UpdateResourceUseCase implements IUseCase<string> {
   private async checkIfLinkIsDifferent(resourceId: string, newLink: string): Promise<void> {
     const savedLink = await this.resourcesRepository.getOneByResourceId(resourceId);
 
-    if (savedLink.link === newLink) {
+    if (savedLink.link === newLink && savedLink.id !== resourceId) {
       throw new AlreadyExistsError('Link already exists');
     }
   }
