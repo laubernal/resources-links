@@ -22,7 +22,10 @@ export class ResourcesRepository implements IResourcesRepository {
 
   public async getAllByUserId(userId: string): Promise<Resource[] | undefined> {
     try {
-      const result = await this.prisma.resource.findMany({ where: { user_id: userId } });
+      const result = await this.prisma.resource.findMany({
+        where: { user_id: userId },
+        include: { categories: true },
+      });
 
       if (!result) {
         return undefined;
