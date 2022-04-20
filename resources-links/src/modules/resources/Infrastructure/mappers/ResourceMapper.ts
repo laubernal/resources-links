@@ -5,7 +5,7 @@ import { Resource } from '../../Domain/entities/resource.entity';
 
 export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resource> {
   public toData(resource: Resource): Prisma.ResourceCreateInput {
-    const cat = resource.categories.map(category => {
+    const categories = resource.categories.map(category => {
       return { id: category.id };
     });
 
@@ -15,7 +15,7 @@ export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resou
       link: resource.link,
       note: resource.note,
       user: { connect: { id: resource.userId } },
-      categories: { connect: cat },
+      categories: { connect: categories },
     };
   }
 
