@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Space } from '@mantine/core';
 
 import SignOut from '../../Auth/Components/Auth/SignOut/SignOut';
-import ResourcesLinks from '../../ResourcesLinks/Components/ResourcesLinks';
+import ResourcesTable from '../../ResourcesLinks/Components/ResourcesTable';
 import Header from '../../Auth/Components/Header/Header';
 
 function Resources(): JSX.Element {
@@ -17,7 +17,7 @@ function Resources(): JSX.Element {
         </Grid.Col>
       </Grid>
       <Space h="md" />
-      <ResourcesLinks />
+      <ResourcesTable />
     </>
   );
 }
