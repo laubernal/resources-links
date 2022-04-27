@@ -8,6 +8,7 @@ function useResourceList() {
       note: '',
       link: '',
       userId: '',
+      createdAt: '',
       categories: [{ id: '', name: '' }],
     },
   ]);

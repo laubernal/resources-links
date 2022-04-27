@@ -4,6 +4,7 @@ export type resourceType = {
   _note: string;
   _link: string;
   _userId: string;
+  _createdAt: string;
   _categories: categoryType[];
 };
 

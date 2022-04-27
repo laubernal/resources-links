@@ -21,8 +21,12 @@ function ResourcesTable(): JSX.Element {
       <td>{resource.title}</td>
       <td>{resource.link}</td>
       <td>{resource.note}</td>
-      <td>{resource.userId}</td>
-      <td>{resource.userId}</td>
+      <td>
+        {resource.categories.map(category => {
+          return <p>{category.name}</p>;
+        })}
+      </td>
+      <td>{resource.createdAt}</td>
     </tr>
   ));
 

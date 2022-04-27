@@ -1,4 +1,3 @@
-
 export interface ResourceContextType {
   fetchResourceList: () => Promise<void>;
   saveResource: () => Promise<void>;
@@ -10,6 +9,7 @@ export interface ResourceContextType {
     note: string;
     link: string;
     userId: string;
+    createdAt: string;
     categories: { id: string; name: string }[];
   }[];
 }
