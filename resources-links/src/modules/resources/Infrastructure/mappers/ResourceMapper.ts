@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 
 import { IMapper } from '../../../shared/Infrastructure/mappers/IMapper';
 import { Resource } from '../../Domain/entities/resource.entity';
+import { CategoryVo } from '../../Domain/vo';
 
 export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resource> {
   public toData(resource: Resource): Prisma.ResourceCreateInput {
@@ -20,15 +21,22 @@ export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resou
   }
 
   public toDomain(resource: any): Resource {
-    return new Resource(
+    const categories = resource.categories.map((category: any) => {
+      return new CategoryVo(category.id, category.name);
+    });
+
+    const res = new Resource(
       resource.id,
       resource.title,
       resource.link,
       resource.note,
       resource.user_id,
-      resource.categories,
+      categories,
       resource.created_at as Date,
       resource.updated_at as Date
     );
+    console.log(res);
+
+    return res;
   }
 }
