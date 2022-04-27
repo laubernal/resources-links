@@ -13,16 +13,16 @@ export const useResourceProvider = () => {
 
       setResourcesList(
         response.data.map(
-          ({ _id, _title, _note, _link, _userId, _createdAt, _categories }: resourceType) => ({
-            id: _id,
-            title: _title,
-            note: _note,
-            link: _link,
-            userId: _userId,
-            createdAt: _createdAt,
-            categories: _categories.map(({ _id, _name }: categoryType) => ({
-              id: _id,
-              name: _name,
+          ({ id, title, note, link, userId, createdAt, categories }: resourceType) => ({
+            id,
+            title,
+            note,
+            link,
+            userId,
+            createdAt,
+            categories: categories.map(({ id, name }: categoryType) => ({
+              id,
+              name,
             })),
           })
         )
