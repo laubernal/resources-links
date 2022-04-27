@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { Controller, get, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
+import { GetAllResourcesResponse } from '../../Application/Dto';
 import { GetAllResourcesUseCase } from '../../Application/UseCases';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 
@@ -22,7 +23,19 @@ export class GetAllResourcesController {
         res.status(200).send({});
       }
 
-      res.status(200).send(resources);
+      const resourcesList = resources?.map(resource => {
+        return new GetAllResourcesResponse(
+          resource.id,
+          resource.title,
+          resource.link,
+          resource.note,
+          resource.userId,
+          resource.createdAt.toString(),
+          resource.categories
+        );
+      });
+
+      res.status(200).send(resourcesList);
     } catch (error: any) {
       console.log(error);
       res.status(400).send({
