@@ -25,7 +25,6 @@ export class GetAllResourcesController {
 
       const resourcesList = resources.map(resource => {
         const createdAt = resource.createdAt?.toDateString();
-        console.log(resource.categories);
 
         return new GetAllResourcesResponse(
           resource.id,
