@@ -19,18 +19,21 @@ export class GetAllResourcesController {
         req.currentUser!.id
       );
 
-      if (!resources) {
+      if (!resources.length) {
         res.status(200).send({});
       }
 
-      const resourcesList = resources?.map(resource => {
+      const resourcesList = resources.map(resource => {
+        const createdAt = resource.createdAt?.toDateString();
+        console.log(resource.categories);
+
         return new GetAllResourcesResponse(
           resource.id,
           resource.title,
           resource.link,
           resource.note,
           resource.userId,
-          resource.createdAt.toString(),
+          createdAt,
           resource.categories
         );
       });

@@ -7,7 +7,7 @@ export class GetAllResourcesResponse {
     public link: string,
     public note: string,
     public userId: string,
-    public createdAt: string,
+    public createdAt: string | undefined,
     public categories: CategoryType[]
   ) {}
 }
