@@ -25,7 +25,7 @@ export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resou
       return new CategoryVo(category.id, category.name);
     });
 
-    const res = new Resource(
+    return new Resource(
       resource.id,
       resource.title,
       resource.link,
@@ -34,9 +34,6 @@ export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resou
       categories,
       resource.created_at as Date,
       resource.updated_at as Date
-    );
-    console.log(res);
-
-    return res;
+    );;
   }
 }
