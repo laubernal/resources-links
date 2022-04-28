@@ -1,9 +1,8 @@
 export type resourceType = {
   id: string;
   title: string;
-  note: string;
   link: string;
-  userId: string;
+  note: string;
   createdAt: string;
   categories: categoryType[];
 };

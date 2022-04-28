@@ -20,7 +20,7 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getAllByUserId(userId: string): Promise<Resource[] | undefined> {
+  public async getAllByUserId(userId: string): Promise<Resource[]> {
     try {
       const result = await this.prisma.resource.findMany({
         where: { user_id: userId },
@@ -28,7 +28,7 @@ export class ResourcesRepository implements IResourcesRepository {
       });
 
       if (!result) {
-        return undefined;
+        return [];
       }
 
       const resources: Resource[] = [];

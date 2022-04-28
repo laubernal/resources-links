@@ -47,11 +47,11 @@ export class Resource {
     return this._categories;
   }
 
-  public createdAt(): Date | undefined {
+  public get createdAt(): Date | undefined {
     return this._createdAt;
   }
 
-  public updatedAt(): Date | undefined {
+  public get updatedAt(): Date | undefined {
     return this._updatedAt;
   }
 }
