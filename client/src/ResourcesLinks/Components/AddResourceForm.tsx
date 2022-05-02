@@ -9,7 +9,7 @@ function AddResourceForm(): JSX.Element {
 
   return (
     <div>
-      <Modal opened={opened} onClose={() => setOpened(false)} title="Introduce yourself!">
+      <Modal opened={opened} onClose={() => setOpened(false)} title="Add a new resource">
         <NewResourceForm />
       </Modal>
       <Group position="right">
