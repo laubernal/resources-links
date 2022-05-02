@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActionIcon, Group, Modal, TextInput } from '@mantine/core';
+import { ActionIcon, Group, Modal } from '@mantine/core';
 import { CirclePlus } from 'tabler-icons-react';
 
 import NewResourceForm from './NewResourceForm';

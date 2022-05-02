@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Table, Title } from '@mantine/core';
+import { Table, Text, Title } from '@mantine/core';
 
 import { useResource } from '../Hooks/useResource';
 
@@ -21,7 +21,11 @@ function ResourcesTable(): JSX.Element {
   const rows = resource.resourcesList.map(resource => (
     <tr key={resource.id}>
       <td>{resource.title}</td>
-      <td>{resource.link}</td>
+      <td>
+        <Text variant="link" component="a" href={resource.link} target="_blank">
+          {resource.link}
+        </Text>
+      </td>
       <td>{resource.note}</td>
       <td>
         {resource.categories.map(category => {
