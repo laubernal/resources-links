@@ -21,7 +21,7 @@ export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resou
   }
 
   public toDomain(resource: any): Resource {
-    const categories = resource.categories.map((category: any) => {
+    const categories: CategoryVo[] = resource.categories.map((category: any) => {
       return new CategoryVo(category.id, category.name);
     });
 
@@ -34,6 +34,6 @@ export class ResourceMapper implements IMapper<Prisma.ResourceCreateInput, Resou
       categories,
       resource.created_at as Date,
       resource.updated_at as Date
-    );;
+    );
   }
 }

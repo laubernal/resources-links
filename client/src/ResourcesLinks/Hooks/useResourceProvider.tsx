@@ -10,6 +10,7 @@ export const useResourceProvider = () => {
     try {
       const response = await axios.get('/resources');
       console.log('RESPONSE', response.data);
+      console.log(response.data[2]);
 
       setResourcesList(
         response.data.map(({ id, title, link, note, createdAt, categories }: resourceType) => ({

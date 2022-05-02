@@ -25,6 +25,9 @@ export class GetAllResourcesController {
 
       const resourcesList = resources.map(resource => {
         const createdAt = resource.createdAt?.toDateString();
+        const categories = resource.categories.map(category => {
+          return { id: category.id, name: category.name };
+        });
 
         return new GetAllResourcesResponse(
           resource.id,
@@ -33,7 +36,7 @@ export class GetAllResourcesController {
           resource.note,
           resource.userId,
           createdAt,
-          resource.categories
+          categories
         );
       });
 
