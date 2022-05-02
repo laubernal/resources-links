@@ -16,6 +16,8 @@ function ResourcesTable(): JSX.Element {
     })();
   }, []);
 
+  console.log(resource.resourcesList);
+
   const rows = resource.resourcesList.map(resource => (
     <tr key={resource.id}>
       <td>{resource.title}</td>
