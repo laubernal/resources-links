@@ -4,6 +4,7 @@ import { Grid, Space } from '@mantine/core';
 import SignOut from '../../Auth/Components/Auth/SignOut/SignOut';
 import ResourcesTable from '../../ResourcesLinks/Components/ResourcesTable';
 import Header from '../../Auth/Components/Header/Header';
+import AddResourceForm from '../../ResourcesLinks/Components/AddResourceForm';
 
 function Resources(): JSX.Element {
   return (
@@ -18,6 +19,7 @@ function Resources(): JSX.Element {
       </Grid>
       <Space h="md" />
       <ResourcesTable />
+      <AddResourceForm />
     </>
   );
 }

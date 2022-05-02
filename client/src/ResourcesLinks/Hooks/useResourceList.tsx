@@ -13,7 +13,6 @@ function useResourceList() {
   ]);
 
   const saveResource = (resourceList: any): void => {
-    console.log('SAVE RESOURCe', resourceList);
     setResourcesList(resourceList);
   };
 
