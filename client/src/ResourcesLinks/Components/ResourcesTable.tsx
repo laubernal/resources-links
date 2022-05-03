@@ -34,7 +34,7 @@ function ResourcesTable(): JSX.Element {
       <td>
         <Text align="center">
           {resource.categories.map(category => {
-            return <p>{category.name}</p>;
+            return <Text>{category.name}</Text>;
           })}
         </Text>
       </td>
