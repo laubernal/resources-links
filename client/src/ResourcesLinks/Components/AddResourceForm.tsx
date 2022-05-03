@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ActionIcon, Group, Modal } from '@mantine/core';
-import { CirclePlus } from 'tabler-icons-react';
+import { Plus } from 'tabler-icons-react';
 
 import NewResourceForm from './NewResourceForm';
 
@@ -26,7 +26,7 @@ function AddResourceForm(): JSX.Element {
           radius="lg"
           variant="transparent"
         >
-          <CirclePlus onClick={() => setOpened(true)} />
+          <Plus size={40} strokeWidth={1.5} onClick={() => setOpened(true)} />
         </ActionIcon>
       </Group>
     </div>
