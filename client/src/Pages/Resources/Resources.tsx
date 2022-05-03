@@ -9,7 +9,7 @@ import AddResourceForm from '../../ResourcesLinks/Components/AddResourceForm';
 function Resources(): JSX.Element {
   return (
     <>
-      <Container size="xl">
+      <Container size={1600}>
         <Grid grow>
           <Grid.Col span={3}>
             <Header />
@@ -18,13 +18,9 @@ function Resources(): JSX.Element {
             <SignOut />
           </Grid.Col>
         </Grid>
-      </Container>
-      <Space h="xl" />
-      <Container size="xl">
-        <Group position="center">
-          <Space h="md" />
-          <ResourcesTable />
-        </Group>
+        <Space h="xl" />
+        <ResourcesTable />
+        <Space h="sm" />
         <AddResourceForm />
       </Container>
     </>

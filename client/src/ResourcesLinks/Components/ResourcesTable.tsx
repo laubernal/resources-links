@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Table, Text, Title } from '@mantine/core';
-import { Link } from 'tabler-icons-react';
 
 import { useResource } from '../Hooks/useResource';
 
@@ -22,7 +21,7 @@ function ResourcesTable(): JSX.Element {
   const rows = resource.resourcesList.map(resource => (
     <tr key={resource.id}>
       <td>
-        <Text align="center">{resource.title}</Text>
+        <Text align="justify">{resource.title}</Text>
       </td>
       <td>
         <Text variant="link" component="a" href={resource.link} target="_blank">
@@ -30,7 +29,7 @@ function ResourcesTable(): JSX.Element {
         </Text>
       </td>
       <td>
-        <Text align="center">{resource.note}</Text>
+        <Text align="justify">{resource.note}</Text>
       </td>
       <td>
         <Text align="center">
@@ -46,7 +45,7 @@ function ResourcesTable(): JSX.Element {
   ));
 
   return (
-    <div>
+    <>
       <Title order={2}>Your resources</Title>
       <Table highlightOnHover horizontalSpacing="md" verticalSpacing="sm">
         <thead>
@@ -80,7 +79,7 @@ function ResourcesTable(): JSX.Element {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-    </div>
+    </>
   );
 }
 
