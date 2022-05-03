@@ -47,11 +47,8 @@ function ResourcesTable(): JSX.Element {
 
   return (
     <div>
-      <Title order={3}>
-        <Link size={23} strokeWidth={2} color={'black'} />
-        Your resources
-      </Title>
-      <Table>
+      <Title order={2}>Your resources</Title>
+      <Table highlightOnHover horizontalSpacing="md" verticalSpacing="sm">
         <thead>
           <tr>
             <th>
