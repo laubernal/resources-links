@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { MultiSelect, TextInput } from '@mantine/core';
+import { ActionIcon, CloseButton, Group, MultiSelect, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { Check, X } from 'tabler-icons-react';
 
 import { useCategories } from '../Hooks/useCategories';
 import { useResource } from '../Hooks/useResource';
@@ -45,6 +46,21 @@ function NewResourceForm(): JSX.Element {
           searchable
           nothingFound="No categories found"
         ></MultiSelect>
+
+        <Group spacing={5} position="right">
+          <CloseButton
+            title="Cancel"
+            color="cyan"
+            size="xl"
+            iconSize={30}
+            radius="lg"
+            variant="transparent"
+          />
+
+          <ActionIcon title="Submit" color="cyan" size="xl" radius="lg" variant="transparent">
+            <Check size={40} strokeWidth={1.5} />
+          </ActionIcon>
+        </Group>
       </form>
     </div>
   );
