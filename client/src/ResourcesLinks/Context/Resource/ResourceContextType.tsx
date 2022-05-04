@@ -1,4 +1,4 @@
-import { categoryType, resourceType } from '../../types';
+import { categoryType, resourceType } from '../../../types';
 
 export interface ResourceContextType {
   fetchResourceList: () => Promise<void>;

@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { categoryType } from '../../types';
 
-export const useCategories = () => {
-  const [categories, setCategories] = useState([{ label: '', value: '' }]);
+export const useCategoryList = () => {
+  const [categoriesList, setCategoriesList] = useState([{ label: '', value: '' }]);
 
   const getCategories = async (): Promise<void> => {
     try {
@@ -11,7 +11,7 @@ export const useCategories = () => {
 
       console.log('CATEGORIES', response.data);
 
-      setCategories(
+      setCategoriesList(
         response.data.map(({ id, name }: categoryType) => ({
           value: id,
           label: name,
@@ -23,7 +23,7 @@ export const useCategories = () => {
   };
 
   return {
-    categories,
+    categoriesList,
     setCategories: getCategories,
   };
 };
