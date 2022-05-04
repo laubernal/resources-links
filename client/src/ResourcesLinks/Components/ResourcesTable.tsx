@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Table, Text, Title } from '@mantine/core';
 
 import { useResource } from '../Hooks/useResource';
+import { categoryType } from '../../types';
 
 function ResourcesTable(): JSX.Element {
   const resource = useResource();
@@ -33,7 +34,7 @@ function ResourcesTable(): JSX.Element {
       </td>
       <td>
         <Text align="center">
-          {resource.categories.map(category => {
+          {resource.categories.map((category: categoryType) => {
             return <Text>{category.name}</Text>;
           })}
         </Text>

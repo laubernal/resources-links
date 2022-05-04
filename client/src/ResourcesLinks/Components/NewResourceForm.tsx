@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { ActionIcon, CloseButton, Group, MultiSelect, Space, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Check, X } from 'tabler-icons-react';
+import { Check } from 'tabler-icons-react';
 
-import { useCategories } from '../Hooks/useCategories';
+import { useCategoryList } from '../Hooks/useCategoryList';
 import { useResource } from '../Hooks/useResource';
 
 function NewResourceForm(): JSX.Element {
-  const { categories, setCategories } = useCategories();
+  const { categoriesList, setCategories } = useCategoryList();
   const resource = useResource();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function NewResourceForm(): JSX.Element {
         <TextInput placeholder="Link" label="Link" required></TextInput>
         <TextInput placeholder="Note" label="Note"></TextInput>
         <MultiSelect
-          data={categories}
+          data={categoriesList}
           label="Categories"
           placeholder="Select the categories you want"
           searchable
