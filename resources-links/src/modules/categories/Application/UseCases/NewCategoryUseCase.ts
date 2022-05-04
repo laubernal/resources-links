@@ -5,10 +5,10 @@ import { Category } from '../../Domain/entities/category.entity';
 import { ICategoryRepository } from '../../Domain/interfaces/ICategoriesRepository';
 import { NewCategoryDto } from '../Dto/NewCategoryDto';
 
-export class NewCategoryUseCase implements IUseCase<string> {
+export class NewCategoryUseCase implements IUseCase<Category> {
   constructor(public categoryRepository: ICategoryRepository) {}
 
-  public async execute(category: NewCategoryDto): Promise<string> {
+  public async execute(category: NewCategoryDto): Promise<Category> {
     try {
       await this.checkIfCategoryAlreadyExists(category.name);
 
@@ -16,7 +16,7 @@ export class NewCategoryUseCase implements IUseCase<string> {
 
       await this.categoryRepository.save(newCategory);
 
-      return newCategory.id;
+      return newCategory;
     } catch (error: any) {
       throw new Error(error.message);
     }

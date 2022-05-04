@@ -1,4 +1,4 @@
 import React from 'react';
 import { CategoryContextType } from './CategoryContextType';
 
-export const ResourceContext = React.createContext<CategoryContextType>(null!);
+export const CategoryContext = React.createContext<CategoryContextType>(null!);

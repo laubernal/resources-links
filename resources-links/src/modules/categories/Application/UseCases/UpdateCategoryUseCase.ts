@@ -3,12 +3,12 @@ import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsEr
 import { Id } from '../../../shared/Domain/vo';
 import { Category } from '../../Domain/entities/category.entity';
 import { ICategoryRepository } from '../../Domain/interfaces/ICategoriesRepository';
-import { UpdateCategoryDto } from '../Dto/UpdateCategoryDto';
+import { CategoryDto } from '../Dto/CategoryDto';
 
 export class UpdateCategoryUseCase implements IUseCase<string> {
   constructor(public categoryRepository: ICategoryRepository) {}
 
-  public async execute(category: UpdateCategoryDto): Promise<string> {
+  public async execute(category: CategoryDto): Promise<string> {
     try {
       const validatedId = Id.validUuid(category.id);
 
