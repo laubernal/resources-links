@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
 import { requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
-import { UpdateCategoryDto } from '../../Application/Dto/UpdateCategoryDto';
+import { CategoryDto } from '../../Application/Dto/CategoryDto';
 import { UpdateCategoryUseCase } from '../../Application/UseCases';
 import { CategoryRepository } from '../repositories/CategoryRepository';
 
@@ -16,7 +16,7 @@ export class UpdateCategoryController {
 
       const categoryRepository = new CategoryRepository();
 
-      const updatedCategory = new UpdateCategoryDto(id, name);
+      const updatedCategory = new CategoryDto(id, name);
 
       const categoryId = await new UpdateCategoryUseCase(categoryRepository).execute(
         updatedCategory

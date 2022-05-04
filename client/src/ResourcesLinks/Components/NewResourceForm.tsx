@@ -3,16 +3,22 @@ import { ActionIcon, CloseButton, Group, MultiSelect, Space, TextInput } from '@
 import { useForm } from '@mantine/form';
 import { Check } from 'tabler-icons-react';
 
-import { useCategoryList } from '../Hooks/useCategoryList';
 import { useResource } from '../Hooks/useResource';
+import { useCategory } from '../Hooks/useCategory';
 
 function NewResourceForm(): JSX.Element {
-  const { categoriesList, setCategories } = useCategoryList();
+  const category = useCategory();
   const resource = useResource();
 
   useEffect(() => {
-    setCategories();
-  }, []);
+    (async () => {
+      try {
+        await category.fetchCategoryList();
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    })();
+  }, [category.categoriesList]);
 
   const form = useForm({
     initialValues: {
@@ -33,10 +39,9 @@ function NewResourceForm(): JSX.Element {
     }
   };
 
-  const handleCreateCategory = async (category: string) => {
+  const handleCreateCategory = async (newCategory: string) => {
     try {
-      // event?.preventDefault();
-      // await category.saveCategory(category);
+      await category.saveCategory(newCategory);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -49,14 +54,14 @@ function NewResourceForm(): JSX.Element {
         <TextInput placeholder="Link" label="Link" required></TextInput>
         <TextInput placeholder="Note" label="Note"></TextInput>
         <MultiSelect
-          data={categoriesList}
+          data={category.categoriesList}
           label="Categories"
           placeholder="Select the categories you want"
           searchable
           nothingFound="No categories found"
           creatable
-          getCreateLabel={category => `+ Create ${category}`}
-          onCreate={category => handleCreateCategory(category)}
+          getCreateLabel={(category: string) => `+ Create ${category}`}
+          onCreate={(category: string) => handleCreateCategory(category)}
           required
         ></MultiSelect>
         <Space h="md" />

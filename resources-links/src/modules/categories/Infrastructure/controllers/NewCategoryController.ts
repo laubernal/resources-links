@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
+import { CategoryDto } from '../../Application/Dto';
 import { NewCategoryDto } from '../../Application/Dto/NewCategoryDto';
 import { NewCategoryUseCase } from '../../Application/UseCases';
 import { CategoryRepository } from '../repositories/CategoryRepository';
@@ -20,9 +21,11 @@ export class NewCategoryController {
 
       const newCategoryDto = new NewCategoryDto(name);
 
-      const categoryId = await new NewCategoryUseCase(categoryRepository).execute(newCategoryDto);
+      const category = await new NewCategoryUseCase(categoryRepository).execute(newCategoryDto);
 
-      res.status(200).send({ categoryId });
+      const newCategory = new CategoryDto(category.id, category.name);
+
+      res.status(200).send({ newCategory });
     } catch (error: any) {
       console.log(error);
       res.status(400).send({

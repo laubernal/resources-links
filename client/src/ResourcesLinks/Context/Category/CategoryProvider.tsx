@@ -1,10 +1,9 @@
 import React from 'react';
+import { useCategoryProvider } from '../../Hooks/useCategoryProvider';
+import { CategoryContext } from './CategoryContext';
 
-import { useResourceProvider } from '../../Hooks/useResourceProvider';
-import { ResourceContext } from '../Resource/ResourceContext';
+export const CategoryProvider = ({ children }: { children: React.ReactNode }) => {
+  const category = useCategoryProvider();
 
-export const ResourceProvider = ({ children }: { children: React.ReactNode }) => {
-  const resource = useResourceProvider();
-
-  return <ResourceContext.Provider value={resource}>{children}</ResourceContext.Provider>;
+  return <CategoryContext.Provider value={category}>{children}</CategoryContext.Provider>;
 };
