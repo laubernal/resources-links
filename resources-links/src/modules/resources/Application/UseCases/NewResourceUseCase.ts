@@ -11,6 +11,8 @@ export class NewResourceUseCase implements IUseCase<string> {
 
   public async execute(resource: NewResourceDto): Promise<string> {
     try {
+      console.log('NEW RESOURCE: ', resource);
+
       const link = new Link(resource.link);
       const userId = Id.validUuid(resource.userId);
       const categories: CategoryVo[] = resource.categories.map(category => {

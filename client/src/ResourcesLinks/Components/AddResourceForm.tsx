@@ -15,6 +15,9 @@ function AddResourceForm(): JSX.Element {
         opened={opened}
         onClose={() => setOpened(false)}
         title="Add a new resource"
+        transition="fade"
+        transitionDuration={400}
+        transitionTimingFunction="ease"
       >
         <NewResourceForm />
       </Modal>

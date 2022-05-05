@@ -20,6 +20,7 @@ export const useCategoryProvider = () => {
       console.log(error.message);
     }
   };
+  
   const saveCategory = async (name: string): Promise<void> => {
     try {
       await axios.post('/categories/new', { name });

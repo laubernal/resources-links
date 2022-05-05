@@ -36,6 +36,8 @@ export const useResourceProvider = () => {
     categories: categoryType[]
   ): Promise<void> => {
     try {
+      console.log(`TITLE: ${title}, LINK: ${link}, NOTE: ${note}, categories: ${categories}`);
+
       const response = await axios.post('/resources/new', { title, link, note, categories });
 
       console.log('SAVE RESPONSE', response);
