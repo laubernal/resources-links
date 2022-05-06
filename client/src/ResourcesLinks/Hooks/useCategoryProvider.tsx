@@ -11,16 +11,16 @@ export const useCategoryProvider = () => {
       const response = await axios.get('/categories');
 
       setCategoriesList(
-        response.data.map(({ id, name }: categoryType) => ({
-          value: id,
-          label: name,
+        response.data.map((category: categoryType) => ({
+          value: JSON.stringify(category),
+          label: category.name,
         }))
       );
     } catch (error: any) {
       console.log(error.message);
     }
   };
-  
+
   const saveCategory = async (name: string): Promise<void> => {
     try {
       await axios.post('/categories/new', { name });

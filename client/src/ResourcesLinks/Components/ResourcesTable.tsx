@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Table, Text, Title } from '@mantine/core';
 
 import { useResource } from '../Hooks/useResource';
-import { categoryType } from '../../types';
+import { categoryType, resourceType } from '../../types';
 
 function ResourcesTable(): JSX.Element {
   const resource = useResource();
@@ -17,7 +17,7 @@ function ResourcesTable(): JSX.Element {
     })();
   }, []);
 
-  const rows = resource.resourcesList.map(resource => (
+  const rows = resource.resourcesList.map((resource: resourceType) => (
     <tr key={resource.id}>
       <td>
         <Text align="justify">{resource.title}</Text>
@@ -33,7 +33,7 @@ function ResourcesTable(): JSX.Element {
       <td>
         <Text align="center">
           {resource.categories.map((category: categoryType) => {
-            return <Text>{category.name}</Text>;
+            return <Text key={category.id}>{category.name}</Text>;
           })}
         </Text>
       </td>
