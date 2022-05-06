@@ -10,7 +10,7 @@ function Resources(): JSX.Element {
   return (
     <>
       <Container size={1600}>
-        <Grid grow>
+        <Grid>
           <Grid.Col span={3}>
             <Header />
           </Grid.Col>

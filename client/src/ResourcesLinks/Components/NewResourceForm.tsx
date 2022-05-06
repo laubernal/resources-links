@@ -4,15 +4,13 @@ import { useForm } from '@mantine/form';
 
 import { useResource } from '../Hooks/useResource';
 import { useCategory } from '../Hooks/useCategory';
+import { categoryType } from '../../types';
 
 interface FormValues {
   title: string;
   link: string;
   note: string;
-  categories: {
-    id: string;
-    name: string;
-  }[];
+  categories: string[];
 }
 
 function NewResourceForm(): JSX.Element {
@@ -24,12 +22,7 @@ function NewResourceForm(): JSX.Element {
       title: '',
       link: '',
       note: '',
-      categories: [
-        {
-          id: '',
-          name: '',
-        },
-      ],
+      categories: [],
     },
   });
 
@@ -46,9 +39,12 @@ function NewResourceForm(): JSX.Element {
   const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
     try {
       event.preventDefault();
-      console.log(values);
 
-      await resource.saveResource(values.title, values.link, values.note, values.categories);
+      const categories: categoryType[] = values.categories.map(category => {
+        return JSON.parse(category);
+      });
+
+      await resource.saveResource(values.title, values.link, values.note, categories);
       // CLOSE MODAL WHEN SAVED
       // SHOW ALERT WITH SAVED SUCCESSFULLY
     } catch (error: any) {
@@ -71,11 +67,13 @@ function NewResourceForm(): JSX.Element {
         <TextInput
           placeholder="Title"
           label="Title"
+          required
           data-autofocus
           {...form.getInputProps('title')}
         />
         <TextInput placeholder="Link" label="Link" required {...form.getInputProps('link')} />
-        <TextInput placeholder="Note" label="Note" {...form.getInputProps('note')} />
+        <TextInput placeholder="Note" label="Note" required {...form.getInputProps('note')} />
+
         <MultiSelect
           data={category.categoriesList}
           label="Categories"
