@@ -13,7 +13,7 @@ interface FormValues {
   categories: string[];
 }
 
-function NewResourceForm(): JSX.Element {
+function NewResourceForm(props: { setOpenedModal: Function }): JSX.Element {
   const category = useCategory();
   const resource = useResource();
 
@@ -92,6 +92,9 @@ function NewResourceForm(): JSX.Element {
         <Space h="md" />
 
         <Group mt="md" position="right">
+          <Button radius="md" color="cyan" onClick={() => props.setOpenedModal(false)}>
+            Cancel
+          </Button>
           <Button type="submit" radius="md" color="cyan">
             Submit
           </Button>

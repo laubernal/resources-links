@@ -11,19 +11,7 @@ export const useResourceProvider = () => {
       const response = await axios.get('/resources');
       console.log('RESPONSE', response.data);
 
-      setResourcesList(
-        response.data.map(({ id, title, link, note, createdAt, categories }: resourceType) => ({
-          id,
-          title,
-          link,
-          note,
-          createdAt,
-          categories: categories.map(({ id, name }: categoryType) => ({
-            id,
-            name,
-          })),
-        }))
-      );
+      setResourcesList(response.data);
     } catch (error: any) {
       console.log(error.message);
     }
