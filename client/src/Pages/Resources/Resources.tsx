@@ -57,27 +57,33 @@ function Resources(): JSX.Element {
         </Group>
 
         {showSuccessNotification ? (
-          <Notification
-            closeButtonProps={{ 'aria-label': 'Hide notification' }}
-            icon={<Check size={18} />}
-            color="teal"
-            title="Saved!"
-            onClose={() => setShowSuccessNotification(false)}
-          >
-            Your resource was saved succesfully!
-          </Notification>
+          <Group position="right">
+            <Notification
+              closeButtonProps={{ 'aria-label': 'Hide notification' }}
+              icon={<Check size={18} />}
+              color="teal"
+              title="Saved!"
+              onClose={() => setShowSuccessNotification(false)}
+              {...setTimeout(() => setShowSuccessNotification(false), 3000)}
+            >
+              Your resource was saved succesfully!
+            </Notification>
+          </Group>
         ) : null}
 
         {showErrorNotification ? (
-          <Notification
-            closeButtonProps={{ 'aria-label': 'Hide notification' }}
-            icon={<X size={18} />}
-            color="red"
-            title="Error!"
-            onClose={() => setShowErrorNotification(false)}
-          >
-            There was a problem saving your resource!
-          </Notification>
+          <Group position="right">
+            <Notification
+              closeButtonProps={{ 'aria-label': 'Hide notification' }}
+              icon={<X size={18} />}
+              color="red"
+              title="Error!"
+              onClose={() => setShowErrorNotification(false)}
+              {...setTimeout(() => setShowErrorNotification(false), 3000)}
+            >
+              There was a problem saving your resource!
+            </Notification>
+          </Group>
         ) : null}
       </Container>
     </>

@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Group, MultiSelect, Notification, Space, TextInput } from '@mantine/core';
+import React, { useEffect } from 'react';
+import { Button, Group, MultiSelect, Space, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 import { useResource } from '../Hooks/useResource';
 import { useCategory } from '../Hooks/useCategory';
 import { categoryType } from '../../types';
-import { Check, X } from 'tabler-icons-react';
+
+interface NewResourceFormProps {
+  setOpenedModal: (boolean: boolean) => void;
+  setShowSuccessNotification: (boolean: boolean) => void;
+  setShowErrorNotification: (boolean: boolean) => void;
+}
 
 interface FormValues {
   title: string;
@@ -14,11 +19,11 @@ interface FormValues {
   categories: string[];
 }
 
-function NewResourceForm(props: {
-  setOpenedModal: Function;
-  setShowSuccessNotification: Function;
-  setShowErrorNotification: Function;
-}): JSX.Element {
+function NewResourceForm({
+  setOpenedModal,
+  setShowSuccessNotification,
+  setShowErrorNotification,
+}: NewResourceFormProps): JSX.Element {
   const category = useCategory();
   const resource = useResource();
 
@@ -49,14 +54,13 @@ function NewResourceForm(props: {
         return JSON.parse(category);
       });
 
-      // await resource.saveResource(values.title, values.link, values.note, categories);
-      
-      props.setShowSuccessNotification(true);
-      // CLOSE MODAL WHEN SAVED
-      setTimeout(() => props.setOpenedModal(false), 1000);
+      await resource.saveResource(values.title, values.link, values.note, categories);
+
+      setShowSuccessNotification(true);
+      setTimeout(() => setOpenedModal(false), 500);
     } catch (error: any) {
       console.log(error.message);
-      props.setShowErrorNotification(true);
+      setShowErrorNotification(true);
     }
   };
 
@@ -100,7 +104,7 @@ function NewResourceForm(props: {
         <Space h="md" />
 
         <Group mt="md" position="right">
-          <Button radius="md" color="cyan" onClick={() => props.setOpenedModal(false)}>
+          <Button radius="md" color="cyan" onClick={() => setOpenedModal(false)}>
             Cancel
           </Button>
           <Button type="submit" radius="md" color="cyan">
