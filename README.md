@@ -1,4 +1,4 @@
-# Resources links
+# 🔗 Resources links
 
 💡 React Application that allows you to keep all the links of resources that you want to look for in the future all in one place.
 
