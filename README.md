@@ -4,7 +4,7 @@
 
 ---
 
-#### What it does
+### What it does
 
 You'll be able to:
 
