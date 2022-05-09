@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import { Button, Group, MultiSelect, Space, TextInput } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
+import { Button, Group, MultiSelect, Notification, Space, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 import { useResource } from '../Hooks/useResource';
 import { useCategory } from '../Hooks/useCategory';
 import { categoryType } from '../../types';
+import { Check, X } from 'tabler-icons-react';
 
 interface FormValues {
   title: string;
@@ -13,7 +14,11 @@ interface FormValues {
   categories: string[];
 }
 
-function NewResourceForm(props: { setOpenedModal: Function }): JSX.Element {
+function NewResourceForm(props: {
+  setOpenedModal: Function;
+  setShowSuccessNotification: Function;
+  setShowErrorNotification: Function;
+}): JSX.Element {
   const category = useCategory();
   const resource = useResource();
 
@@ -44,11 +49,14 @@ function NewResourceForm(props: { setOpenedModal: Function }): JSX.Element {
         return JSON.parse(category);
       });
 
-      await resource.saveResource(values.title, values.link, values.note, categories);
+      // await resource.saveResource(values.title, values.link, values.note, categories);
+      
+      props.setShowSuccessNotification(true);
       // CLOSE MODAL WHEN SAVED
-      // SHOW ALERT WITH SAVED SUCCESSFULLY
+      setTimeout(() => props.setOpenedModal(false), 1000);
     } catch (error: any) {
       console.log(error.message);
+      props.setShowErrorNotification(true);
     }
   };
 
