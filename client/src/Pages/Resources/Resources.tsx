@@ -44,6 +44,18 @@ function Resources(): JSX.Element {
           />
         </Modal>
 
+        {/* <Modal
+          centered
+          size="xl"
+          opened={openedModal}
+          onClose={() => setOpenedModal(false)}
+          title="Edit resource"
+        >
+          <UpdateResourceForm setOpenedModal={setOpenedModal}
+            setShowSuccessNotification={setShowSuccessNotification}
+            setShowErrorNotification={setShowErrorNotification} title={title} link={link} note={note} categories={categories} />
+        </Modal> */}
+
         <Group position="right">
           <ActionIcon
             title="Add new resource"
