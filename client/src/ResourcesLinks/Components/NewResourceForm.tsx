@@ -44,12 +44,12 @@ function NewResourceForm({
         console.log(error.message);
       }
     })();
-  }, []);
+  });
 
   const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
     try {
       event.preventDefault();
-     
+
       const categories: categoryType[] = values.categories.map(category => {
         return JSON.parse(category);
       });
@@ -59,7 +59,8 @@ function NewResourceForm({
       setShowSuccessNotification(true);
       setTimeout(() => setOpenedModal(false), 500);
     } catch (error: any) {
-      console.log(error.message);
+      console.log('ERROR -------------', error.message);
+      setTimeout(() => setOpenedModal(false), 500);
       setShowErrorNotification(true);
     }
   };

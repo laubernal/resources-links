@@ -81,7 +81,7 @@ function Resources(): JSX.Element {
               onClose={() => setShowErrorNotification(false)}
               {...setTimeout(() => setShowErrorNotification(false), 3000)}
             >
-              There was a problem saving your resource!
+              There was a problem saving your resource! Please check your data
             </Notification>
           </Group>
         ) : null}

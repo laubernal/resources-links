@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Table, Text, Title } from '@mantine/core';
+import { Menu, Table, Text, Title } from '@mantine/core';
 
 import { useResource } from '../Hooks/useResource';
 import { categoryType, resourceType } from '../../types';
+import { Trash } from 'tabler-icons-react';
 
 function ResourcesTable(): JSX.Element {
   const resource = useResource();
@@ -40,6 +41,11 @@ function ResourcesTable(): JSX.Element {
       <td>
         <Text>{resource.createdAt}</Text>
       </td>
+      <td>
+        <Menu withArrow>
+          <Menu.Item icon={<Trash size={14} />}>Delete</Menu.Item>
+        </Menu>
+      </td>
     </tr>
   ));
 
@@ -74,6 +80,7 @@ function ResourcesTable(): JSX.Element {
                 Created
               </Text>
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

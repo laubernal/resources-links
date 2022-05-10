@@ -21,7 +21,6 @@ export class NewResourceController {
         note: string;
         categories: CategoryType[];
       };
-      console.log(`TITLE: ${title} - LINK: ${link} - NOTE: ${note} - CATEGORIES: ${categories}`);
 
       const resourceRepository = new ResourcesRepository();
 
