@@ -24,7 +24,7 @@ export const useResourceProvider = () => {
     categories: categoryType[]
   ): Promise<void> => {
     try {
-      console.log(`TITLE: ${title}, LINK: ${link}, NOTE: ${note}, categories: ${categories}`);
+      console.log(`TITLE: ${title}, LINK: ${link}, NOTE: ${note}`);
       console.log('CATEGORIES SAVE RESOURCE', categories);
 
       const response = await axios.post('/resources/new', { title, link, note, categories });
