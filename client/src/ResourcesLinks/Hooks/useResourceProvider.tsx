@@ -23,16 +23,16 @@ export const useResourceProvider = () => {
     note: string,
     categories: categoryType[]
   ): Promise<void> => {
-    try {
-      console.log(`TITLE: ${title}, LINK: ${link}, NOTE: ${note}`);
-      console.log('CATEGORIES SAVE RESOURCE', categories);
+    // try {
+    console.log(`TITLE: ${title}, LINK: ${link}, NOTE: ${note}`);
+    console.log('CATEGORIES SAVE RESOURCE', categories);
 
-      const response = await axios.post('/resources/new', { title, link, note, categories });
+    const response = await axios.post('/resources/new', { title, link, note, categories });
 
-      console.log('SAVE RESPONSE', response);
-    } catch (error: any) {
-      console.log(error.message);
-    }
+    console.log('SAVE RESPONSE', response);
+    // } catch (error: any) {
+    //   console.log(error.message);
+    // }
   };
 
   const updateResource = async (
