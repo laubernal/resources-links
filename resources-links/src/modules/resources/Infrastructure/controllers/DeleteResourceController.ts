@@ -22,7 +22,7 @@ export class DeleteResourceController {
 
       new DeleteResourceUseCase(resourceRepository).execute(deleteResourceDto);
 
-      res.status(200);
+      res.status(200).send({});
     } catch (error: any) {
       console.log(error);
       res.status(400).send({
