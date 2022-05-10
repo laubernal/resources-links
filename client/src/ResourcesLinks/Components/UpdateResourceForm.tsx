@@ -6,10 +6,14 @@ import { useResource } from '../Hooks/useResource';
 import { useCategory } from '../Hooks/useCategory';
 import { categoryType } from '../../types';
 
-interface NewResourceFormProps {
+interface UpdateResourceFormProps {
   setOpenedModal: (boolean: boolean) => void;
   setShowSuccessNotification: (boolean: boolean) => void;
   setShowErrorNotification: (boolean: boolean) => void;
+  title: string;
+  link: string;
+  note: string;
+  categories: string[];
 }
 
 interface FormValues {
@@ -19,20 +23,24 @@ interface FormValues {
   categories: string[];
 }
 
-function NewResourceForm({
+function UpdateResourceForm({
   setOpenedModal,
   setShowSuccessNotification,
   setShowErrorNotification,
-}: NewResourceFormProps): JSX.Element {
+  title,
+  link,
+  note,
+  categories,
+}: UpdateResourceFormProps): JSX.Element {
   const category = useCategory();
   const resource = useResource();
 
   const form = useForm<FormValues>({
     initialValues: {
-      title: '',
-      link: '',
-      note: '',
-      categories: [],
+      title,
+      link,
+      note,
+      categories,
     },
   });
 
@@ -46,10 +54,7 @@ function NewResourceForm({
     })();
   });
 
-  const handleSubmit = async (
-    values: typeof form.values,
-    event: React.FormEvent<Element>
-  ): Promise<void> => {
+  const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
     try {
       event.preventDefault();
 
@@ -68,7 +73,7 @@ function NewResourceForm({
     }
   };
 
-  const handleCreateCategory = async (newCategory: string): Promise<void> => {
+  const handleCreateCategory = async (newCategory: string) => {
     try {
       await category.saveCategory(newCategory);
       await category.fetchCategoryList();
@@ -119,4 +124,4 @@ function NewResourceForm({
   );
 }
 
-export default NewResourceForm;
+export default UpdateResourceForm;

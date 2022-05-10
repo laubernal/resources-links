@@ -3,22 +3,31 @@ import { Menu, Table, Text, Title } from '@mantine/core';
 
 import { useResource } from '../Hooks/useResource';
 import { categoryType, resourceType } from '../../types';
-import { Trash } from 'tabler-icons-react';
+import { Edit, Trash } from 'tabler-icons-react';
+import UpdateResourceForm from './UpdateResourceForm';
 
 function ResourcesTable(): JSX.Element {
-  const resource = useResource();
+  const resourceContext = useResource();
 
   useEffect(() => {
     (async () => {
       try {
-        await resource.fetchResourceList();
+        await resourceContext.fetchResourceList();
       } catch (error: any) {
         console.log(error.message);
       }
     })();
   }, []);
 
-  const rows = resource.resourcesList.map((resource: resourceType) => (
+  const handleDeleteResource = async (resourceId: string): Promise<void> => {
+    try {
+      await resourceContext.deleteResource(resourceId);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  const rows = resourceContext.resourcesList.map((resource: resourceType) => (
     <tr key={resource.id}>
       <td>
         <Text align="justify">{resource.title}</Text>
@@ -42,8 +51,16 @@ function ResourcesTable(): JSX.Element {
         <Text>{resource.createdAt}</Text>
       </td>
       <td>
-        <Menu withArrow>
-          <Menu.Item icon={<Trash size={14} />}>Delete</Menu.Item>
+        <Menu placement="center" withArrow>
+          <Menu.Item icon={<Edit size={14} />} onClick={() => console.log('CLICKED')}>
+            Edit
+          </Menu.Item>
+          <Menu.Item
+            icon={<Trash size={14} color="red" />}
+            onClick={() => handleDeleteResource(resource.id)}
+          >
+            Delete
+          </Menu.Item>
         </Menu>
       </td>
     </tr>

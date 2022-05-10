@@ -12,7 +12,7 @@ export class UpdateResourceController {
   @post('/resources/update')
   @use(requireAuth)
   @use(currentUser)
-  @bodyValidator('id', 'title', 'note', 'link', 'categories')
+  @bodyValidator('id', 'link', 'categories')
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
       const { id, title, note, link, categories } = req.body as {
