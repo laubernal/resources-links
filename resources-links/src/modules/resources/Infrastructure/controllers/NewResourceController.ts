@@ -12,15 +12,16 @@ export class NewResourceController {
   @post('/resources/new')
   @use(requireAuth)
   @use(currentUser)
-  @bodyValidator('title', 'note', 'link', 'categories')
+  @bodyValidator('link', 'categories')
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
-      const { title, note, link, categories } = req.body as {
+      const { title, link, note, categories } = req.body as {
         title: string;
-        note: string;
         link: string;
+        note: string;
         categories: CategoryType[];
       };
+      console.log(`TITLE: ${title} - LINK: ${link} - NOTE: ${note} - CATEGORIES: ${categories}`);
 
       const resourceRepository = new ResourcesRepository();
 

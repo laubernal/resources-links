@@ -49,7 +49,7 @@ function NewResourceForm({
   const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
     try {
       event.preventDefault();
-
+     
       const categories: categoryType[] = values.categories.map(category => {
         return JSON.parse(category);
       });
@@ -79,12 +79,11 @@ function NewResourceForm({
         <TextInput
           placeholder="Title"
           label="Title"
-          required
           data-autofocus
           {...form.getInputProps('title')}
         />
         <TextInput placeholder="Link" label="Link" required {...form.getInputProps('link')} />
-        <TextInput placeholder="Note" label="Note" required {...form.getInputProps('note')} />
+        <TextInput placeholder="Note" label="Note" {...form.getInputProps('note')} />
 
         <MultiSelect
           data={category.categoriesList}
