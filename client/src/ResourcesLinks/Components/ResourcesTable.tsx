@@ -12,6 +12,7 @@ function ResourcesTable(): JSX.Element {
   useEffect(() => {
     (async () => {
       try {
+        console.log('RENDER');
         await resourceContext.fetchResourceList();
       } catch (error: any) {
         console.log(error.message);
@@ -22,6 +23,9 @@ function ResourcesTable(): JSX.Element {
   const handleDeleteResource = async (resourceId: string): Promise<void> => {
     try {
       await resourceContext.deleteResource(resourceId);
+      console.log('FETCH');
+
+      await resourceContext.fetchResourceList();
     } catch (error: any) {
       console.log(error.message);
     }

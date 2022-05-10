@@ -52,11 +52,13 @@ export const useResourceProvider = () => {
   };
 
   const deleteResource = async (resourceId: string): Promise<void> => {
-    try {
-      await axios.post('/resources/delete', { resourceId });
-    } catch (error: any) {
-      console.log(error.message);
-    }
+    // try {
+    console.log('BEFORE DELETE');
+    await axios.post('/resources/delete', { resourceId });
+    console.log('AFTER DELETE');
+    // } catch (error: any) {
+    //   console.log(error.message);
+    // }
   };
 
   return {
