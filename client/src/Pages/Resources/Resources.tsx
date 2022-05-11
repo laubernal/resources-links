@@ -6,9 +6,11 @@ import ResourcesTable from '../../ResourcesLinks/Components/ResourcesTable';
 import Header from '../../Auth/Components/Header/Header';
 import NewResourceForm from '../../ResourcesLinks/Components/NewResourceForm';
 import { Check, Plus, X } from 'tabler-icons-react';
+import DeleteConfirmationModal from '../../ResourcesLinks/Components/DeleteConfirmationModal';
 
 function Resources(): JSX.Element {
   const [openedModal, setOpenedModal] = useState(false);
+  const [openedDeleteModal, setOpenedDeleteModal] = useState(false);
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
   const [showErrorNotification, setShowErrorNotification] = useState(false);
 
@@ -47,13 +49,19 @@ function Resources(): JSX.Element {
         {/* <Modal
           centered
           size="xl"
-          opened={openedModal}
+          opened={openedUpdateModal}
           onClose={() => setOpenedModal(false)}
           title="Edit resource"
         >
-          <UpdateResourceForm setOpenedModal={setOpenedModal}
+          <UpdateResourceForm
+            setOpenedModal={setOpenedUpdateModal}
             setShowSuccessNotification={setShowSuccessNotification}
-            setShowErrorNotification={setShowErrorNotification} title={title} link={link} note={note} categories={categories} />
+            setShowErrorNotification={setShowErrorNotification}
+            title={title}
+            link={link}
+            note={note}
+            categories={categories}
+          />
         </Modal> */}
 
         <Group position="right">
