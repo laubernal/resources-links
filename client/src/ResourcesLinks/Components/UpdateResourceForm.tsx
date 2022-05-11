@@ -6,41 +6,51 @@ import { useResource } from '../Hooks/useResource';
 import { useCategory } from '../Hooks/useCategory';
 import { categoryType } from '../../types';
 
+type updateResourceType = {
+  id: string;
+  title: string;
+  link: string;
+  note: string;
+  categories: categoryType[];
+};
+
 interface UpdateResourceFormProps {
   setOpenedModal: (boolean: boolean) => void;
   setShowSuccessNotification: (boolean: boolean) => void;
   setShowErrorNotification: (boolean: boolean) => void;
-  title: string;
-  link: string;
-  note: string;
-  categories: string[];
+  resource: updateResourceType;
+  // title: string;
+  // link: string;
+  // note: string;
+  // categories: [];
 }
 
 interface FormValues {
   title: string;
   link: string;
   note: string;
-  categories: string[];
+  categories: categoryType[];
 }
 
 function UpdateResourceForm({
   setOpenedModal,
   setShowSuccessNotification,
   setShowErrorNotification,
-  title,
-  link,
-  note,
-  categories,
-}: UpdateResourceFormProps): JSX.Element {
+  resource,
+}: // title,
+// link,
+// note,
+// categories,
+UpdateResourceFormProps): JSX.Element {
   const category = useCategory();
-  const resource = useResource();
+  const resources = useResource();
 
   const form = useForm<FormValues>({
     initialValues: {
-      title,
-      link,
-      note,
-      categories,
+      title: resource.title,
+      link: resource.link,
+      note: resource.note,
+      categories: resource.categories,
     },
   });
 
@@ -58,16 +68,24 @@ function UpdateResourceForm({
     try {
       event.preventDefault();
 
-      const categories: categoryType[] = values.categories.map(category => {
-        return JSON.parse(category);
-      });
+      // const categories: categoryType[] = values.categories.map(category => {
+      //   return JSON.parse(category);
+      // });
 
-      await resource.saveResource(values.title, values.link, values.note, categories);
+      await resources.updateResource(
+        resource.id,
+        values.title,
+        values.link,
+        values.note,
+        values.categories
+      );
+
+      await resources.fetchResourceList();
 
       setShowSuccessNotification(true);
       setTimeout(() => setOpenedModal(false), 500);
     } catch (error: any) {
-      console.log('ERROR -------------', error.message);
+      console.log(error.message);
       setTimeout(() => setOpenedModal(false), 500);
       setShowErrorNotification(true);
     }
