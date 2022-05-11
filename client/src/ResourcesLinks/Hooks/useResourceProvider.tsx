@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { categoryType, resourceType } from '../../types';
+import { categoryType } from '../../types';
 import useResourceList from './useResourceList';
 
 export const useResourceProvider = () => {
