@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Menu, Table, Text, Title } from '@mantine/core';
+import { Menu, Modal, Table, Text, Title } from '@mantine/core';
 
 import { useResource } from '../Hooks/useResource';
 import { categoryType, resourceType } from '../../types';
@@ -7,10 +7,28 @@ import { Edit, Trash } from 'tabler-icons-react';
 import UpdateResourceForm from './UpdateResourceForm';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 
-function ResourcesTable(): JSX.Element {
+interface ResourceTableProps {
+  setShowSuccessNotification: (boolean: boolean) => void;
+  setShowErrorNotification: (boolean: boolean) => void;
+}
+
+function ResourcesTable({
+  setShowSuccessNotification,
+  setShowErrorNotification,
+}: ResourceTableProps): JSX.Element {
   const resources = useResource();
+
+  const [openedUpdateModal, setOpenedUpdateModal] = useState(false);
   const [openedDeleteModal, setOpenedDeleteModal] = useState(false);
   const [resourceId, setResourceId] = useState('');
+  const [resource, setResource] = useState({
+    id: '',
+    title: '',
+    link: '',
+    note: '',
+    createdAt: '',
+    categories: [{ id: '', name: '' }],
+  });
 
   useEffect(() => {
     (async () => {
@@ -25,10 +43,20 @@ function ResourcesTable(): JSX.Element {
   const handleDeleteResource = async (resourceId: string): Promise<void> => {
     try {
       setResourceId(resourceId);
-      setOpenedDeleteModal(true);
-      // await resources.deleteResource(resourceId);
 
-      // await resources.fetchResourceList();
+      setOpenedDeleteModal(true);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  const handleUpdateResource = async (updateResource: resourceType): Promise<void> => {
+    try {
+      console.log(`HANDLE UPDATE RESOURCE ${updateResource.id}`);
+      setResource(resource);
+      console.log(`RESOURCE ${resource} ${resource}`);
+
+      console.log('UPDATE MODAL 2', openedUpdateModal);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -58,8 +86,9 @@ function ResourcesTable(): JSX.Element {
         <Text>{resource.createdAt}</Text>
       </td>
       <td>
-        <Menu placement="center" withArrow closeOnItemClick>
-          <Menu.Item icon={<Edit size={14} />} onClick={() => console.log('CLICKED')}>
+        <Menu placement="center" withArrow>
+          {/* <Menu.Item icon={<Edit size={14} />} onClick={() => handleUpdateResource(resource)}> */}
+          <Menu.Item icon={<Edit size={14} />} onClick={() => setOpenedUpdateModal(true)}>
             Edit
           </Menu.Item>
           <Menu.Item
@@ -109,12 +138,33 @@ function ResourcesTable(): JSX.Element {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
+
+      <Modal
+        centered
+        size="xl"
+        opened={openedUpdateModal}
+        onClose={() => setOpenedUpdateModal(false)}
+        title="Edit resource"
+        withinPortal
+      >
+        {/* <UpdateResourceForm
+          setOpenedModal={setOpenedUpdateModal}
+          setShowSuccessNotification={setShowSuccessNotification}
+          setShowErrorNotification={setShowErrorNotification}
+          resource={resource}
+          // title={resource.id}
+          // link={resource.link}
+          // note={resource.note}
+          // categories={resource.categories}
+        /> */}
+        Example
+      </Modal>
+
       <DeleteConfirmationModal
         openedModal={openedDeleteModal}
         setOpenedModal={setOpenedDeleteModal}
         resourceId={resourceId}
       />
-
     </>
   );
 }

@@ -60,11 +60,11 @@ function NewResourceForm({
       await resource.saveResource(values.title, values.link, values.note, categories);
 
       await resource.fetchResourceList();
-      
+
       setShowSuccessNotification(true);
       setTimeout(() => setOpenedModal(false), 500);
     } catch (error: any) {
-      console.log('ERROR -------------', error.message);
+      console.log(error.message);
       setTimeout(() => setOpenedModal(false), 500);
       setShowErrorNotification(true);
     }

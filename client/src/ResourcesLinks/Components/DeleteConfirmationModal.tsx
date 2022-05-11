@@ -28,12 +28,12 @@ function DeleteConfirmationModal({
 
   return (
     <Modal
-      withinPortal
       centered
-      size="xl"
+      size="md"
       opened={openedDeleteModal}
       onClose={() => setOpenedDeleteModal(false)}
       title="Are you sure you want to delete this resource?"
+      withinPortal
     >
       <Group position="right">
         <Button
