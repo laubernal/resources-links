@@ -19,10 +19,6 @@ interface UpdateResourceFormProps {
   setShowSuccessNotification: (boolean: boolean) => void;
   setShowErrorNotification: (boolean: boolean) => void;
   resource: updateResourceType;
-  // title: string;
-  // link: string;
-  // note: string;
-  // categories: [];
 }
 
 interface FormValues {
@@ -37,11 +33,7 @@ function UpdateResourceForm({
   setShowSuccessNotification,
   setShowErrorNotification,
   resource,
-}: // title,
-// link,
-// note,
-// categories,
-UpdateResourceFormProps): JSX.Element {
+}: UpdateResourceFormProps): JSX.Element {
   const category = useCategory();
   const resources = useResource();
 

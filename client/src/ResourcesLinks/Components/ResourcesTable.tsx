@@ -20,8 +20,7 @@ function ResourcesTable({
 
   const [openedUpdateModal, setOpenedUpdateModal] = useState(false);
   const [openedDeleteModal, setOpenedDeleteModal] = useState(false);
-  const [resourceId, setResourceId] = useState('');
-  const [resource, setResource] = useState({
+  const [selectedResource, setSelectedResource] = useState({
     id: '',
     title: '',
     link: '',
@@ -42,7 +41,11 @@ function ResourcesTable({
 
   const handleDeleteResource = async (resourceId: string): Promise<void> => {
     try {
-      setResourceId(resourceId);
+      const resource = resources.resourcesList.find(resource => resource.id === resourceId);
+
+      if (resource) {
+        setSelectedResource(resource);
+      }
 
       setOpenedDeleteModal(true);
     } catch (error: any) {
@@ -52,9 +55,11 @@ function ResourcesTable({
 
   const handleUpdateResource = async (updateResource: resourceType): Promise<void> => {
     try {
+      setOpenedUpdateModal(true);
       console.log(`HANDLE UPDATE RESOURCE ${updateResource.id}`);
-      setResource(resource);
-      console.log(`RESOURCE ${resource} ${resource}`);
+      // setResource(resource);
+      setSelectedResource(updateResource);
+      // console.log(`RESOURCE ${resource} ${resource}`);
 
       console.log('UPDATE MODAL 2', openedUpdateModal);
     } catch (error: any) {
@@ -87,8 +92,8 @@ function ResourcesTable({
       </td>
       <td>
         <Menu placement="center" withArrow>
-          {/* <Menu.Item icon={<Edit size={14} />} onClick={() => handleUpdateResource(resource)}> */}
-          <Menu.Item icon={<Edit size={14} />} onClick={() => setOpenedUpdateModal(true)}>
+          <Menu.Item icon={<Edit size={14} />} onClick={() => handleUpdateResource(resource)}>
+            {/* <Menu.Item icon={<Edit size={14} />} onClick={() => setOpenedUpdateModal(true)}> */}
             Edit
           </Menu.Item>
           <Menu.Item
@@ -151,7 +156,7 @@ function ResourcesTable({
           setOpenedModal={setOpenedUpdateModal}
           setShowSuccessNotification={setShowSuccessNotification}
           setShowErrorNotification={setShowErrorNotification}
-          resource={resource}
+          resource={selectedResource}
           // title={resource.id}
           // link={resource.link}
           // note={resource.note}
@@ -163,7 +168,7 @@ function ResourcesTable({
       <DeleteConfirmationModal
         openedModal={openedDeleteModal}
         setOpenedModal={setOpenedDeleteModal}
-        resourceId={resourceId}
+        resourceId={selectedResource.id}
       />
     </>
   );
