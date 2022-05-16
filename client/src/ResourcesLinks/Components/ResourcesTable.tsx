@@ -68,7 +68,7 @@ function ResourcesTable({
     })();
   }, []);
 
-  const handleDeleteResource = async (resourceId: string): Promise<void> => {
+  const handleDeleteResourceClick = async (resourceId: string): Promise<void> => {
     try {
       const resource = resources.resourcesList.find(resource => resource.id === resourceId);
 
@@ -82,10 +82,18 @@ function ResourcesTable({
     }
   };
 
-  const handleUpdateResource = async (updateResource: resourceType): Promise<void> => {
+  const handleUpdateResourceClick = async (updateResource: resourceType): Promise<void> => {
     try {
       console.log(updateResource);
       setOpenedUpdateModal(true);
+
+      form.setValues({
+        title: updateResource.title,
+        link: updateResource.link,
+        note: updateResource.note,
+        categories: updateResource.categories,
+      });
+
       // setResource(resource);
       setSelectedResource(updateResource);
       // console.log(`RESOURCE ${resource} ${resource}`);
@@ -119,12 +127,12 @@ function ResourcesTable({
       </td>
       <td>
         <Menu placement="center" withArrow>
-          <Menu.Item icon={<Edit size={14} />} onClick={() => handleUpdateResource(resource)}>
+          <Menu.Item icon={<Edit size={14} />} onClick={() => handleUpdateResourceClick(resource)}>
             Edit
           </Menu.Item>
           <Menu.Item
             icon={<Trash size={14} color="red" />}
-            onClick={() => handleDeleteResource(resource.id)}
+            onClick={() => handleDeleteResourceClick(resource.id)}
           >
             Delete
           </Menu.Item>
@@ -138,7 +146,7 @@ function ResourcesTable({
       title: selectedResource.title,
       link: selectedResource.link,
       note: selectedResource.note,
-      categories: selectedResource.categories,
+      categories: [],
     },
   });
 
@@ -179,6 +187,14 @@ function ResourcesTable({
     }
   };
 
+  console.log('SELECTED RESOURCE', selectedResource);
+
+  const categoriesList: string[] = selectedResource.categories.map(category => {
+    console.log('CATEGORY', category);
+    return category.id;
+  });
+
+  console.log('CATEGORIES LIST', categoriesList);
   return (
     <>
       <Title order={2}>Your resources</Title>
@@ -230,7 +246,6 @@ function ResourcesTable({
           setShowErrorNotification={setShowErrorNotification}
           resource={selectedResource}
         /> */}
-        {/* Example */}
 
         {/* <form onSubmit={form.onSubmit(handleSubmit)}> */}
 
@@ -247,7 +262,7 @@ function ResourcesTable({
           <MultiSelect
             data={category.categoriesList}
             label="Categories"
-            placeholder="Select the categories you want"
+            // placeholder="Select the categories you want"
             required
             searchable
             nothingFound="No categories found"
