@@ -20,7 +20,9 @@ function DeleteConfirmationModal({
       await resource.deleteResource(resourceId);
 
       await resource.fetchResourceList();
+
       setOpenedDeleteModal(false);
+
     } catch (error: any) {
       console.log(error.message);
     }
