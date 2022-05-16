@@ -9,7 +9,6 @@ export const useResourceProvider = () => {
   const fetchResourceList = async (): Promise<void> => {
     try {
       const response = await axios.get('/resources');
-      console.log('RESPONSE', response.data);
 
       setResourcesList(response.data);
     } catch (error: any) {
@@ -24,12 +23,12 @@ export const useResourceProvider = () => {
     categories: categoryType[]
   ): Promise<void> => {
     // try {
-    console.log(`TITLE: ${title}, LINK: ${link}, NOTE: ${note}`);
-    console.log('CATEGORIES SAVE RESOURCE', categories);
+    // console.log(`TITLE: ${title}, LINK: ${link}, NOTE: ${note}`);
+    // console.log('CATEGORIES SAVE RESOURCE', categories);
 
     const response = await axios.post('/resources/new', { title, link, note, categories });
 
-    console.log('SAVE RESPONSE', response);
+    // console.log('SAVE RESPONSE', response);
     // } catch (error: any) {
     //   console.log(error.message);
     // }

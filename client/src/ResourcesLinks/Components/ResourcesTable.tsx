@@ -1,15 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { Menu, Modal, Table, Text, Title } from '@mantine/core';
+import {
+  Button,
+  Group,
+  Menu,
+  Modal,
+  MultiSelect,
+  Space,
+  Table,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
 
 import { useResource } from '../Hooks/useResource';
-import { categoryType, resourceType } from '../../types';
+import { categoryType, resourceType, updateResourceType } from '../../types';
 import { Edit, Trash } from 'tabler-icons-react';
 import UpdateResourceForm from './UpdateResourceForm';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
+import { useForm } from '@mantine/hooks';
+import { useCategory } from '../Hooks/useCategory';
 
 interface ResourceTableProps {
   setShowSuccessNotification: (boolean: boolean) => void;
   setShowErrorNotification: (boolean: boolean) => void;
+}
+
+interface UpdateResourceFormProps {
+  setOpenedModal: (boolean: boolean) => void;
+  setShowSuccessNotification: (boolean: boolean) => void;
+  setShowErrorNotification: (boolean: boolean) => void;
+  resource: updateResourceType;
+}
+
+interface FormValues {
+  title: string;
+  link: string;
+  note: string;
+  categories: categoryType[];
 }
 
 function ResourcesTable({
@@ -17,6 +44,7 @@ function ResourcesTable({
   setShowErrorNotification,
 }: ResourceTableProps): JSX.Element {
   const resources = useResource();
+  const category = useCategory();
 
   const [openedUpdateModal, setOpenedUpdateModal] = useState(false);
   const [openedDeleteModal, setOpenedDeleteModal] = useState(false);
@@ -33,6 +61,7 @@ function ResourcesTable({
     (async () => {
       try {
         await resources.fetchResourceList();
+        await category.fetchCategoryList();
       } catch (error: any) {
         console.log(error.message);
       }
@@ -55,13 +84,11 @@ function ResourcesTable({
 
   const handleUpdateResource = async (updateResource: resourceType): Promise<void> => {
     try {
+      console.log(updateResource);
       setOpenedUpdateModal(true);
-      console.log(`HANDLE UPDATE RESOURCE ${updateResource.id}`);
       // setResource(resource);
       setSelectedResource(updateResource);
       // console.log(`RESOURCE ${resource} ${resource}`);
-
-      console.log('UPDATE MODAL 2', openedUpdateModal);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -93,7 +120,6 @@ function ResourcesTable({
       <td>
         <Menu placement="center" withArrow>
           <Menu.Item icon={<Edit size={14} />} onClick={() => handleUpdateResource(resource)}>
-            {/* <Menu.Item icon={<Edit size={14} />} onClick={() => setOpenedUpdateModal(true)}> */}
             Edit
           </Menu.Item>
           <Menu.Item
@@ -106,6 +132,52 @@ function ResourcesTable({
       </td>
     </tr>
   ));
+
+  const form = useForm<FormValues>({
+    initialValues: {
+      title: selectedResource.title,
+      link: selectedResource.link,
+      note: selectedResource.note,
+      categories: selectedResource.categories,
+    },
+  });
+
+  const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
+    try {
+      event.preventDefault();
+
+      // const categories: categoryType[] = values.categories.map(category => {
+      //   return JSON.parse(category);
+      // });
+
+      await resources.updateResource(
+        selectedResource.id,
+        values.title,
+        values.link,
+        values.note,
+        values.categories
+      );
+
+      await resources.fetchResourceList();
+
+      setShowSuccessNotification(true);
+      setTimeout(() => setOpenedUpdateModal(false), 500);
+    } catch (error: any) {
+      console.log(error.message);
+      setTimeout(() => setOpenedUpdateModal(false), 500);
+      setShowErrorNotification(true);
+    }
+  };
+
+  const handleCreateCategory = async (newCategory: string) => {
+    try {
+      await category.saveCategory(newCategory);
+
+      await category.fetchCategoryList();
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <>
@@ -157,12 +229,47 @@ function ResourcesTable({
           setShowSuccessNotification={setShowSuccessNotification}
           setShowErrorNotification={setShowErrorNotification}
           resource={selectedResource}
-          // title={resource.id}
-          // link={resource.link}
-          // note={resource.note}
-          // categories={resource.categories}
         /> */}
-        Example
+        {/* Example */}
+
+        {/* <form onSubmit={form.onSubmit(handleSubmit)}> */}
+
+        <form>
+          <TextInput
+            placeholder="Title"
+            label="Title"
+            data-autofocus
+            {...form.getInputProps('title')}
+          />
+          <TextInput placeholder="Link" label="Link" required {...form.getInputProps('link')} />
+          <TextInput placeholder="Note" label="Note" {...form.getInputProps('note')} />
+
+          <MultiSelect
+            data={category.categoriesList}
+            label="Categories"
+            placeholder="Select the categories you want"
+            required
+            searchable
+            nothingFound="No categories found"
+            creatable
+            // getCreateLabel={(newCategory: string) => `+ Create ${newCategory}`}
+            // onCreate={(newCategory: string) => handleCreateCategory(newCategory)}
+            clearButtonLabel="Clear selection"
+            clearable
+            {...form.getInputProps('categories')}
+          />
+
+          <Space h="md" />
+
+          <Group mt="md" position="right">
+            <Button radius="md" color="cyan" onClick={() => setOpenedUpdateModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" radius="md" color="cyan">
+              Submit
+            </Button>
+          </Group>
+        </form>
       </Modal>
 
       <DeleteConfirmationModal

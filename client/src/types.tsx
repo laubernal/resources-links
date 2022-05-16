@@ -8,3 +8,11 @@ export type resourceType = {
 };
 
 export type categoryType = { id: string; name: string };
+
+export type updateResourceType = {
+  id: string;
+  title: string;
+  link: string;
+  note: string;
+  categories: categoryType[];
+};

@@ -4,15 +4,7 @@ import { useForm } from '@mantine/form';
 
 import { useResource } from '../Hooks/useResource';
 import { useCategory } from '../Hooks/useCategory';
-import { categoryType } from '../../types';
-
-type updateResourceType = {
-  id: string;
-  title: string;
-  link: string;
-  note: string;
-  categories: categoryType[];
-};
+import { categoryType, updateResourceType } from '../../types';
 
 interface UpdateResourceFormProps {
   setOpenedModal: (boolean: boolean) => void;
