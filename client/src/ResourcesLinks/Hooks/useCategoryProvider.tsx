@@ -12,10 +12,16 @@ export const useCategoryProvider = () => {
 
       setCategoriesList(
         response.data.map((category: categoryType) => ({
-          value: JSON.stringify(category),
+          value: category.id,
           label: category.name,
         }))
       );
+      // setCategoriesList(
+      //   response.data.map((category: categoryType) => ({
+      //     value: JSON.stringify(category),
+      //     label: category.name,
+      //   }))
+      // );
     } catch (error: any) {
       console.log(error.message);
     }
