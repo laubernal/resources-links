@@ -11,25 +11,17 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
+import { useForm } from '@mantine/hooks';
+import { Edit, Trash } from 'tabler-icons-react';
 
 import { useResource } from '../Hooks/useResource';
-import { categoryType, resourceType, updateResourceType } from '../../types';
-import { Edit, Trash } from 'tabler-icons-react';
-import UpdateResourceForm from './UpdateResourceForm';
-import DeleteConfirmationModal from './DeleteConfirmationModal';
-import { useForm } from '@mantine/hooks';
 import { useCategory } from '../Hooks/useCategory';
+import { categoryType, resourceType } from '../../types';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 interface ResourceTableProps {
   setShowSuccessNotification: (boolean: boolean) => void;
   setShowErrorNotification: (boolean: boolean) => void;
-}
-
-interface UpdateResourceFormProps {
-  setOpenedModal: (boolean: boolean) => void;
-  setShowSuccessNotification: (boolean: boolean) => void;
-  setShowErrorNotification: (boolean: boolean) => void;
-  resource: updateResourceType;
 }
 
 interface FormValues {
@@ -55,6 +47,15 @@ function ResourcesTable({
     note: '',
     createdAt: '',
     categories: [{ id: '', name: '' }],
+  });
+
+  const form = useForm<FormValues>({
+    initialValues: {
+      title: '',
+      link: '',
+      note: '',
+      categories: [],
+    },
   });
 
   useEffect(() => {
@@ -84,7 +85,7 @@ function ResourcesTable({
 
   const handleUpdateResourceClick = async (updateResource: resourceType): Promise<void> => {
     try {
-      console.log(updateResource);
+      console.log('UPDATE RESOURCE', updateResource);
       setOpenedUpdateModal(true);
 
       form.setValues({
@@ -94,9 +95,7 @@ function ResourcesTable({
         categories: updateResource.categories,
       });
 
-      // setResource(resource);
       setSelectedResource(updateResource);
-      // console.log(`RESOURCE ${resource} ${resource}`);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -141,15 +140,6 @@ function ResourcesTable({
     </tr>
   ));
 
-  const form = useForm<FormValues>({
-    initialValues: {
-      title: selectedResource.title,
-      link: selectedResource.link,
-      note: selectedResource.note,
-      categories: [],
-    },
-  });
-
   const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
     try {
       event.preventDefault();
@@ -190,11 +180,12 @@ function ResourcesTable({
   console.log('SELECTED RESOURCE', selectedResource);
 
   const categoriesList: string[] = selectedResource.categories.map(category => {
-    console.log('CATEGORY', category);
     return category.id;
   });
 
   console.log('CATEGORIES LIST', categoriesList);
+  console.log('CATEGORIES LIST DATA', category.categoriesList);
+
   return (
     <>
       <Title order={2}>Your resources</Title>
@@ -240,13 +231,6 @@ function ResourcesTable({
         title="Edit resource"
         withinPortal
       >
-        {/* <UpdateResourceForm
-          setOpenedModal={setOpenedUpdateModal}
-          setShowSuccessNotification={setShowSuccessNotification}
-          setShowErrorNotification={setShowErrorNotification}
-          resource={selectedResource}
-        /> */}
-
         {/* <form onSubmit={form.onSubmit(handleSubmit)}> */}
 
         <form>
@@ -259,19 +243,30 @@ function ResourcesTable({
           <TextInput placeholder="Link" label="Link" required {...form.getInputProps('link')} />
           <TextInput placeholder="Note" label="Note" {...form.getInputProps('note')} />
 
+          {/* <MultiSelect
+            data={category.categoriesList}
+            label="Categories"
+            placeholder="Select the categories you want"
+            // defaultValue={['f7aaf0c8-ed25-44b3-887c-bf223c683fa9']}
+            defaultValue={categoriesList}
+            clearButtonLabel="Clear selection"
+            clearable
+          /> */}
+
           <MultiSelect
             data={category.categoriesList}
             label="Categories"
-            // placeholder="Select the categories you want"
+            placeholder="Select the categories you want"
             required
             searchable
             nothingFound="No categories found"
-            creatable
+            // creatable
+            defaultValue={categoriesList}
             // getCreateLabel={(newCategory: string) => `+ Create ${newCategory}`}
             // onCreate={(newCategory: string) => handleCreateCategory(newCategory)}
             clearButtonLabel="Clear selection"
             clearable
-            {...form.getInputProps('categories')}
+            // {...form.getInputProps('categories')}
           />
 
           <Space h="md" />
