@@ -140,9 +140,12 @@ function ResourcesTable({
     </tr>
   ));
 
-  const handleSubmit = async (values: typeof form.values, event: React.FormEvent<Element>) => {
+  const handleSubmit = async (
+    values: typeof form.values
+    // event: React.FormEvent<Element>
+  ): Promise<void> => {
     try {
-      event.preventDefault();
+      // event.preventDefault();
 
       // const categories: categoryType[] = values.categories.map(category => {
       //   return JSON.parse(category);
@@ -180,7 +183,7 @@ function ResourcesTable({
   console.log('SELECTED RESOURCE', selectedResource);
 
   const categoriesList: string[] = selectedResource.categories.map(category => {
-    return category.id;
+    return JSON.stringify(category);
   });
 
   console.log('CATEGORIES LIST', categoriesList);
@@ -231,9 +234,8 @@ function ResourcesTable({
         title="Edit resource"
         withinPortal
       >
-        {/* <form onSubmit={form.onSubmit(handleSubmit)}> */}
-
-        <form>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          {/* <form> */}
           <TextInput
             placeholder="Title"
             label="Title"
@@ -243,7 +245,7 @@ function ResourcesTable({
           <TextInput placeholder="Link" label="Link" required {...form.getInputProps('link')} />
           <TextInput placeholder="Note" label="Note" {...form.getInputProps('note')} />
 
-          {/* <MultiSelect
+          <MultiSelect
             data={category.categoriesList}
             label="Categories"
             placeholder="Select the categories you want"
@@ -251,7 +253,7 @@ function ResourcesTable({
             defaultValue={categoriesList}
             clearButtonLabel="Clear selection"
             clearable
-          /> */}
+          />
 
           <MultiSelect
             data={category.categoriesList}
