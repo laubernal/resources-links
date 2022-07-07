@@ -1,4 +1,4 @@
-import assertString from './asserStrings';
+import assertString from './assertStrings';
 
 const uuid: Record<string, any> = {
   1: /^[0-9A-F]{8}-[0-9A-F]{4}-1[0-9A-F]{3}-[0-9A-F]{4}-[0-9A-F]{12}$/i,

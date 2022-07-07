@@ -5,9 +5,13 @@ import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { NewResourceDto } from '../Dto';
 import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsError';
+import { IMetadataScraperService } from '../../Domain/interfaces/IMetadataScraperService';
 
 export class NewResourceUseCase implements IUseCase<string> {
-  constructor(private resourcesRepository: IResourcesRepository) {}
+  constructor(
+    private resourcesRepository: IResourcesRepository,
+    private metadataScraperService: IMetadataScraperService
+  ) {}
 
   public async execute(resource: NewResourceDto): Promise<string> {
     try {
@@ -19,6 +23,15 @@ export class NewResourceUseCase implements IUseCase<string> {
 
       await this.checkIfLinkAlreadyExists(link.value);
 
+      // check if title and note are empty
+      if (resource.title === '' && resource.note === '') {
+        // call fetchMetadata method
+        const metadata = await this.metadataScraperService.getMetadata(link.value);
+        console.log(metadata)
+        // convert the fetched metadata in a before returning VO!!
+        // return the newResource
+      }
+
       const newResource = Resource.build(
         new Text(resource.title),
         link,
@@ -27,7 +40,7 @@ export class NewResourceUseCase implements IUseCase<string> {
         categories
       );
 
-      await this.resourcesRepository.save(newResource);
+      // await this.resourcesRepository.save(newResource);
 
       return newResource.id;
     } catch (error: any) {
