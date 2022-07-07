@@ -6,6 +6,7 @@ import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlew
 import { NewResourceDto } from '../../Application/Dto';
 import { NewResourceUseCase } from '../../Application/UseCases';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
+import { MetadataScraperService } from '../services/MetadataScraperService';
 
 @Controller()
 export class NewResourceController {
@@ -23,10 +24,14 @@ export class NewResourceController {
       };
 
       const resourceRepository = new ResourcesRepository();
+      const metadataScraperService = new MetadataScraperService();
 
       const newResourceDto = new NewResourceDto(title, note, link, req.currentUser!.id, categories);
 
-      const resourceId = await new NewResourceUseCase(resourceRepository).execute(newResourceDto);
+      const resourceId = await new NewResourceUseCase(
+        resourceRepository,
+        metadataScraperService
+      ).execute(newResourceDto);
 
       res.status(200).send({ resourceId });
     } catch (error: any) {
