@@ -26,6 +26,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/pg": "^8.6.5",
     "@types/uuid": "^8.3.4",
+    "axios": "^0.27.2",
     "chalk": "^4.1.0",
     "concurrently": "^7.0.0",
     "cookie-session": "^2.0.0",

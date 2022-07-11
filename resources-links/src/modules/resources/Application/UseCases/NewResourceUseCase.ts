@@ -23,13 +23,48 @@ export class NewResourceUseCase implements IUseCase<string> {
 
       await this.checkIfLinkAlreadyExists(link.value);
 
-      // check if title and note are empty
-      if (resource.title === '' && resource.note === '') {
-        // call fetchMetadata method
+      if (resource.title === '' || resource.note === '') {
         const metadata = await this.metadataScraperService.getMetadata(link.value);
-        console.log(metadata)
-        // convert the fetched metadata in a before returning VO!!
-        // return the newResource
+
+        if (resource.title === '' && resource.note !== '') {
+          const newResource = Resource.build(
+            new Text(metadata.title),
+            link,
+            new Text(resource.note),
+            userId,
+            categories
+          );
+
+          await this.resourcesRepository.save(newResource);
+
+          return newResource.id;
+        }
+
+        if (resource.title !== '' && resource.note === '') {
+          const newResource = Resource.build(
+            new Text(resource.title),
+            link,
+            new Text(metadata.description),
+            userId,
+            categories
+          );
+
+          await this.resourcesRepository.save(newResource);
+
+          return newResource.id;
+        }
+
+        const newResource = Resource.build(
+          new Text(metadata.title),
+          link,
+          new Text(metadata.description),
+          userId,
+          categories
+        );
+
+        await this.resourcesRepository.save(newResource);
+
+        return newResource.id;
       }
 
       const newResource = Resource.build(
@@ -40,7 +75,7 @@ export class NewResourceUseCase implements IUseCase<string> {
         categories
       );
 
-      // await this.resourcesRepository.save(newResource);
+      await this.resourcesRepository.save(newResource);
 
       return newResource.id;
     } catch (error: any) {
