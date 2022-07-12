@@ -6,6 +6,7 @@ export class NewResourceDto {
     public note: string,
     public link: string,
     public userId: string,
-    public categories: CategoryType[]
+    public categories: CategoryType[],
+    public useMetadata: boolean
   ) {}
 }

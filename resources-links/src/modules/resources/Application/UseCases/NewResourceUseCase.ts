@@ -23,14 +23,45 @@ export class NewResourceUseCase implements IUseCase<string> {
 
       await this.checkIfLinkAlreadyExists(link.value);
 
-      if (resource.title === '' || resource.note === '') {
-        const metadata = await this.metadataScraperService.getMetadata(link.value);
+      if (resource.useMetadata) {
+        if (resource.title === '' || resource.note === '') {
+          const metadata = await this.metadataScraperService.getMetadata(link.value);
 
-        if (resource.title === '' && resource.note !== '') {
+          let title = metadata.title === '' ? 'No title' : metadata.title;
+          let note = metadata.description === '' ? 'No note' : metadata.description;
+
+          if (resource.title === '' && resource.note !== '') {
+            const newResource = Resource.build(
+              new Text(title),
+              link,
+              new Text(resource.note),
+              userId,
+              categories
+            );
+
+            await this.resourcesRepository.save(newResource);
+
+            return newResource.id;
+          }
+
+          if (resource.title !== '' && resource.note === '') {
+            const newResource = Resource.build(
+              new Text(resource.title),
+              link,
+              new Text(note),
+              userId,
+              categories
+            );
+
+            await this.resourcesRepository.save(newResource);
+
+            return newResource.id;
+          }
+
           const newResource = Resource.build(
-            new Text(metadata.title),
+            new Text(title),
             link,
-            new Text(resource.note),
+            new Text(note),
             userId,
             categories
           );
@@ -39,41 +70,12 @@ export class NewResourceUseCase implements IUseCase<string> {
 
           return newResource.id;
         }
-
-        if (resource.title !== '' && resource.note === '') {
-          const newResource = Resource.build(
-            new Text(resource.title),
-            link,
-            new Text(metadata.description),
-            userId,
-            categories
-          );
-
-          await this.resourcesRepository.save(newResource);
-
-          return newResource.id;
-        }
-
-        const newResource = Resource.build(
-          new Text(metadata.title),
-          link,
-          new Text(metadata.description),
-          userId,
-          categories
-        );
-
-        await this.resourcesRepository.save(newResource);
-
-        return newResource.id;
       }
 
-      const newResource = Resource.build(
-        new Text(resource.title),
-        link,
-        new Text(resource.note),
-        userId,
-        categories
-      );
+      let title = resource.title === '' ? 'No title' : resource.title;
+      let note = resource.note === '' ? 'No note' : resource.note;
+
+      const newResource = Resource.build(new Text(title), link, new Text(note), userId, categories);
 
       await this.resourcesRepository.save(newResource);
 
