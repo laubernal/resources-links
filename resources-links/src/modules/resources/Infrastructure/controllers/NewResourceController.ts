@@ -16,17 +16,25 @@ export class NewResourceController {
   @bodyValidator('link', 'categories')
   public async newResource(req: Request, res: Response): Promise<void> {
     try {
-      const { title, link, note, categories } = req.body as {
+      const { title, link, note, categories, useMetadata } = req.body as {
         title: string;
         link: string;
         note: string;
         categories: CategoryType[];
+        useMetadata: boolean;
       };
 
       const resourceRepository = new ResourcesRepository();
       const metadataScraperService = new MetadataScraperService();
 
-      const newResourceDto = new NewResourceDto(title, note, link, req.currentUser!.id, categories);
+      const newResourceDto = new NewResourceDto(
+        title,
+        note,
+        link,
+        req.currentUser!.id,
+        categories,
+        useMetadata
+      );
 
       const resourceId = await new NewResourceUseCase(
         resourceRepository,

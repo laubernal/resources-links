@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { MetadataError } from '../../../shared/Domain/Error/MetadataError';
+
 type MetadataResponse = {
   title: string;
   description: string;
@@ -19,11 +21,9 @@ export class MetadataScraperService {
 
       const metadata: MetadataResponse = await metascraper({ html, url });
 
-      console.log('METADATA', metadata);
-
-      return { title: metadata.title, description: metadata.description };
+      return metadata;
     } catch (error: any) {
-      throw new Error(error.message);
+      throw new MetadataError(error.message);
     }
   }
 }
