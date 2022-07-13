@@ -12,7 +12,7 @@ export class UpdateResourceUseCase implements IUseCase<string> {
   public async execute(resource: UpdateResourceDto): Promise<string> {
     try {
       const validatedLink = new Link(resource.link);
-      const validatedUserId = Id.validUuid(resource.userId);
+      const validatedUserId = new Id(resource.userId);
       const categories: CategoryVo[] = resource.categories.map(category => {
         return new CategoryVo(category.id, category.name);
       });
@@ -24,7 +24,7 @@ export class UpdateResourceUseCase implements IUseCase<string> {
         resource.title,
         validatedLink.value,
         resource.note,
-        validatedUserId,
+        validatedUserId.value,
         categories
       );
 

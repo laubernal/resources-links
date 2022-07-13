@@ -9,9 +9,9 @@ export class DeleteCategoryUseCase implements IUseCase<void> {
 
   public async execute(category: DeleteCategoryDto): Promise<void> {
     try {
-      const validatedId = Id.validUuid(category.id);
+      const validatedId = new Id(category.id);
 
-      const deletedCategory = await this.categoryRepository.delete(validatedId);
+      const deletedCategory = await this.categoryRepository.delete(validatedId.value);
 
       if (!deletedCategory) {
         throw new DeleteError('Could not delete category');

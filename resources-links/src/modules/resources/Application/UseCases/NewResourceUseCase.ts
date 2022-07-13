@@ -2,10 +2,9 @@ import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { Id, Text } from '../../../shared/Domain/vo';
 import { CategoryVo, Link } from '../../Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
-import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { NewResourceDto } from '../Dto';
-import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsError';
-import { IMetadataScraperService } from '../../Domain/interfaces/IMetadataScraperService';
+import { AlreadyExistsError } from '../../../shared/Domain/Error';
+import { IMetadataScraperService, IResourcesRepository } from '../../Domain/interfaces';
 
 export class NewResourceUseCase implements IUseCase<string> {
   constructor(
@@ -16,7 +15,7 @@ export class NewResourceUseCase implements IUseCase<string> {
   public async execute(resource: NewResourceDto): Promise<string> {
     try {
       const link = new Link(resource.link);
-      const userId = Id.validUuid(resource.userId);
+      const userId = new Id(resource.userId);
       const categories: CategoryVo[] = resource.categories.map(category => {
         return new CategoryVo(category.id, category.name);
       });
@@ -27,15 +26,15 @@ export class NewResourceUseCase implements IUseCase<string> {
         if (resource.title === '' || resource.note === '') {
           const metadata = await this.metadataScraperService.getMetadata(link.value);
 
-          let title = metadata.title === '' ? 'No title' : metadata.title;
-          let note = metadata.description === '' ? 'No note' : metadata.description;
+          const title = metadata.title === '' ? 'No title' : metadata.title;
+          const note = metadata.description === '' ? 'No note' : metadata.description;
 
           if (resource.title === '' && resource.note !== '') {
             const newResource = Resource.build(
               new Text(title),
               link,
               new Text(resource.note),
-              userId,
+              userId.value,
               categories
             );
 
@@ -49,7 +48,7 @@ export class NewResourceUseCase implements IUseCase<string> {
               new Text(resource.title),
               link,
               new Text(note),
-              userId,
+              userId.value,
               categories
             );
 
@@ -62,7 +61,7 @@ export class NewResourceUseCase implements IUseCase<string> {
             new Text(title),
             link,
             new Text(note),
-            userId,
+            userId.value,
             categories
           );
 
@@ -72,10 +71,16 @@ export class NewResourceUseCase implements IUseCase<string> {
         }
       }
 
-      let title = resource.title === '' ? 'No title' : resource.title;
-      let note = resource.note === '' ? 'No note' : resource.note;
+      const title = resource.title === '' ? 'No title' : resource.title;
+      const note = resource.note === '' ? 'No note' : resource.note;
 
-      const newResource = Resource.build(new Text(title), link, new Text(note), userId, categories);
+      const newResource = Resource.build(
+        new Text(title),
+        link,
+        new Text(note),
+        userId.value,
+        categories
+      );
 
       await this.resourcesRepository.save(newResource);
 

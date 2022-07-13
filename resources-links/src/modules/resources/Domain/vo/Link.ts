@@ -1,5 +1,6 @@
 const URL = require('url').URL;
 
+import { NotValidError } from '../../../shared/Domain/Error';
 import { VO } from '../../../shared/Domain/vo';
 
 export class Link extends VO {
@@ -7,7 +8,7 @@ export class Link extends VO {
     super();
     this.validate();
     if (!this.validUrl()) {
-      throw new Error('URL is not valid');
+      throw new NotValidError('URL is not valid');
     }
   }
 

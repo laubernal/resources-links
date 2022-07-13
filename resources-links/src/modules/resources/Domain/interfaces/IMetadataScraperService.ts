@@ -1,7 +1,4 @@
-type MetadataResponse = {
-  title: string;
-  description: string;
-};
+import { MetadataResponse } from "../../../../types/types";
 
 export interface IMetadataScraperService {
   getMetadata(url: string): Promise<MetadataResponse>;

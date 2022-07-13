@@ -3,3 +3,4 @@ export * from './CustomError';
 export * from './DeleteError';
 export * from './EmptyError';
 export * from './NotValidError';
+export * from './MetadataError';
