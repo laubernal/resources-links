@@ -6,10 +6,10 @@ export class Resource {
     title: Text,
     link: Link,
     note: Text,
-    userId: string,
+    userId: Id,
     categories: CategoryVo[]
   ): Resource {
-    return new Resource(Id.generate(), title.value, link.value, note.value, userId, categories);
+    return new Resource(Id.generate(), title.value, link.value, note.value, userId.value, categories);
   }
 
   constructor(
