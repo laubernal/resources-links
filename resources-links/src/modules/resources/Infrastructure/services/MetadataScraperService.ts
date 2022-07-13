@@ -1,11 +1,7 @@
 import axios from 'axios';
 
-import { MetadataError } from '../../../shared/Domain/Error/MetadataError';
-
-type MetadataResponse = {
-  title: string;
-  description: string;
-};
+import { MetadataResponse } from '../../../../types/types';
+import { MetadataError } from '../../../shared/Domain/Error';
 
 export class MetadataScraperService {
   public async getMetadata(url: string): Promise<MetadataResponse> {

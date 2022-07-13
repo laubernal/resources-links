@@ -21,6 +21,6 @@ export class CategoryVo extends VO {
   }
 
   private validateId(): void {
-    this._id = Id.validUuid(this._id);
+    this._id = new Id(this._id).value;
   }
 }

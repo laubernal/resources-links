@@ -9,12 +9,12 @@ export class DeleteResourceUseCase implements IUseCase<void> {
 
   public async execute(resource: DeleteResourceDto): Promise<void> {
     try {
-      const validatedResourceId = Id.validUuid(resource.resourceId);
-      const validatedUserId = Id.validUuid(resource.userId);
+      const validatedResourceId = new Id(resource.resourceId);
+      const validatedUserId = new Id(resource.userId);
 
       const deletedResource = await this.resourcesRepository.delete(
-        validatedResourceId,
-        validatedUserId
+        validatedResourceId.value,
+        validatedUserId.value
       );
 
       if (!deletedResource) {

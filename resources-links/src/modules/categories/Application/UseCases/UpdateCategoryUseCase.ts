@@ -10,11 +10,11 @@ export class UpdateCategoryUseCase implements IUseCase<string> {
 
   public async execute(category: CategoryDto): Promise<string> {
     try {
-      const validatedId = Id.validUuid(category.id);
+      const validatedId = new Id(category.id);
 
       await this.checkIfCategoryAlreadyExists(category.name);
 
-      const updatedCategory = new Category(validatedId, category.name);
+      const updatedCategory = new Category(validatedId.value, category.name);
 
       await this.categoryRepository.update(updatedCategory);
 
