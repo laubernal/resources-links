@@ -5,9 +5,9 @@ import { IResourcesRepository } from '../../Domain/interfaces/IResourcesReposito
 export class GetAllResourcesUseCase implements IUseCase<Resource> {
   constructor(private resourcesRepository: IResourcesRepository) {}
 
-  public async execute(userId: string): Promise<Resource[]> {
+  public async execute(userId: string, skip: number, take: number): Promise<Resource[]> {
     try {
-      const resources = await this.resourcesRepository.getAllByUserId(userId);
+      const resources = await this.resourcesRepository.getAllByUserId(userId, skip, take);
 
       return resources;
     } catch (error: any) {
