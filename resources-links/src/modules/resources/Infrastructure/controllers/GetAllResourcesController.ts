@@ -14,7 +14,7 @@ export class GetAllResourcesController {
   public async getAllResources(req: Request, res: Response): Promise<void> {
     try {
       const itemsPerPage = 3;
-      const page = 1;
+      const page: number = !req.query.page ? 1 : parseInt(req.query.page as string);
       const skip = itemsPerPage * (page - 1);
       const take = itemsPerPage;
 
