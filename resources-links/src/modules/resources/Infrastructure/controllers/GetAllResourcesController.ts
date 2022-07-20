@@ -13,10 +13,17 @@ export class GetAllResourcesController {
   @use(currentUser)
   public async getAllResources(req: Request, res: Response): Promise<void> {
     try {
-      const resourceRepository = new ResourcesRepository();
+      const itemsPerPage = 3;
+      const page = 1;
+      const skip = itemsPerPage * (page - 1);
+      const take = itemsPerPage;
 
-      const resources = await new GetAllResourcesUseCase(resourceRepository).execute(
-        req.currentUser!.id
+      const resourcesRepository = new ResourcesRepository();
+
+      const resources = await new GetAllResourcesUseCase(resourcesRepository).execute(
+        req.currentUser!.id,
+        skip,
+        take
       );
 
       if (!resources.length) {
