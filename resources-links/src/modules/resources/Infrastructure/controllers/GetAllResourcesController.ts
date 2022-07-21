@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { Controller, get, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
 import { GetAllResourcesResponse } from '../../Application/Dto';
+import { GetAllResourcesDto } from '../../Application/Dto/GetAllResourcesDto';
 import { GetAllResourcesUseCase } from '../../Application/UseCases';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 
@@ -13,17 +14,15 @@ export class GetAllResourcesController {
   @use(currentUser)
   public async getAllResources(req: Request, res: Response): Promise<void> {
     try {
-      const itemsPerPage = 3;
+      const itemsPerPage = !req.query.perPage ? 10 : parseInt(req.query.perPage as string);
       const page: number = !req.query.page ? 1 : parseInt(req.query.page as string);
-      const skip = itemsPerPage * (page - 1);
-      const take = itemsPerPage;
+
+      const getAllResourcesDto = new GetAllResourcesDto(req.currentUser!.id, itemsPerPage, page);
 
       const resourcesRepository = new ResourcesRepository();
 
       const resources = await new GetAllResourcesUseCase(resourcesRepository).execute(
-        req.currentUser!.id,
-        skip,
-        take
+        getAllResourcesDto
       );
 
       if (!resources.length) {
