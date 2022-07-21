@@ -20,8 +20,11 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getAllByUserId(userId: string, skip: number, take: number): Promise<Resource[]> {
+  public async getAllByUserId(userId: string, perPage: number, page: number): Promise<Resource[]> {
     try {
+      const skip = perPage * (page - 1);
+      const take = perPage;
+
       const result = await this.prisma.resource.findMany({
         skip,
         take,
