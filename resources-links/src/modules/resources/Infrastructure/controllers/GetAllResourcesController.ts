@@ -16,8 +16,14 @@ export class GetAllResourcesController {
     try {
       const itemsPerPage = !req.query.perPage ? 10 : parseInt(req.query.perPage as string);
       const page: number = !req.query.page ? 1 : parseInt(req.query.page as string);
+      const search = !req.query.search ? undefined : (req.query.search as string);
 
-      const getAllResourcesDto = new GetAllResourcesDto(req.currentUser!.id, itemsPerPage, page);
+      const getAllResourcesDto = new GetAllResourcesDto(
+        req.currentUser!.id,
+        itemsPerPage,
+        page,
+        search
+      );
 
       const resourcesRepository = new ResourcesRepository();
 
@@ -27,6 +33,7 @@ export class GetAllResourcesController {
 
       if (!resources.length) {
         res.status(200).send({});
+        return;
       }
 
       const resourcesList = resources.map(resource => {

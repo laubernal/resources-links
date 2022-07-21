@@ -20,18 +20,25 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getAllByUserId(userId: string, perPage: number, page: number): Promise<Resource[]> {
+  public async getAllByUserId(
+    userId: string,
+    perPage: number,
+    page: number,
+    search: string
+  ): Promise<Resource[]> {
     try {
       const skip = perPage * (page - 1);
       const take = perPage;
+      console.log('search', search);
 
       const result = await this.prisma.resource.findMany({
         skip,
         take,
-        where: { user_id: userId },
+        where: { user_id: { equals: userId }, title: { contains: search, mode: 'insensitive' } },
         include: { categories: true },
         orderBy: { created_at: 'desc' },
       });
+      console.log('result', result);
 
       if (!result) {
         return [];
@@ -42,6 +49,7 @@ export class ResourcesRepository implements IResourcesRepository {
       for (const resource of result) {
         resources.push(this.mapper.toDomain(resource));
       }
+      console.log('resources', resources);
 
       this.prisma.$disconnect();
 

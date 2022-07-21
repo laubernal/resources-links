@@ -1,5 +1,5 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
-import { Id, Number } from '../../../shared/Domain/vo';
+import { Id, Number, Text } from '../../../shared/Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { GetAllResourcesDto } from '../Dto/GetAllResourcesDto';
@@ -12,11 +12,15 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
       const userId = new Id(getAllResourcesDto.userId);
       const perPage = new Number(getAllResourcesDto.perPage);
       const page = new Number(getAllResourcesDto.page);
+      const search = !getAllResourcesDto.search
+        ? undefined
+        : new Text(getAllResourcesDto.search).value;
 
       const resources = await this.resourcesRepository.getAllByUserId(
         userId.value,
         perPage.value,
-        page.value
+        page.value,
+        search
       );
 
       return resources;
