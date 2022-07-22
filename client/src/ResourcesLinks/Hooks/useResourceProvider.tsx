@@ -8,7 +8,7 @@ export const useResourceProvider = () => {
 
   const fetchResourceList = async (): Promise<void> => {
     try {
-      const response = await axios.get('/resources');
+      const response = await axios.get(`/resources`, { params: { page: 2 } });
 
       setResourcesList(response.data);
     } catch (error: any) {
