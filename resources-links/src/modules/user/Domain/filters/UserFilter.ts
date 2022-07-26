@@ -1,16 +1,16 @@
 import { Id } from '../../../shared/Domain/vo';
 
-export class AuthFilter {
+export class UserFilter {
   protected static ID_FILTER = 'user_id';
 
-  public static builder(): AuthFilter {
-    return new AuthFilter();
+  public static builder(): UserFilter {
+    return new UserFilter();
   }
 
   protected data: Map<string, any> = new Map();
 
   public withUserId(userId: Id): this {
-    this.data.set(AuthFilter.ID_FILTER, userId);
+    this.data.set(UserFilter.ID_FILTER, userId);
     return this;
   }
 
