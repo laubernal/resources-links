@@ -1,9 +1,10 @@
+import { Filter } from '../../../shared/Domain/filters/Filter';
 import { Id } from '../../../shared/Domain/vo';
 import { Link } from '../vo';
 
-export class ResourceFilter {
-  protected static RESOURCE_ID_FILTER = 'id';
-  protected static LINK_FILTER = 'link';
+export class ResourceFilter extends Filter {
+  public static RESOURCE_ID_FILTER = 'id';
+  public static LINK_FILTER = 'link';
 
   public static builder(): ResourceFilter {
     return new ResourceFilter();
