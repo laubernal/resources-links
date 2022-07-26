@@ -1,7 +1,9 @@
-import { Id } from '../../../shared/Domain/vo';
+import { Filter } from '../../../shared/Domain/filters/Filter';
+import { Id, Text } from '../../../shared/Domain/vo';
 
-export class UserFilter {
-  protected static ID_FILTER = 'user_id';
+export class UserFilter extends Filter {
+  public static ID_FILTER = 'user_id';
+  public static TITLE_FILTER = 'title';
 
   public static builder(): UserFilter {
     return new UserFilter();
@@ -11,6 +13,11 @@ export class UserFilter {
 
   public withUserId(userId: Id): this {
     this.data.set(UserFilter.ID_FILTER, userId);
+    return this;
+  }
+
+  public withTitle(title: Text): this {
+    this.data.set(UserFilter.TITLE_FILTER, title);
     return this;
   }
 
