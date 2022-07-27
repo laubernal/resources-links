@@ -16,6 +16,7 @@ export class SignInUseCase implements IUseCase<User> {
       const emailValidated = new Email(user.email);
 
       const filter = UserFilter.builder().withEmail(emailValidated);
+      
       const userExists = await this.userRepository.getOne(filter);
 
       if (!userExists) {

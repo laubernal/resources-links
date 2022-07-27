@@ -1,6 +1,7 @@
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { Id, Number, Text } from '../../../shared/Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
+import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { GetAllResourcesDto } from '../Dto/GetAllResourcesDto';
 
@@ -16,12 +17,20 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
         ? undefined
         : new Text(getAllResourcesDto.search).value;
 
-      const resources = await this.resourcesRepository.getAllByUserId(
-        userId.value,
+      const filter = ResourceFilter.builder().withUserId(userId).withTitle(search);
+
+      const resources = await this.resourcesRepository.getAllTest(
+        filter,
         perPage.value,
-        page.value,
-        search
+        page.value
       );
+
+      // const resources = await this.resourcesRepository.getAllByUserId(
+      //   userId.value,
+      //   perPage.value,
+      //   page.value,
+      //   search
+      // );
 
       return resources;
     } catch (error: any) {
