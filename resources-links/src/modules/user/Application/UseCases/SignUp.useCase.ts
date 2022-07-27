@@ -5,6 +5,7 @@ import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email, Name, Password } from '../../Domain/vo';
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { SignUpDto } from '../Dto';
+import { UserFilter } from '../../Domain/filters/UserFilter';
 
 export class SignUpUseCase implements IUseCase<string> {
   constructor(private userRepository: IUserRepository) {}
@@ -13,7 +14,8 @@ export class SignUpUseCase implements IUseCase<string> {
     try {
       const emailValidated = new Email(user.email);
 
-      const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
+      const filter = UserFilter.builder().withEmail(emailValidated);
+      const userExists = await this.userRepository.getOne(filter);
 
       if (userExists) {
         throw new AlreadyExistsError('User already exists');

@@ -1,28 +1,50 @@
 import { Database } from '../../../shared/Infrastructure/repositories/Database';
 import { User } from '../../Domain/entities/user.entity';
 import { UserNotExistsError } from '../../Domain/error';
+import { UserFilter } from '../../Domain/filters/UserFilter';
 import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
+import { PrismaUserFilterAdapter } from '../adapters/PrismaUserFilterAdapter';
 import { UserMapper } from '../mappers/UserMapper';
 
 export class UserRepository implements IUserRepository {
   protected mapper = new UserMapper();
   private prisma = Database.instance().connection();
 
-  public async getOneByEmail(email: string): Promise<User | undefined> {
-    const result = await this.prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+  public async getOne(filter: UserFilter): Promise<User | undefined> {
+    try {
+      const adapter = new PrismaUserFilterAdapter(filter);
+      const adapterQuery = adapter.apply();
 
-    if (!result) {
-      return undefined;
+      const result = await this.prisma.user.findUnique(adapterQuery);
+
+      if (!result) {
+        return undefined;
+      }
+
+      this.prisma.$disconnect();
+
+      return this.mapper.toDomain(result);
+    } catch (error: any) {
+      this.prisma.$disconnect();
+      throw new Error(error.message);
     }
-
-    this.prisma.$disconnect();
-
-    return this.mapper.toDomain(result);
   }
+
+  // public async getOneByEmail(email: string): Promise<User | undefined> {
+  //   const result = await this.prisma.user.findUnique({
+  //     where: {
+  //       email,
+  //     },
+  //   });
+
+  //   if (!result) {
+  //     return undefined;
+  //   }
+
+  //   this.prisma.$disconnect();
+
+  //   return this.mapper.toDomain(result);
+  // }
 
   public async getAllBy(value: string): Promise<User | undefined> {
     return undefined;
