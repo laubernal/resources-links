@@ -2,6 +2,7 @@ import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { AlreadyExistsError } from '../../../shared/Domain/Error/AlreadyExistsError';
 import { Id } from '../../../shared/Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
+import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
 import { CategoryVo, Link } from '../../Domain/vo';
 import { UpdateResourceDto } from '../Dto';
@@ -13,11 +14,14 @@ export class UpdateResourceUseCase implements IUseCase<string> {
     try {
       const validatedLink = new Link(resource.link);
       const validatedUserId = new Id(resource.userId);
+      const validatedResourceId = new Id(resource.id);
       const categories: CategoryVo[] = resource.categories.map(category => {
         return new CategoryVo(category.id, category.name);
       });
 
-      await this.checkIfLinkIsDifferent(resource.id, validatedLink.value);
+      console.log(categories);
+
+      await this.checkIfLinkIsDifferent(validatedResourceId, validatedLink.value);
 
       const updatedResource = new Resource(
         resource.id,
@@ -36,10 +40,13 @@ export class UpdateResourceUseCase implements IUseCase<string> {
     }
   }
 
-  private async checkIfLinkIsDifferent(resourceId: string, newLink: string): Promise<void> {
-    const savedLink = await this.resourcesRepository.getOneByResourceId(resourceId);
+  private async checkIfLinkIsDifferent(resourceId: Id, newLink: string): Promise<void> {
+    const filter = ResourceFilter.builder().withResourceId(resourceId);
 
-    if (savedLink.link === newLink && savedLink.id !== resourceId) {
+    const savedLink = await this.resourcesRepository.getOneTest(filter);
+    // const savedLink = await this.resourcesRepository.getOneByResourceId(resourceId);
+
+    if (savedLink?.link === newLink && savedLink?.id !== resourceId.value) {
       throw new AlreadyExistsError('Link already exists');
     }
   }
