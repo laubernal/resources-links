@@ -30,26 +30,6 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  // public async getOneByEmail(email: string): Promise<User | undefined> {
-  //   const result = await this.prisma.user.findUnique({
-  //     where: {
-  //       email,
-  //     },
-  //   });
-
-  //   if (!result) {
-  //     return undefined;
-  //   }
-
-  //   this.prisma.$disconnect();
-
-  //   return this.mapper.toDomain(result);
-  // }
-
-  public async getAllBy(value: string): Promise<User | undefined> {
-    return undefined;
-  }
-
   public async save(user: User): Promise<void> {
     const newUser = this.mapper.toData(user);
 

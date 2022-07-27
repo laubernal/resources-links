@@ -54,43 +54,6 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  // public async getAllByUserId(
-  //   userId: string,
-  //   perPage: number,
-  //   page: number,
-  //   search: string
-  // ): Promise<Resource[]> {
-  //   try {
-  //     const skip = perPage * (page - 1);
-  //     const take = perPage;
-
-  //     const result = await this.prisma.resource.findMany({
-  //       skip,
-  //       take,
-  //       where: { user_id: { equals: userId }, title: { contains: search, mode: 'insensitive' } },
-  //       include: { categories: true },
-  //       orderBy: { created_at: 'desc' },
-  //     });
-
-  //     if (!result) {
-  //       return [];
-  //     }
-
-  //     const resources: Resource[] = [];
-
-  //     for (const resource of result) {
-  //       resources.push(this.mapper.toDomain(resource));
-  //     }
-
-  //     this.prisma.$disconnect();
-
-  //     return resources;
-  //   } catch (error: any) {
-  //     this.prisma.$disconnect();
-  //     throw new Error(error.message);
-  //   }
-  // }
-
   public async getOne(filter: ResourceFilter): Promise<Resource | undefined> {
     try {
       const adapter = new PrismaResourceFilterAdapter(filter);
@@ -110,40 +73,6 @@ export class ResourcesRepository implements IResourcesRepository {
       throw new Error(error.message);
     }
   }
-
-  // public async getOneByResourceId(resourceId: string): Promise<Resource> {
-  //   try {
-  //     const result = await this.prisma.resource.findMany({
-  //       where: { id: resourceId },
-  //     });
-
-  //     this.prisma.$disconnect();
-
-  //     return this.mapper.toDomain(result[0]);
-  //   } catch (error: any) {
-  //     this.prisma.$disconnect();
-  //     throw new Error(error.message);
-  //   }
-  // }
-
-  // public async getOneByLink(link: string): Promise<Resource | undefined> {
-  //   try {
-  //     const result = await this.prisma.resource.findMany({
-  //       where: { link },
-  //     });
-
-  //     if (result.length === 0) {
-  //       return undefined;
-  //     }
-
-  //     this.prisma.$disconnect();
-
-  //     return this.mapper.toDomain(result[0]);
-  //   } catch (error: any) {
-  //     this.prisma.$disconnect();
-  //     throw new Error(error.message);
-  //   }
-  // }
 
   public async update(resource: Resource): Promise<void> {
     try {

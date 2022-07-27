@@ -36,7 +36,7 @@ export class PrismaResourceFilterAdapter {
       const title = filters.get(ResourceFilter.TITLE_FILTER) as Text;
       const whereQuery = {
         ...query.where,
-        title: { contains: title, mode: 'insensitive' },
+        title: { contains: title ? title.value : title, mode: 'insensitive' },
       };
 
       Object.assign(query, { where: whereQuery });
