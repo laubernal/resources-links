@@ -6,6 +6,7 @@ import { IUserRepository } from '../../Domain/interfaces/IUserRepository';
 import { Email } from '../../Domain/vo';
 import { IUseCase } from '../../../shared/Application/UseCases/IUseCase';
 import { SignInDto } from '../Dto';
+import { UserFilter } from '../../Domain/filters/UserFilter';
 
 export class SignInUseCase implements IUseCase<User> {
   constructor(private userRepository: IUserRepository) {}
@@ -14,7 +15,8 @@ export class SignInUseCase implements IUseCase<User> {
     try {
       const emailValidated = new Email(user.email);
 
-      const userExists = await this.userRepository.getOneByEmail(emailValidated.value);
+      const filter = UserFilter.builder().withEmail(emailValidated);
+      const userExists = await this.userRepository.getOne(filter);
 
       if (!userExists) {
         throw new UserNotExistsError();

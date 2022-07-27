@@ -2,7 +2,6 @@ import { Database } from '../../../shared/Infrastructure/repositories/Database';
 import { UserFilter } from '../../../user/Domain/filters/UserFilter';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
-import { PrismaUserFilterAdapter } from '../adapters/PrismaUserFilterAdapter';
 import { ResourceMapper } from '../mappers/ResourceMapper';
 
 export class ResourcesRepository implements IResourcesRepository {
@@ -27,24 +26,24 @@ export class ResourcesRepository implements IResourcesRepository {
       const skip = perPage * (page - 1);
       const take = perPage;
 
-      const adapter = new PrismaUserFilterAdapter(filter);
-      const adapterQuery = adapter.apply();
+      // const adapter = new PrismaUserFilterAdapter(filter);
+      // const adapterQuery = adapter.apply();
 
-      const query = Object.assign(adapterQuery, skip, take);
+      // const query = Object.assign(adapterQuery, skip, take);
 
-      const result = await this.prisma.resource.findMany(query);
+      // const result = await this.prisma.resource.findMany(query);
 
-      if (!result) {
-        return [];
-      }
+      // if (!result) {
+      //   return [];
+      // }
 
       const resources: Resource[] = [];
 
-      for (const resource of result) {
-        resources.push(this.mapper.toDomain(resource));
-      }
+      // for (const resource of result) {
+      //   resources.push(this.mapper.toDomain(resource));
+      // }
 
-      this.prisma.$disconnect();
+      // this.prisma.$disconnect();
 
       return resources;
     } catch (error: any) {
