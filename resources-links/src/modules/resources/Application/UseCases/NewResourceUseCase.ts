@@ -5,6 +5,7 @@ import { Resource } from '../../Domain/entities/resource.entity';
 import { NewResourceDto } from '../Dto';
 import { AlreadyExistsError } from '../../../shared/Domain/Error';
 import { IMetadataScraperService, IResourcesRepository } from '../../Domain/interfaces';
+import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 
 export class NewResourceUseCase implements IUseCase<string> {
   constructor(
@@ -20,7 +21,7 @@ export class NewResourceUseCase implements IUseCase<string> {
         return new CategoryVo(category.id, category.name);
       });
 
-      await this.checkIfLinkAlreadyExists(link.value);
+      await this.checkIfLinkAlreadyExists(link);
 
       if (resource.useMetadata) {
         if (this.isTitleOrNoteEmpty(resource)) {
@@ -50,8 +51,10 @@ export class NewResourceUseCase implements IUseCase<string> {
     }
   }
 
-  private async checkIfLinkAlreadyExists(link: string): Promise<void> {
-    const linkExists = await this.resourcesRepository.getOneByLink(link);
+  private async checkIfLinkAlreadyExists(link: Link): Promise<void> {
+    const filter = ResourceFilter.builder().withLink(link);
+
+    const linkExists = await this.resourcesRepository.getOne(filter);
 
     if (linkExists) {
       throw new AlreadyExistsError('Link already exists');

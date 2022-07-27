@@ -23,11 +23,7 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getAllTest(
-    filter: ResourceFilter,
-    perPage: number,
-    page: number
-  ): Promise<Resource[]> {
+  public async getAll(filter: ResourceFilter, perPage: number, page: number): Promise<Resource[]> {
     try {
       const skip = perPage * (page - 1);
       const take = perPage;
@@ -36,7 +32,6 @@ export class ResourcesRepository implements IResourcesRepository {
       const adapterQuery = adapter.apply();
 
       const query = Object.assign(adapterQuery, { skip }, { take });
-      console.log('QUERY', query);
 
       const result = await this.prisma.resource.findMany(query);
 
@@ -59,44 +54,44 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getAllByUserId(
-    userId: string,
-    perPage: number,
-    page: number,
-    search: string
-  ): Promise<Resource[]> {
-    try {
-      const skip = perPage * (page - 1);
-      const take = perPage;
+  // public async getAllByUserId(
+  //   userId: string,
+  //   perPage: number,
+  //   page: number,
+  //   search: string
+  // ): Promise<Resource[]> {
+  //   try {
+  //     const skip = perPage * (page - 1);
+  //     const take = perPage;
 
-      const result = await this.prisma.resource.findMany({
-        skip,
-        take,
-        where: { user_id: { equals: userId }, title: { contains: search, mode: 'insensitive' } },
-        include: { categories: true },
-        orderBy: { created_at: 'desc' },
-      });
+  //     const result = await this.prisma.resource.findMany({
+  //       skip,
+  //       take,
+  //       where: { user_id: { equals: userId }, title: { contains: search, mode: 'insensitive' } },
+  //       include: { categories: true },
+  //       orderBy: { created_at: 'desc' },
+  //     });
 
-      if (!result) {
-        return [];
-      }
+  //     if (!result) {
+  //       return [];
+  //     }
 
-      const resources: Resource[] = [];
+  //     const resources: Resource[] = [];
 
-      for (const resource of result) {
-        resources.push(this.mapper.toDomain(resource));
-      }
+  //     for (const resource of result) {
+  //       resources.push(this.mapper.toDomain(resource));
+  //     }
 
-      this.prisma.$disconnect();
+  //     this.prisma.$disconnect();
 
-      return resources;
-    } catch (error: any) {
-      this.prisma.$disconnect();
-      throw new Error(error.message);
-    }
-  }
+  //     return resources;
+  //   } catch (error: any) {
+  //     this.prisma.$disconnect();
+  //     throw new Error(error.message);
+  //   }
+  // }
 
-  public async getOneTest(filter: ResourceFilter): Promise<Resource | undefined> {
+  public async getOne(filter: ResourceFilter): Promise<Resource | undefined> {
     try {
       const adapter = new PrismaResourceFilterAdapter(filter);
       const adapterQuery = adapter.apply();
@@ -116,39 +111,39 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getOneByResourceId(resourceId: string): Promise<Resource> {
-    try {
-      const result = await this.prisma.resource.findMany({
-        where: { id: resourceId },
-      });
+  // public async getOneByResourceId(resourceId: string): Promise<Resource> {
+  //   try {
+  //     const result = await this.prisma.resource.findMany({
+  //       where: { id: resourceId },
+  //     });
 
-      this.prisma.$disconnect();
+  //     this.prisma.$disconnect();
 
-      return this.mapper.toDomain(result[0]);
-    } catch (error: any) {
-      this.prisma.$disconnect();
-      throw new Error(error.message);
-    }
-  }
+  //     return this.mapper.toDomain(result[0]);
+  //   } catch (error: any) {
+  //     this.prisma.$disconnect();
+  //     throw new Error(error.message);
+  //   }
+  // }
 
-  public async getOneByLink(link: string): Promise<Resource | undefined> {
-    try {
-      const result = await this.prisma.resource.findMany({
-        where: { link },
-      });
+  // public async getOneByLink(link: string): Promise<Resource | undefined> {
+  //   try {
+  //     const result = await this.prisma.resource.findMany({
+  //       where: { link },
+  //     });
 
-      if (result.length === 0) {
-        return undefined;
-      }
+  //     if (result.length === 0) {
+  //       return undefined;
+  //     }
 
-      this.prisma.$disconnect();
+  //     this.prisma.$disconnect();
 
-      return this.mapper.toDomain(result[0]);
-    } catch (error: any) {
-      this.prisma.$disconnect();
-      throw new Error(error.message);
-    }
-  }
+  //     return this.mapper.toDomain(result[0]);
+  //   } catch (error: any) {
+  //     this.prisma.$disconnect();
+  //     throw new Error(error.message);
+  //   }
+  // }
 
   public async update(resource: Resource): Promise<void> {
     try {
