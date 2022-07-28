@@ -13,11 +13,12 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
       const userId = new Id(getAllResourcesDto.userId);
       const perPage = new Number(getAllResourcesDto.perPage);
       const page = new Number(getAllResourcesDto.page);
-      const search = !getAllResourcesDto.search
-        ? undefined
-        : new Text(getAllResourcesDto.search);
 
-      const filter = ResourceFilter.builder().withUserId(userId).withTitle(search);
+      const filter = !getAllResourcesDto.search
+        ? ResourceFilter.builder().withUserId(userId)
+        : ResourceFilter.builder()
+            .withUserId(userId)
+            .withTitle(new Text(getAllResourcesDto.search));
 
       const resources = await this.resourcesRepository.getAll(filter, perPage.value, page.value);
 
