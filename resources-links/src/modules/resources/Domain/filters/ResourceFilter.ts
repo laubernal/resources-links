@@ -24,7 +24,7 @@ export class ResourceFilter extends Filter {
     return this;
   }
 
-  public withTitle(title: Text | undefined): this {
+  public withTitle(title: Text): this {
     this.data.set(ResourceFilter.TITLE_FILTER, title);
     return this;
   }
