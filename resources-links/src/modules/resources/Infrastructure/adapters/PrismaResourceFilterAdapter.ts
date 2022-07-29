@@ -1,11 +1,15 @@
+import { Pagination } from '../../../shared/Domain/filters/Pagination';
 import { Id, Text } from '../../../shared/Domain/vo';
+import { PrismaAdapter } from '../../../shared/Infrastructure/adapters/PrismaAdapter';
 import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 import { Link } from '../../Domain/vo';
 
 type queryType = { where: {}; include: {}; orderBy?: {} };
 
-export class PrismaResourceFilterAdapter {
-  constructor(private filter: ResourceFilter) {}
+export class PrismaResourceFilterAdapter extends PrismaAdapter {
+  constructor(private filter: ResourceFilter) {
+    super();
+  }
 
   public apply(): any {
     const filters = this.filter.apply();
@@ -36,7 +40,7 @@ export class PrismaResourceFilterAdapter {
       const title = filters.get(ResourceFilter.TITLE_FILTER) as Text;
       const whereQuery = {
         ...query.where,
-        title: { contains: title ? title.value : title, mode: 'insensitive' },
+        title: { contains: title, mode: 'insensitive' },
       };
 
       Object.assign(query, { where: whereQuery });
@@ -51,6 +55,14 @@ export class PrismaResourceFilterAdapter {
       Object.assign(query, { where: whereQuery });
     }
 
+    if (filters.has(Pagination.PAGINATION_FILTER)) {
+      const pagination = filters.get(Pagination.PAGINATION_FILTER);
+
+      // this.assign(this.pagination(pagination));
+      // Object.assign(query, this.pagination(pagination));
+    }
+
+    // return this.prismaFilter;
     return query;
   }
 }

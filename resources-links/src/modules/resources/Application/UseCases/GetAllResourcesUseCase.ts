@@ -15,10 +15,17 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
       const page = new Number(getAllResourcesDto.page);
 
       const filter = !getAllResourcesDto.search
-        ? ResourceFilter.builder().withUserId(userId)
+        ? ResourceFilter.builder()
+            .withUserId(userId)
+            .paginate()
+            .setPage(page.value)
+            .setPerPage(perPage.value)
         : ResourceFilter.builder()
             .withUserId(userId)
-            .withTitle(new Text(getAllResourcesDto.search));
+            .withTitle(new Text(getAllResourcesDto.search))
+            .paginate()
+            .setPage(page.value)
+            .setPerPage(perPage.value);
 
       const resources = await this.resourcesRepository.getAll(filter, perPage.value, page.value);
 
