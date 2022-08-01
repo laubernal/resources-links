@@ -4,7 +4,7 @@ import { PrismaAdapter } from '../../../shared/Infrastructure/adapters/PrismaAda
 import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 import { Link } from '../../Domain/vo';
 
-type queryType = { where: {}; orderBy?: {} };
+type queryType = { include: {}; orderBy?: {} };
 
 export class PrismaResourceFilterAdapter extends PrismaAdapter {
   constructor(private filter: ResourceFilter) {
@@ -15,61 +15,53 @@ export class PrismaResourceFilterAdapter extends PrismaAdapter {
     const filters = this.filter.apply();
 
     const query: queryType = {
-      where: {},
+      include: { categories: true },
+      orderBy: { created_at: 'desc' },
     };
 
-    this.assign({ include: { categories: true }, orderBy: { created_at: 'desc' } });
+    this.assign(query);
 
     if (filters.has(ResourceFilter.USER_ID_FILTER)) {
       const userId = filters.get(ResourceFilter.USER_ID_FILTER) as Id;
-      const whereQuery = { ...query.where, user_id: { equals: userId.value } };
+      const whereQuery = { ...this.prismaFilter.where, user_id: { equals: userId.value } };
 
       this.assign({ where: whereQuery });
-
-      // Object.assign(query, { where: whereQuery });
     }
 
     if (filters.has(ResourceFilter.RESOURCE_ID_FILTER)) {
       const resourceId = filters.get(ResourceFilter.RESOURCE_ID_FILTER) as Id;
-      const whereQuery = { ...query.where, id: resourceId.value };
+      const whereQuery = { ...this.prismaFilter.where, id: resourceId.value };
 
       delete query.orderBy;
 
       this.assign({ where: whereQuery });
-
-      // Object.assign(query, { where: whereQuery });
     }
 
     if (filters.has(ResourceFilter.TITLE_FILTER)) {
       const title = filters.get(ResourceFilter.TITLE_FILTER) as Text;
       const whereQuery = {
-        ...query.where,
+        ...this.prismaFilter.where,
         title: { contains: title.value, mode: 'insensitive' },
       };
 
       this.assign({ where: whereQuery });
-      // Object.assign(query, { where: whereQuery });
     }
 
     if (filters.has(ResourceFilter.LINK_FILTER)) {
       const link = filters.get(ResourceFilter.LINK_FILTER) as Link;
-      const whereQuery = { ...query.where, link: link.value };
+      const whereQuery = { ...this.prismaFilter.where, link: link.value };
 
       delete query.orderBy;
 
       this.assign({ where: whereQuery });
-
-      // Object.assign(query, { where: whereQuery });
     }
 
     if (filters.has(Pagination.PAGINATION_FILTER)) {
       const pagination = filters.get(Pagination.PAGINATION_FILTER);
 
       this.assign(this.pagination(pagination));
-      // Object.assign(query, this.pagination(pagination));
     }
 
     return this.prismaFilter;
-    // return query;
   }
 }

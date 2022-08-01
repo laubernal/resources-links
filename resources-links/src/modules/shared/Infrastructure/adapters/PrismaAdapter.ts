@@ -2,7 +2,7 @@ import { Pagination } from '../../Domain/filters/Pagination';
 import { Number } from '../../Domain/vo';
 
 export class PrismaAdapter {
-  protected prismaFilter = {};
+  protected prismaFilter = { where: {} };
 
   protected assign(filter: any): void {
     this.prismaFilter = Object.assign(this.prismaFilter, filter);
