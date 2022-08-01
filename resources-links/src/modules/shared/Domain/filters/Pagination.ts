@@ -1,3 +1,5 @@
+import { Number } from '../vo';
+
 export class Pagination {
   public static PAGE_FILTER = 'page';
   public static PER_PAGE_FILTER = 'perPage';
@@ -5,12 +7,12 @@ export class Pagination {
 
   private pagination: Map<string, any> = new Map();
 
-  public setPage(page: number): this {
+  public setPage(page: Number): this {
     this.pagination.set(Pagination.PAGE_FILTER, page);
     return this;
   }
 
-  public setPerPage(perPage: number): this {
+  public setPerPage(perPage: Number): this {
     this.pagination.set(Pagination.PER_PAGE_FILTER, perPage);
     return this;
   }

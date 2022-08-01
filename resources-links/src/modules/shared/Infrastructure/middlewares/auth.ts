@@ -22,7 +22,7 @@ export const currentUser = (req: Request, res: Response, next: NextFunction) => 
   try {
     const payload = jwt.verify(req.session.jwt, process.env.TOKEN_KEY!) as UserPayload;
     req.currentUser = payload;
-  } catch (err) {}
+  } catch (error) {}
   next();
 };
 
@@ -47,8 +47,8 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
     };
 
     next();
-  } catch (err: any) {
-    console.log(err);
+  } catch (error: any) {
+    console.log(error);
 
     throw new Error('User not authorized');
   }

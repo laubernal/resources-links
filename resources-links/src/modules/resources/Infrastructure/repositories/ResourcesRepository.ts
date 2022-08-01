@@ -1,5 +1,4 @@
 import { Database } from '../../../shared/Infrastructure/repositories/Database';
-import { UserFilter } from '../../../user/Domain/filters/UserFilter';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
@@ -23,17 +22,12 @@ export class ResourcesRepository implements IResourcesRepository {
     }
   }
 
-  public async getAll(filter: ResourceFilter, perPage: number, page: number): Promise<Resource[]> {
+  public async getAll(filter: ResourceFilter): Promise<Resource[]> {
     try {
-      const skip = perPage * (page - 1);
-      const take = perPage;
-
       const adapter = new PrismaResourceFilterAdapter(filter);
       const adapterQuery = adapter.apply();
 
-      const query = Object.assign(adapterQuery, { skip }, { take });
-
-      const result = await this.prisma.resource.findMany(query);
+      const result = await this.prisma.resource.findMany(adapterQuery);
 
       if (!result) {
         return [];

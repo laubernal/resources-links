@@ -18,16 +18,16 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
         ? ResourceFilter.builder()
             .withUserId(userId)
             .paginate()
-            .setPage(page.value)
-            .setPerPage(perPage.value)
+            .setPage(page)
+            .setPerPage(perPage)
         : ResourceFilter.builder()
             .withUserId(userId)
             .withTitle(new Text(getAllResourcesDto.search))
             .paginate()
-            .setPage(page.value)
-            .setPerPage(perPage.value);
+            .setPage(page)
+            .setPerPage(perPage);
 
-      const resources = await this.resourcesRepository.getAll(filter, perPage.value, page.value);
+      const resources = await this.resourcesRepository.getAll(filter);
 
       return resources;
     } catch (error: any) {
