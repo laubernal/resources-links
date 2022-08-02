@@ -6,5 +6,5 @@ export interface IResourcesRepository {
   getAll(filter: ResourceFilter): Promise<Resource[]>;
   getOne(filter: ResourceFilter): Promise<Resource | undefined>;
   update(resource: Resource): Promise<void>;
-  delete(resourceId: string, userId: string): Promise<number | undefined>;
+  delete(resource: Resource): Promise<number | undefined>;
 }

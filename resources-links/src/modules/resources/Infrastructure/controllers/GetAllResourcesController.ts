@@ -2,8 +2,7 @@ import { Request, Response } from 'express';
 
 import { Controller, get, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
-import { GetAllResourcesResponse } from '../../Application/Dto';
-import { GetAllResourcesDto } from '../../Application/Dto/GetAllResourcesDto';
+import { GetAllResourcesDto, GetAllResourcesResponse } from '../../Application/Dto';
 import { GetAllResourcesUseCase } from '../../Application/UseCases';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 

@@ -3,7 +3,7 @@ import { Id, Number, Text } from '../../../shared/Domain/vo';
 import { Resource } from '../../Domain/entities/resource.entity';
 import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 import { IResourcesRepository } from '../../Domain/interfaces/IResourcesRepository';
-import { GetAllResourcesDto } from '../Dto/GetAllResourcesDto';
+import { GetAllResourcesDto } from '../Dto';
 
 export class GetAllResourcesUseCase implements IUseCase<Resource> {
   constructor(private resourcesRepository: IResourcesRepository) {}

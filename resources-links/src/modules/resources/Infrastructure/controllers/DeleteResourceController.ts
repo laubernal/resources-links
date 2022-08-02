@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 
 import { bodyValidator, Controller, post, use } from '../../../shared/Infrastructure/decorators';
 import { currentUser, requireAuth } from '../../../shared/Infrastructure/middlewares/auth';
-import { DeleteResourceDto } from '../../Application/Dto';
 import { DeleteResourceUseCase } from '../../Application/UseCases';
 import { ResourcesRepository } from '../repositories/ResourcesRepository';
 
@@ -14,13 +13,13 @@ export class DeleteResourceController {
   @bodyValidator('resourceId')
   public async deleteResource(req: Request, res: Response): Promise<void> {
     try {
-      const { resourceId } = req.body as { resourceId: string };
+      const { resourceId } = req.body as {
+        resourceId: string;
+      };
 
       const resourceRepository = new ResourcesRepository();
 
-      const deleteResourceDto = new DeleteResourceDto(resourceId, req.currentUser!.id);
-
-      new DeleteResourceUseCase(resourceRepository).execute(deleteResourceDto);
+      new DeleteResourceUseCase(resourceRepository).execute(resourceId);
 
       res.status(200).send({});
     } catch (error: any) {
