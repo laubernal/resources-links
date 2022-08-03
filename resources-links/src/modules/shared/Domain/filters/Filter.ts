@@ -1,4 +1,5 @@
-import { Number } from '../vo';
+import { Number, Text } from '../vo';
+import { Ordenation } from './Ordenation';
 import { Pagination } from './Pagination';
 
 export abstract class Filter {
@@ -8,6 +9,14 @@ export abstract class Filter {
     const pagination = new Pagination();
 
     this.data.set(Pagination.PAGINATION_FILTER, pagination);
+
+    return this;
+  }
+
+  public order(): this {
+    const ordenation = new Ordenation();
+
+    this.data.set(Ordenation.ORDENATION_FILTER, ordenation);
 
     return this;
   }
@@ -26,6 +35,24 @@ export abstract class Filter {
     const pagination = this.data.get(Pagination.PAGINATION_FILTER);
 
     pagination.setPerPage(perPage);
+
+    return this;
+  }
+
+  public setField(field: Text): this {
+    const ordenation = this.data.get(Ordenation.ORDENATION_FILTER);
+
+    ordenation.setField(field);
+
+    return this;
+  }
+
+  public setDescOrder(): this {
+    const ordenation = this.data.get(Ordenation.DESC_FILTER);
+
+    console.log('desc order', ordenation);
+
+    ordenation.setDescOrder();
 
     return this;
   }

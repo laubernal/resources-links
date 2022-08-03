@@ -13,6 +13,7 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
       const userId = new Id(getAllResourcesDto.userId);
       const perPage = new Number(getAllResourcesDto.perPage);
       const page = new Number(getAllResourcesDto.page);
+      const field = new Text('created_at');
 
       const filter = !getAllResourcesDto.search
         ? ResourceFilter.builder()
@@ -20,12 +21,20 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
             .paginate()
             .setPage(page)
             .setPerPage(perPage)
+            .order()
+            .setField(field)
+            .setDescOrder()
         : ResourceFilter.builder()
             .withUserId(userId)
             .withTitle(new Text(getAllResourcesDto.search))
             .paginate()
             .setPage(page)
-            .setPerPage(perPage);
+            .setPerPage(perPage)
+            .order()
+            .setField(field)
+            .setDescOrder();
+
+      console.log('FILTER', filter);
 
       const resources = await this.resourcesRepository.getAll(filter);
 

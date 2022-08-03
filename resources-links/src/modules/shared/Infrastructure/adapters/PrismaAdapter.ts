@@ -1,5 +1,6 @@
+import { Ordenation } from '../../Domain/filters/Ordenation';
 import { Pagination } from '../../Domain/filters/Pagination';
-import { Number } from '../../Domain/vo';
+import { Number, Text } from '../../Domain/vo';
 
 export class PrismaAdapter {
   protected prismaFilter = { where: {} };
@@ -23,6 +24,28 @@ export class PrismaAdapter {
       const perPage = paginationFilter.get(Pagination.PER_PAGE_FILTER) as Number;
 
       Object.assign(query, { take: perPage.value });
+    }
+
+    return query;
+  }
+
+  protected ordenation(ordenation: Ordenation) {
+    const ordenationFilter = ordenation.build();
+    const query = {};
+
+    if (ordenationFilter.has(Ordenation.DESC_FILTER)) {
+      const fieldFilter = ordenationFilter.get(Ordenation.FIELD_FILTER) as Text;
+      const order = ordenationFilter.get(Ordenation.DESC_FILTER);
+
+      const orderQuery = {};
+
+      Object.defineProperty(orderQuery, fieldFilter.value, {
+        value: order,
+      });
+
+      console.log('ORDER QUERY', orderQuery);
+
+      Object.assign(query, { orderBy: orderQuery });
     }
 
     return query;

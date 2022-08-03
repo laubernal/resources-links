@@ -27,6 +27,8 @@ export class ResourcesRepository implements IResourcesRepository {
       const adapter = new PrismaResourceFilterAdapter(filter);
       const adapterQuery = adapter.apply();
 
+      console.log('ADAPTER QUERY', adapterQuery);
+
       const result = await this.prisma.resource.findMany(adapterQuery);
 
       if (!result) {

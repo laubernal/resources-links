@@ -1,3 +1,4 @@
+import { Ordenation } from '../../../shared/Domain/filters/Ordenation';
 import { Pagination } from '../../../shared/Domain/filters/Pagination';
 import { Id, Text } from '../../../shared/Domain/vo';
 import { PrismaAdapter } from '../../../shared/Infrastructure/adapters/PrismaAdapter';
@@ -16,7 +17,7 @@ export class PrismaResourceFilterAdapter extends PrismaAdapter {
 
     const query: queryType = {
       include: { categories: true },
-      orderBy: { created_at: 'desc' },
+      // orderBy: { created_at: 'desc' },
     };
 
     this.assign(query);
@@ -60,6 +61,12 @@ export class PrismaResourceFilterAdapter extends PrismaAdapter {
       const pagination = filters.get(Pagination.PAGINATION_FILTER);
 
       this.assign(this.pagination(pagination));
+    }
+
+    if (filters.has(Ordenation.ORDENATION_FILTER)) {
+      const ordenation = filters.get(Ordenation.ORDENATION_FILTER);
+
+      this.assign(this.ordenation(ordenation));
     }
 
     return this.prismaFilter;
