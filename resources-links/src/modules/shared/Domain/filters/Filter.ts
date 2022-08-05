@@ -13,10 +13,12 @@ export abstract class Filter {
     return this;
   }
 
-  public order(): this {
+  public orderBy(field: Text): this {
     const ordenation = new Ordenation();
 
     this.data.set(Ordenation.ORDENATION_FILTER, ordenation);
+
+    this.setField(field);
 
     return this;
   }
@@ -39,20 +41,26 @@ export abstract class Filter {
     return this;
   }
 
-  public setField(field: Text): this {
+  public setDescOrder(): this {
     const ordenation = this.data.get(Ordenation.ORDENATION_FILTER);
 
-    ordenation.setField(field);
+    ordenation.setDescOrder();
 
     return this;
   }
 
-  public setDescOrder(): this {
-    const ordenation = this.data.get(Ordenation.DESC_FILTER);
+  public setAscOrder(): this {
+    const ordenation = this.data.get(Ordenation.ORDENATION_FILTER);
 
-    console.log('desc order', ordenation);
+    ordenation.setAscOrder();
 
-    ordenation.setDescOrder();
+    return this;
+  }
+
+  private setField(field: Text): this {
+    const ordenation = this.data.get(Ordenation.ORDENATION_FILTER);
+
+    ordenation.setField(field);
 
     return this;
   }

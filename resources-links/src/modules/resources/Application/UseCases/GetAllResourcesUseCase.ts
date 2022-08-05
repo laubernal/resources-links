@@ -21,8 +21,7 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
             .paginate()
             .setPage(page)
             .setPerPage(perPage)
-            .order()
-            .setField(field)
+            .orderBy(field)
             .setDescOrder()
         : ResourceFilter.builder()
             .withUserId(userId)
@@ -30,11 +29,8 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
             .paginate()
             .setPage(page)
             .setPerPage(perPage)
-            .order()
-            .setField(field)
+            .orderBy(field)
             .setDescOrder();
-
-      console.log('FILTER', filter);
 
       const resources = await this.resourcesRepository.getAll(filter);
 

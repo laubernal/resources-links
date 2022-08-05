@@ -32,22 +32,33 @@ export class PrismaAdapter {
   protected ordenation(ordenation: Ordenation) {
     const ordenationFilter = ordenation.build();
     const query = {};
+    const fieldFilter = ordenationFilter.get(Ordenation.FIELD_FILTER) as Text;
 
     if (ordenationFilter.has(Ordenation.DESC_FILTER)) {
-      const fieldFilter = ordenationFilter.get(Ordenation.FIELD_FILTER) as Text;
       const order = ordenationFilter.get(Ordenation.DESC_FILTER);
 
-      const orderQuery = {};
+      this.attachOrderByQuery(order, fieldFilter.value, query);
+    }
 
-      Object.defineProperty(orderQuery, fieldFilter.value, {
-        value: order,
-      });
+    if (ordenationFilter.has(Ordenation.ASC_FILTER)) {
+      const order = ordenationFilter.get(Ordenation.ASC_FILTER);
 
-      console.log('ORDER QUERY', orderQuery);
-
-      Object.assign(query, { orderBy: orderQuery });
+      this.attachOrderByQuery(order, fieldFilter.value, query);
     }
 
     return query;
+  }
+
+  private attachOrderByQuery(order: string, fieldFilter: string, query: {}): void {
+    const orderQuery = {};
+
+    Object.defineProperty(orderQuery, fieldFilter, {
+      value: order,
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    });
+
+    Object.assign(query, { orderBy: orderQuery });
   }
 }

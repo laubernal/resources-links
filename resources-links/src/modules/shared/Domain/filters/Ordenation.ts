@@ -18,6 +18,11 @@ export class Ordenation {
     return this;
   }
 
+  public setAscOrder(): this {
+    this.ordenation.set(Ordenation.ASC_FILTER, 'asc');
+    return this;
+  }
+
   public build(): Map<string, any> {
     return this.ordenation;
   }
