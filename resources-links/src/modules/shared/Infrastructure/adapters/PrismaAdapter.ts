@@ -50,7 +50,7 @@ export class PrismaAdapter {
   }
 
   private attachOrderByQuery(order: string, fieldFilter: string, query: {}): void {
-    const orderQuery = {};
+    const orderQuery = {[fieldFilter]: order};
 
     Object.defineProperty(orderQuery, fieldFilter, {
       value: order,

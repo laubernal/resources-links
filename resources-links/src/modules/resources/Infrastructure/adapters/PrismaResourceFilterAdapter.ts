@@ -5,7 +5,7 @@ import { PrismaAdapter } from '../../../shared/Infrastructure/adapters/PrismaAda
 import { ResourceFilter } from '../../Domain/filters/ResourceFilter';
 import { Link } from '../../Domain/vo';
 
-type queryType = { include: {}; orderBy?: {} };
+type queryType = { include: {} };
 
 export class PrismaResourceFilterAdapter extends PrismaAdapter {
   constructor(private filter: ResourceFilter) {
@@ -17,7 +17,6 @@ export class PrismaResourceFilterAdapter extends PrismaAdapter {
 
     const query: queryType = {
       include: { categories: true },
-      // orderBy: { created_at: 'desc' },
     };
 
     this.assign(query);
@@ -32,8 +31,6 @@ export class PrismaResourceFilterAdapter extends PrismaAdapter {
     if (filters.has(ResourceFilter.RESOURCE_ID_FILTER)) {
       const resourceId = filters.get(ResourceFilter.RESOURCE_ID_FILTER) as Id;
       const whereQuery = { ...this.prismaFilter.where, id: resourceId.value };
-
-      delete query.orderBy;
 
       this.assign({ where: whereQuery });
     }
@@ -51,8 +48,6 @@ export class PrismaResourceFilterAdapter extends PrismaAdapter {
     if (filters.has(ResourceFilter.LINK_FILTER)) {
       const link = filters.get(ResourceFilter.LINK_FILTER) as Link;
       const whereQuery = { ...this.prismaFilter.where, link: link.value };
-
-      delete query.orderBy;
 
       this.assign({ where: whereQuery });
     }
