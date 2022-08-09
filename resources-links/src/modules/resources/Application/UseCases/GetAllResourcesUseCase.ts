@@ -16,21 +16,8 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
       const field = new Text('created_at');
 
       const filter = !getAllResourcesDto.search
-        ? ResourceFilter.builder()
-            .withUserId(userId)
-            .paginate()
-            .setPage(page)
-            .setPerPage(perPage)
-            .orderBy(field)
-            .setDescOrder()
-        : ResourceFilter.builder()
-            .withUserId(userId)
-            .withTitle(new Text(getAllResourcesDto.search))
-            .paginate()
-            .setPage(page)
-            .setPerPage(perPage)
-            .orderBy(field)
-            .setDescOrder();
+        ? this.buildResourceFilter(userId, page, perPage, field, 'desc')
+        : this.buildResourceFilter(userId, page, perPage, field, 'desc', getAllResourcesDto.search);
 
       const resources = await this.resourcesRepository.getAll(filter);
 
@@ -39,4 +26,33 @@ export class GetAllResourcesUseCase implements IUseCase<Resource> {
       throw new Error(error.message);
     }
   }
+
+  private buildResourceFilter(
+    userId: Id,
+    page: Number,
+    perPage: Number,
+    field: Text,
+    order: string,
+    search?: string
+  ): ResourceFilter {
+    const filter = !search
+      ? ResourceFilter.builder()
+          .withUserId(userId)
+          .paginate()
+          .setPage(page)
+          .setPerPage(perPage)
+          .orderBy(field)
+          .setDescOrder()
+      : ResourceFilter.builder()
+          .withUserId(userId)
+          .withTitle(new Text(search))
+          .paginate()
+          .setPage(page)
+          .setPerPage(perPage)
+          .orderBy(field)
+          .setDescOrder();
+    return filter;
+  }
+
+  private buildOrderByFilter(field: Text, order: string) {}
 }
