@@ -14,7 +14,7 @@ You'll be able to:
 
 ---
 
-#### How it was built
+### How it was built
 
 The technologies I have used to build this app are:
 
