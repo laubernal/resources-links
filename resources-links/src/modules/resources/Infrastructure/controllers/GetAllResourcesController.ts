@@ -15,9 +15,7 @@ export class GetAllResourcesController {
     try {
       const itemsPerPage: number = !req.query.perPage ? 10 : parseInt(req.query.perPage as string);
       const page: number = !req.query.page ? 1 : parseInt(req.query.page as string);
-      const search: string | undefined = !req.query.search
-        ? undefined
-        : (req.query.search as string);
+      const search: string = req.query.search as string;
 
       const orderBy: string = req.query.orderBy as string;
       const order: string = req.query.order as string;

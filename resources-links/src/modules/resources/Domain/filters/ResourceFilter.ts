@@ -1,4 +1,5 @@
 import { Filter } from '../../../shared/Domain/filters/Filter';
+import { Ordenation } from '../../../shared/Domain/filters/Ordenation';
 import { Id, Text } from '../../../shared/Domain/vo';
 import { Link } from '../vo';
 
@@ -31,6 +32,16 @@ export class ResourceFilter extends Filter {
 
   public withLink(link: Link): this {
     this.data.set(ResourceFilter.LINK_FILTER, link);
+    return this;
+  }
+
+  public orderByCreationDate(order: string): this {
+    if (order === Ordenation.ASC_FILTER) {
+      this.orderBy(new Text('created_at')).setAscOrder();
+      return this;
+    }
+
+    this.orderBy(new Text('created_at')).setDescOrder();
     return this;
   }
 

@@ -3,7 +3,7 @@ export class GetAllResourcesDto {
     public userId: string,
     public perPage: number,
     public page: number,
-    public search: string | undefined,
+    public search: string,
     public orderBy: string,
     public order: string
   ) {}
