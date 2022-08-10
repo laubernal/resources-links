@@ -9,15 +9,14 @@
 You'll be able to:
 
 - Assign categories to your resources so you can keep everything organized and easy to find.
-- Assign a title to your resources to find what you're looking for more easily.
-- Add a description so you can remember what it's about so you don't have to open the link.
+- Assign a title to your resources to find what you're looking for easier.
+- Add a description so you can remember what it's about without opening the link.
 
 ---
 
-<!---
 #### How it was built
 
-The technologies I used to build this app are:
+The technologies I have used to build this app are:
 
 - NodeJs
 - Typescript
@@ -25,5 +24,6 @@ The technologies I used to build this app are:
 - Docker
 - Prisma
 
+<!---
 I have used hexagonal architecture to write clean code and I have tried to follow the SOLID principles as much as possible.
 -->
