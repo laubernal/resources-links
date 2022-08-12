@@ -70,12 +70,21 @@ export class ResourcesRepository implements IResourcesRepository {
 
   public async update(resource: Resource): Promise<void> {
     try {
+      const categoriesId = resource.categories.map(category => {
+        return { id: category.id };
+      });
+      console.log('CATEGORIES ID', categoriesId);
+
       await this.prisma.resource.update({
         where: { id: resource.id },
         data: {
           title: resource.title,
           link: resource.link,
           note: resource.note,
+          categories: {
+            set: [],
+            connect: categoriesId,
+          },
         },
       });
 
